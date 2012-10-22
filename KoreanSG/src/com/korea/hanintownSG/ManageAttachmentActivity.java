@@ -62,7 +62,7 @@ public class ManageAttachmentActivity extends DYActivity
 			dialog = new ProgressDialog( this );
 			dialog.setMessage("·ÎµùÁß...");
 			dialog.show();
-			new FetchImageTask( "http", serverHost, serverPort ).execute( null );
+			new FetchImageTask( "http", serverHost, serverPort ).execute();
 		}
 		catch( Exception ex )
 		{
