@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/main_top_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="게시판"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_bg01"
+            android:onClick="goBack"
+            android:text="뒤로" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layerRecentPosts"
+        android:layout_width="fill_parent"
+        android:layout_height="140dp"
+        android:layout_below="@+id/rLayout"
+        android:orientation="vertical"
+        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="20sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="최신 글"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
+
+        <HorizontalScrollView
+            android:id="@+id/hsvRecentPosts"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            <LinearLayout 
+                android:id="@+id/layoutImageParent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layerRecentPosts"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector" />
+
+</RelativeLayout>

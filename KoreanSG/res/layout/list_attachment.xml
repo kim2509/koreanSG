@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <ImageButton
+        android:id="@+id/imgBtnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@drawable/delete" 
+        android:onClick="deleteItem"/>
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/thumbnail"
+        android:text="본문"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:gravity="right"
+        android:layout_marginRight="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@drawable/image_bg"
+        android:layout_toLeftOf="@+id/imgBtnMoveUp"
+        android:padding="3dip" >
+
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignTop="@+id/thumbnail" />
+    </LinearLayout>
+    
+    <ImageButton
+        android:id="@+id/imgBtnMoveUp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/up"
+        android:layout_margin="5dp"
+        android:layout_toLeftOf="@+id/imgBtnMoveDown"
+        android:onClick="moveItemUp"/>
+    
+    <ImageButton
+        android:id="@+id/imgBtnMoveDown"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/down"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        android:onClick="moveItemDown"/>
+
+</RelativeLayout>

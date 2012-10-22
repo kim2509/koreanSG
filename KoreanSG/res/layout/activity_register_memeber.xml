@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/main_top_bg" >
+
+        <Button android:id="@+id/btnBack" 
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_bg01"
+            android:layout_marginLeft="5dp"
+            android:text="뒤로"></Button>
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:text="한인타운 SG"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="0.6"/>
+        
+        <Button android:id="@+id/btnRegisterMember" 
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_bg02"
+            android:layout_marginRight="5dp"
+            android:text="전송">
+            
+        </Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical" >
+
+        <EditText android:id="@+id/edtID" 
+            android:layout_width="fill_parent"
+            android:inputType="text"
+            android:hint="아이디"
+            android:layout_height="40dp" />
+        
+        <EditText android:id="@+id/edtEmail" 
+            android:layout_width="fill_parent"
+            android:inputType="textEmailAddress"
+            android:hint="이메일주소(example@gmail.com)"
+            android:layout_height="40dp" />
+        
+        <EditText android:id="@+id/edtNickname" 
+            android:layout_width="fill_parent"
+            android:inputType="text"
+            android:hint="별명"
+            android:layout_height="40dp" />
+        
+        <EditText android:id="@+id/edtPassword" 
+            android:layout_width="fill_parent"
+            android:inputType="textPassword"
+            android:hint="비밀번호"
+            android:layout_height="40dp" />
+        
+        <EditText android:id="@+id/edtPasswordConfirm" 
+            android:layout_width="fill_parent"
+            android:inputType="textPassword"
+            android:hint="비밀번호 확인"
+            android:layout_height="40dp" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,99 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/main_top_bg" >
+
+        <Button android:id="@+id/btnBack" 
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_bg01"
+            android:layout_marginLeft="5dp"
+            android:text="뒤로"></Button>
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:text="로그인 정보"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="0.6"/>
+        
+        <Button android:id="@+id/btnEmpty" 
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_bg02"
+            android:layout_marginRight="5dp"
+            android:visibility="invisible"></Button>
+    </LinearLayout>
+    
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_margin="5dp">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:text="사용자 아이디"/>
+
+            <TextView
+                android:id="@+id/txtUserID"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:gravity="right|center_vertical"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:text="닉네임"/>
+
+            <TextView
+                android:id="@+id/txtNickname"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

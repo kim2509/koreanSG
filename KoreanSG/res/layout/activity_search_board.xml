@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/main_top_bg" >
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_bg01"
+            android:onClick="goBack"
+            android:text="뒤로" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rLayout" 
+        android:background="#EBEDF3">
+
+        <EditText
+            android:id="@+id/edtSearchBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/btnCancel"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:ems="10" />
+
+        <RadioGroup
+            android:id="@+id/rdoGrpSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/edtSearchBox"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rdoByContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="제목+내용" 
+                android:textColor="@android:color/black"/>
+
+            <RadioButton
+                android:id="@+id/rdoByAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="글쓴이" 
+                android:textColor="@android:color/black"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="취소" 
+            android:onClick="goBack"/>
+    </RelativeLayout>
+
+    <WebView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_weight="1" 
+        android:visibility="gone"/>
+</RelativeLayout>
