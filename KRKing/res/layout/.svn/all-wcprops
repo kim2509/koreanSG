@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/krking/!svn/ver/3/KRKing/res/layout
+END
+activity_main.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/krking/!svn/ver/4/KRKing/res/layout/activity_main.xml
+END
+list_predict_item.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/krking/!svn/ver/4/KRKing/res/layout/list_predict_item.xml
+END
+activity_intro.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/krking/!svn/ver/3/KRKing/res/layout/activity_intro.xml
+END
+list_menu_header.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/krking/!svn/ver/4/KRKing/res/layout/list_menu_header.xml
+END
+krking_first.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/krking/!svn/ver/4/KRKing/res/layout/krking_first.xml
+END
+list_menu_item.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/krking/!svn/ver/4/KRKing/res/layout/list_menu_item.xml
+END
+krking_ranking.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/krking/!svn/ver/4/KRKing/res/layout/krking_ranking.xml
+END

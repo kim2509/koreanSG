@@ -1,0 +1,188 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/main_top_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="게시판"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_bg01"
+            android:onClick="goBack"
+            android:text="뒤로" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rLayout"
+        android:layout_margin="10dp"
+        android:background="#D2D2D2"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="#F4F4F4"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@android:color/black"
+                android:text="제목" />
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#2E2E2E"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="fill_parent"
+                android:background="#F4F4F4"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@android:color/black"
+                android:text="작성자" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/txtAuthor"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#2E2E2E"
+                    android:text="내용" />
+                
+                <Button android:id="@+id/btnPhone" 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/txtAuthor"
+                    android:text="전화연결"/>
+                
+                <Button android:id="@+id/btnSMS" 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/btnPhone"
+                    android:text="SMS"/>
+                
+            </RelativeLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" 
+            android:layout_marginBottom="1dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="#F4F4F4"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/black"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="날짜" />
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_weight="0.8"
+                android:textColor="#2E2E2E"/>
+            
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="#F4F4F4"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/black"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_weight="0.9"
+                android:text="조회수" />
+
+            <TextView
+                android:id="@+id/txtHitCount"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_weight="1"
+                android:textColor="#2E2E2E" />
+            
+        </LinearLayout>
+    </LinearLayout>
+
+    <WebView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/layoutInfo"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+    
+</RelativeLayout>

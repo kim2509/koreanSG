@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="2012-10-07 일"
+                android:textColor="@android:color/black"
+                android:background="@android:color/darker_gray"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/black" >
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@android:color/black" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="R" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="구분" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="복숭" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="쌍숭" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="삼복" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="축" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="적중" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="환수" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="SMS발송내역"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#7E9995"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="착순" 
+                        android:textColor="@android:color/black"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0.5dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="부6" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="강베팅" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="5.0" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="8.3" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="18.9" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="-" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="70" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="350" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="0.5dp"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="(7-12)주력 (8-7,12) 방어" 
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="12,7,10" 
+                        android:textColor="@android:color/black"/>
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

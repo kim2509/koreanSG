@@ -1,0 +1,33 @@
+package com.krking;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.widget.Toast;
+
+public class BaseActivity extends FragmentActivity{
+
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_intro);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_intro, menu);
+        return true;
+    }
+    
+    public void showToastMessage( String message )
+	{
+		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+	}
+    
+    public void writeLog( String log )
+	{
+		Log.i("KRKing", log );
+	}
+}

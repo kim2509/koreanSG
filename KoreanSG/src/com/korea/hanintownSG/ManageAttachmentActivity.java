@@ -37,7 +37,6 @@ public class ManageAttachmentActivity extends DYActivity
 	ArrayList<Bitmap> arBitmaps = null;
 	ProgressDialog dialog = null;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{

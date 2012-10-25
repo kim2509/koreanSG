@@ -310,7 +310,8 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 
 				if ( "업체목록".equals( selectedMenu ) )
 				{
-
+					Intent intent = new Intent( this, ShopsMainActivity.class );
+					startActivity( intent );
 				}
 				else if ( "게시판".equals( selectedMenu ) )
 				{

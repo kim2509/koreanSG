@@ -51,10 +51,11 @@ public final class R {
         public static final int up=0x7f020022;
     }
     public static final class id {
-        public static final int ImageView01=0x7f080033;
-        public static final int ListView01=0x7f080032;
+        public static final int ImageView01=0x7f080034;
+        public static final int ListView01=0x7f080033;
         public static final int RelativeLayout01=0x7f08000e;
-        public static final int TextView01=0x7f080034;
+        public static final int TextView01=0x7f080035;
+        public static final int btnAddShop=0x7f080032;
         public static final int btnAppInfo=0x7f080030;
         public static final int btnAttachPhoto=0x7f08001e;
         public static final int btnBack=0x7f080000;
@@ -73,7 +74,7 @@ public final class R {
         public static final int btnSave=0x7f080019;
         public static final int btnSearch=0x7f080011;
         public static final int btnSend=0x7f08000d;
-        public static final int ctCategoryItem=0x7f08003c;
+        public static final int ctCategoryItem=0x7f08003d;
         public static final int dList=0x7f08001c;
         public static final int edtComment=0x7f08000c;
         public static final int edtContent=0x7f080021;
@@ -86,26 +87,26 @@ public final class R {
         public static final int edtSearchBox=0x7f080026;
         public static final int edtTitle=0x7f080020;
         public static final int hsvRecentPosts=0x7f080006;
-        public static final int imgBtnDelete=0x7f080035;
-        public static final int imgBtnMoveDown=0x7f08003a;
-        public static final int imgBtnMoveUp=0x7f080038;
+        public static final int imgBtnDelete=0x7f080036;
+        public static final int imgBtnMoveDown=0x7f08003b;
+        public static final int imgBtnMoveUp=0x7f080039;
         public static final int layerRecentPosts=0x7f080005;
         public static final int layoutImageParent=0x7f080007;
         public static final int layoutLine=0x7f08002e;
         public static final int layoutTo=0x7f08002c;
         public static final int list=0x7f080008;
-        public static final int list_content=0x7f08003b;
-        public static final int list_image=0x7f080039;
+        public static final int list_content=0x7f08003c;
+        public static final int list_image=0x7f08003a;
         public static final int menuGrid=0x7f080018;
-        public static final int menu_settings=0x7f08003d;
+        public static final int menu_settings=0x7f08003e;
         public static final int rLayout=0x7f080004;
         public static final int rLayoutTopBar=0x7f08001d;
         public static final int rdoByAuthor=0x7f08002a;
         public static final int rdoByContent=0x7f080029;
         public static final int rdoGrpSearch=0x7f080028;
         public static final int relativeLayout1=0x7f080025;
-        public static final int thumbnail=0x7f080037;
-        public static final int title=0x7f080036;
+        public static final int thumbnail=0x7f080038;
+        public static final int title=0x7f080037;
         public static final int txtNickname=0x7f080015;
         public static final int txtTitle=0x7f080009;
         public static final int txtTo=0x7f08002d;
@@ -135,14 +136,18 @@ public final class R {
         public static final int activity_search_board=0x7f030011;
         public static final int activity_send_message=0x7f030012;
         public static final int activity_settings=0x7f030013;
-        public static final int activity_shops=0x7f030014;
-        public static final int activity_user_list=0x7f030015;
-        public static final int custom_title=0x7f030016;
-        public static final int dragitem=0x7f030017;
-        public static final int list_attachment=0x7f030018;
-        public static final int list_black_text=0x7f030019;
-        public static final int list_board_menu=0x7f03001a;
-        public static final int list_row=0x7f03001b;
+        public static final int activity_shops_by_category=0x7f030014;
+        public static final int activity_shops_by_menu=0x7f030015;
+        public static final int activity_shops_main=0x7f030016;
+        public static final int activity_user_list=0x7f030017;
+        public static final int custom_title=0x7f030018;
+        public static final int dragitem=0x7f030019;
+        public static final int list_attachment=0x7f03001a;
+        public static final int list_black_text=0x7f03001b;
+        public static final int list_board_menu=0x7f03001c;
+        public static final int list_category_item=0x7f03001d;
+        public static final int list_menu_group_item=0x7f03001e;
+        public static final int list_row=0x7f03001f;
     }
     public static final class menu {
         public static final int activity_app_info=0x7f070000;
@@ -164,7 +169,10 @@ public final class R {
         public static final int activity_send_message=0x7f070010;
         public static final int activity_settings=0x7f070011;
         public static final int activity_shops=0x7f070012;
-        public static final int activity_user_list=0x7f070013;
+        public static final int activity_shops_by_category=0x7f070013;
+        public static final int activity_shops_by_menu=0x7f070014;
+        public static final int activity_shops_main=0x7f070015;
+        public static final int activity_user_list=0x7f070016;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
@@ -190,6 +198,9 @@ public final class R {
         public static final int title_activity_send_message=0x7f050013;
         public static final int title_activity_settings=0x7f050008;
         public static final int title_activity_shops=0x7f050017;
+        public static final int title_activity_shops_by_category=0x7f050019;
+        public static final int title_activity_shops_by_menu=0x7f05001a;
+        public static final int title_activity_shops_main=0x7f050018;
         public static final int title_activity_user_list=0x7f050012;
     }
     public static final class style {

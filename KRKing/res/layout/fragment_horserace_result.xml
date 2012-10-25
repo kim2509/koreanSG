@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/main_top_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="경주결과"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:onClick="showMainMenu"
+            android:text="메뉴" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lLayer"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/rLayout"
+        android:background="@drawable/main_top_bg" >
+
+        <Button
+            android:id="@+id/btnDaysBest"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="일간 BEST" 
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btnWeeksBest"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="주간 BEST" 
+            android:layout_weight="1"/>        
+
+    </LinearLayout>
+    
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rLayout2"
+        android:layout_below="@+id/lLayer"
+        android:background="@android:color/white"
+        android:cacheColorHint="#ffffffff" >
+    </ListView>
+    
+</RelativeLayout>
