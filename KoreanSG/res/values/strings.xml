@@ -27,5 +27,6 @@
     <string name="title_activity_shops_main">ShopsMainActivity</string>
     <string name="title_activity_shops_by_category">ShopsByCategoryActivity</string>
     <string name="title_activity_shops_by_menu">ShopsByMenuActivity</string>
+    <string name="title_activity_shop_list">ShopListActivity</string>
 
 </resources>

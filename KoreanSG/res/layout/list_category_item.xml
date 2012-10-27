@@ -35,8 +35,8 @@
          android:layout_centerVertical="true"
          android:layout_toRightOf="@+id/thumbnail"
          android:text="Rihanna Love the way lie"
-         android:textColor="#040404"
-         android:textSize="15dip"
+         android:textColor="@android:color/black"
+         android:textSize="14dip"
          android:textStyle="bold"
          android:typeface="sans" />
 

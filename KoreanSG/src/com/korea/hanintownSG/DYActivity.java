@@ -315,9 +315,9 @@ public class DYActivity extends Activity{
 		new TransactionTask( this, url ).execute( request );
 	}
 	
-	public void execTransReturningString( String url, JSONObject request )
+	public void execTransReturningString( String url, JSONObject request, boolean bModal )
 	{
-		new TransactionTaskReturningString( this, url ).execute( request );
+		new TransactionTaskReturningString( this, url, bModal ).execute( request );
 	}
 	
 	public void execFormRequest( String url, MultipartEntity reqEntity )
@@ -628,17 +628,23 @@ public class DYActivity extends Activity{
 		private ProgressDialog dialog = null;
 		private String url = "";
 		private DYActivity activity;
+		private boolean bShowDlg = true;
 
-		public TransactionTaskReturningString( DYActivity activity, String url )
+		public TransactionTaskReturningString( DYActivity activity, String url, boolean bModal )
 		{
 			this.activity = activity;
 			dialog = new ProgressDialog( activity );
 			this.url = url;
+			this.bShowDlg = bModal;
 		}
 
 		protected void onPreExecute() {
-			this.dialog.setMessage("로딩중...");
-			this.dialog.show();
+			
+			if ( bShowDlg )
+			{
+				this.dialog.setMessage("로딩중...");
+				this.dialog.show();	
+			}
 		}
 
 		protected String doInBackground( JSONObject... data ) {
@@ -654,8 +660,12 @@ public class DYActivity extends Activity{
 				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 				post.setEntity(se);
 				response = client.execute(post);
-
-				return EntityUtils.toString(response.getEntity());
+				
+				String responseString = EntityUtils.toString(response.getEntity());
+				
+				Log.d("RESPONSE", responseString );
+				
+				return responseString;
 
 			}
 			catch(Exception e){
@@ -672,6 +682,7 @@ public class DYActivity extends Activity{
 		}
 
 		protected void onPostExecute(String result) {
+			
 			if (dialog.isShowing())
 				dialog.dismiss();
 			

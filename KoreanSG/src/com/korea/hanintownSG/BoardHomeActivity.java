@@ -53,7 +53,7 @@ public class BoardHomeActivity extends DYActivity implements OnItemClickListener
     		super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_board_home);
             
-            execTransReturningString("iphone/getBoardMainInfo.php", new JSONObject());
+            execTransReturningString("iphone/getBoardMainInfo.php", new JSONObject(), true );
     	}
     	catch( Exception ex )
     	{
