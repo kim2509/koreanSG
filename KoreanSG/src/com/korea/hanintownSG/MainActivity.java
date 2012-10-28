@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -151,9 +152,9 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 					linearLayout.setOrientation(LinearLayout.VERTICAL);
 
 					imageView = new ImageView(mContext);
-					imageView.setLayoutParams(new GridView.LayoutParams(60, 60));
+					imageView.setLayoutParams(new GridView.LayoutParams( GridLayout.LayoutParams.FILL_PARENT, GridLayout.LayoutParams.WRAP_CONTENT));
 					imageView.setAdjustViewBounds(false);
-					imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+					imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 					imageView.setPadding(8, 8, 8, 8);
 
 					TextView tv = new TextView( mContext );
@@ -162,6 +163,10 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 
 					linearLayout.addView( imageView );
 					linearLayout.addView( tv );
+					
+					LinearLayout.LayoutParams tvp = (LinearLayout.LayoutParams) tv.getLayoutParams();
+					tvp.width = LinearLayout.LayoutParams.FILL_PARENT;
+					tv.setTextColor(Color.BLACK);
 
 				} else {
 					linearLayout = (LinearLayout) convertView;
