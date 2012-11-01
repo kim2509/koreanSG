@@ -26,7 +26,8 @@
      	android:layout_height="wrap_content"
      	android:src="@drawable/arrow"
      	android:layout_alignParentRight="true"
-     	android:layout_centerVertical="true"/>
+     	android:layout_centerVertical="true"
+     	android:layout_marginRight="10dp"/>
 
      <TextView
          android:id="@+id/title"

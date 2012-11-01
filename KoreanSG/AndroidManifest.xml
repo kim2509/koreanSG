@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.korea.hanintownSG"
+    package="com.korea.hanintown"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -144,6 +145,27 @@
         <activity
             android:name=".ShopListActivity"
             android:label="@string/title_activity_shop_list"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".ShopDetailActivity"
+            android:label="@string/title_activity_shop_detail"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".ShopMenuListActivity"
+            android:label="@string/title_activity_shop_menu_list"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".ShopMenuSearchActivity"
+            android:label="@string/title_activity_shop_menu_search"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".ShopListMainActivity"
+            android:label="@string/title_activity_shop_list_main"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
     </application>

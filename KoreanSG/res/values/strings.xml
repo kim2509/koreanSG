@@ -28,5 +28,10 @@
     <string name="title_activity_shops_by_category">ShopsByCategoryActivity</string>
     <string name="title_activity_shops_by_menu">ShopsByMenuActivity</string>
     <string name="title_activity_shop_list">ShopListActivity</string>
+    <string name="title_activity_shop_detail">ShopDetailActivity</string>
+    <string name="title_activity_shop_menu_list">ShopMenuListActivity</string>
+    <string name="title_activity_shop_menu_search">ShopMenuSearchActivity</string>
+    <string name="title_activity_shops_by_category_main">ShopsByCategoryMainActivity</string>
+    <string name="title_activity_shop_list_main">ShopListMainActivity</string>
 
 </resources>
