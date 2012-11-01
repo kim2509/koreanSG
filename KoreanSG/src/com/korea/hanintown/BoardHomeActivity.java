@@ -1,18 +1,9 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,7 +12,6 @@ import com.korea.common.Constants;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;

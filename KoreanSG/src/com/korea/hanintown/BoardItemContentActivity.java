@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.apache.http.util.EncodingUtils;
 import org.json.JSONException;
@@ -280,7 +280,7 @@ public class BoardItemContentActivity extends DYActivity implements OnClickListe
 			request.put("boardName", jsonObj.getString("BOARD_NAME"));
 			request.put("bID", jsonObj.getString("BID"));
 			
-			execTrans("web/mobile/board/deleteBoardContent.php", request);
+			execTrans("web/mobile/board/deleteBoardContent.php", request, true );
 		}
 		catch( Exception ex )
 		{

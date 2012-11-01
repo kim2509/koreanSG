@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -89,7 +89,10 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 				return;
 			}
 
-			setUserInfo( (JSONObject) ((JSONArray) jsonObj.get("userInfo")).get(0) , false, false );
+			JSONArray userInfo = jsonObj.getJSONArray("userInfo");
+			
+			if ( userInfo.length() > 0 )
+				setUserInfo( (JSONObject) userInfo.get(0) , false, false );
 			
 			GridView g = (GridView) findViewById(R.id.menuGrid);
 			g.setAdapter(new ImageAdapter(this, ((JSONArray)serviceList.get(0))));

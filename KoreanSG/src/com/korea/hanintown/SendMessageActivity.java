@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.json.JSONObject;
 
@@ -62,7 +62,7 @@ public class SendMessageActivity extends DYActivity {
         	request.put("toUserID", jsonObj.getString("USER_ID"));
         	request.put("message", edtMessage.getText().toString() );
      
-        	execTrans("iphone/sendMessage.php", request );
+        	execTrans("iphone/sendMessage.php", request, true );
     	}
     	catch( Exception ex )
     	{

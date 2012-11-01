@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

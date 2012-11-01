@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -179,7 +179,7 @@ public class ShopsByCategoryActivity extends DYActivity implements OnItemClickLi
 		
 		try
 		{
-			Intent intent = new Intent( this, ShopListActivity.class );
+			Intent intent = new Intent( this, ShopListMainActivity.class );
 			intent.putExtra("param", arg1.getTag().toString());
 			startActivity(intent);
 		}

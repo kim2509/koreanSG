@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -116,7 +116,7 @@ public class RegisterMemeberActivity extends DYActivity implements OnClickListen
 				jsonObj.put("password", edtPassword.getText().toString() );
 				jsonObj.put("confirmPassword", edtPasswordConfirm.getText().toString() );
 				
-				execTrans("iphone/registerMember.php",  jsonObj );
+				execTrans("iphone/registerMember.php",  jsonObj , true );
 			}
 		}
 		catch( Exception ex )

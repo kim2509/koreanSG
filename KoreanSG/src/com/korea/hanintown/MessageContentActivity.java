@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.apache.http.util.EncodingUtils;
 import org.json.JSONArray;
@@ -6,7 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.korea.common.Constants;
-import com.korea.hanintownSG.DYActivity.JavaScriptInterface;
+import com.korea.hanintown.DYActivity.JavaScriptInterface;
 
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -167,7 +167,7 @@ public class MessageContentActivity extends DYActivity {
     	edtMessage.setText("");
 		hideSoftKeyboard();
     	
-    	execTrans("iphone/sendMessage.php", request);
+    	execTrans("iphone/sendMessage.php", request, true );
     }
     
     @Override

@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -33,6 +33,10 @@ public class ShopsMainActivity extends TabActivity {
             
             tabHost.addTab(categorySpec); 
             tabHost.addTab(menuSpec);
+            
+            for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
+                tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 33;
+            }
     	}
     	catch( Exception ex )
     	{

@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -310,14 +310,19 @@ public class DYActivity extends Activity{
 		Log.i("KoreanSG", log );
 	}
 	
-	public void execTrans( String url, JSONObject request )
+	public void execTrans( String url, JSONObject request, boolean bModal )
 	{
-		new TransactionTask( this, url ).execute( request );
+		new TransactionTask( this, url, bModal ).execute( request );
 	}
 	
 	public void execTransReturningString( String url, JSONObject request, boolean bModal )
 	{
 		new TransactionTaskReturningString( this, url, bModal ).execute( request );
+	}
+	
+	public void execTransReturningString( String url, JSONObject request, int requestCode, boolean bModal )
+	{
+		new TransactionTaskReturningString( this, url, requestCode, bModal ).execute( request );
 	}
 	
 	public void execFormRequest( String url, MultipartEntity reqEntity )
@@ -332,6 +337,11 @@ public class DYActivity extends Activity{
 	}
 	
 	public void doPostTransaction( Object result )
+	{
+		
+	}
+	
+	public void doPostTransaction( int requestCode, Object result )
 	{
 		
 	}
@@ -395,17 +405,23 @@ public class DYActivity extends Activity{
 		private ProgressDialog dialog = null;
 		private String url = "";
 		private DYActivity activity;
+		private boolean bModal = true;
 
-		public TransactionTask( DYActivity activity, String url )
+		public TransactionTask( DYActivity activity, String url, boolean bModal )
 		{
 			this.activity = activity;
 			dialog = new ProgressDialog( activity );
 			this.url = url;
+			this.bModal = bModal;
 		}
 
 		protected void onPreExecute() {
-			this.dialog.setMessage("로딩중...");
-			this.dialog.show();
+			
+			if ( bModal )
+			{
+				this.dialog.setMessage("로딩중...");
+				this.dialog.show();	
+			}
 		}
 
 		protected JSONArray doInBackground( JSONObject... data ) {
@@ -424,6 +440,8 @@ public class DYActivity extends Activity{
 				/*Checking response */
 				String responseString = EntityUtils.toString(response.getEntity());
 
+				Log.d("RESPONSE", responseString );
+				
 				JSONArray jsonArray = new JSONArray( responseString );
 
 				return jsonArray;
@@ -629,6 +647,7 @@ public class DYActivity extends Activity{
 		private String url = "";
 		private DYActivity activity;
 		private boolean bShowDlg = true;
+		int requestCode = 0;
 
 		public TransactionTaskReturningString( DYActivity activity, String url, boolean bModal )
 		{
@@ -638,6 +657,15 @@ public class DYActivity extends Activity{
 			this.bShowDlg = bModal;
 		}
 
+		public TransactionTaskReturningString( DYActivity activity, String url, int requestCode, boolean bModal )
+		{
+			this.activity = activity;
+			dialog = new ProgressDialog( activity );
+			this.url = url;
+			this.bShowDlg = bModal;
+			this.requestCode = requestCode;
+		}
+		
 		protected void onPreExecute() {
 			
 			if ( bShowDlg )
@@ -686,7 +714,10 @@ public class DYActivity extends Activity{
 			if (dialog.isShowing())
 				dialog.dismiss();
 			
-			activity.doPostTransaction( result );
+			if ( requestCode == 0 )
+				activity.doPostTransaction( result );
+			else
+				activity.doPostTransaction( requestCode, result );
 		}
 	}
 	

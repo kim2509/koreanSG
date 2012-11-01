@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

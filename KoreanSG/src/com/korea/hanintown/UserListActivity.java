@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.apache.http.util.EncodingUtils;
 import org.json.JSONArray;
@@ -34,7 +34,7 @@ public class UserListActivity extends DYActivity implements OnItemClickListener{
 
 			initializeControls();
 
-			execTrans("iphone/userList.php", getJSONDataWithDefaultSetting() );
+			execTrans("iphone/userList.php", getJSONDataWithDefaultSetting() , true );
 		}
 		catch( Exception ex )
 		{

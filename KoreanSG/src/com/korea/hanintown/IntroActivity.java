@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import android.os.Bundle;
 import android.os.Handler;

@@ -1,4 +1,4 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

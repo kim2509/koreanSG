@@ -1,12 +1,16 @@
-package com.korea.hanintownSG;
+package com.korea.hanintown;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.korea.common.Constants;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -31,6 +35,9 @@ public class ShopsByMenuActivity extends DYActivity implements OnItemClickListen
             ArrayList<JSONObject> data = new ArrayList<JSONObject>();
             lv.setAdapter( new MenuGroupItemAdapter( this, data ) );
             lv.setOnItemClickListener( this );
+            
+            JSONObject request = getJSONDataWithDefaultSetting();
+            execTransReturningString("android/getMenuKeywordList.php", request, Constants.REQUEST_CODE_COMMON, true );
     	}
     	catch( Exception ex )
     	{
@@ -68,6 +75,11 @@ public class ShopsByMenuActivity extends DYActivity implements OnItemClickListen
             return position;
         }
         
+        public void setData( ArrayList<JSONObject> data )
+        {
+        	this.data = data;
+        }
+        
         public View getView(int position, View convertView, ViewGroup parent) {
         	try
         	{
@@ -80,7 +92,10 @@ public class ShopsByMenuActivity extends DYActivity implements OnItemClickListen
         		
                 TextView title = (TextView)vi.findViewById(R.id.title); // title
                 
+                title.setText( jsonObj.getString("NAME") );
+
                 vi.setTag( jsonObj );
+                
                 
                 return vi;	
         	}
@@ -91,15 +106,50 @@ public class ShopsByMenuActivity extends DYActivity implements OnItemClickListen
         	return null;
         }
     }
-
+    
+    @Override
+    public void doPostTransaction(int requestCode, Object result) {
+    	// TODO Auto-generated method stub
+    	
+    	try
+    	{
+    		super.doPostTransaction(requestCode, result);
+    		
+    		if ( result == null || "".equals( result ) ) return;
+    		
+    		JSONArray arResult = new JSONArray( result.toString() );
+    		
+    		ArrayList<JSONObject> data = new ArrayList<JSONObject>();
+    		for ( int i = 0; i < arResult.length(); i++ )
+    		{
+    			data.add( arResult.getJSONObject( i ) );
+    		}
+    		
+    		ListView lv = (ListView) findViewById(R.id.list);
+    		MenuGroupItemAdapter adapter = (MenuGroupItemAdapter) lv.getAdapter();
+    		adapter.setData( data );
+    		adapter.notifyDataSetChanged();
+    	}
+    	catch( Exception ex )
+    	{
+    		writeLog( ex.getMessage() );
+    	}
+    }
+    
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		
 		// TODO Auto-generated method stub
-		
 		try
 		{
+			Intent intent = new Intent( this, ShopMenuListActivity.class );
 			
+			JSONObject obj = (JSONObject) arg1.getTag();
+			if ( "메뉴검색".equals( obj.getString("NAME") ) )
+				intent = new Intent( this, ShopMenuSearchActivity.class );
+			
+			intent.putExtra("param", arg1.getTag().toString());
+			startActivity(intent);
 		}
 		catch( Exception ex )
 		{
