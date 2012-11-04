@@ -5,10 +5,7 @@
     android:background="@android:color/white" >
 
     <RelativeLayout
-        android:id="@+id/rLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/main_top_bg" >
+        android:id="@+id/rLayout" style="@style/TopBar">
 
         <TextView
             android:id="@+id/txtTitle"
@@ -46,41 +43,39 @@
     <RelativeLayout
         android:id="@+id/rLayoutTopBar"
         android:layout_width="fill_parent"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rLayout"
         android:background="#EBEDF3">
 
         <Button
             android:id="@+id/btnAttachPhoto"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:background="@android:color/white"
             android:onClick="attachPhoto"
             android:text="사진첨부" />
 
         <Button
             android:id="@+id/btnPhotoInfo"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:background="@android:color/white"
             android:text="사진 0" 
             android:onClick="goManageAttachmentActivity"/>
 
         <Button
             android:id="@+id/btnBoardCategory"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/btnPhotoInfo"
             android:layout_alignBottom="@+id/btnPhotoInfo"
+            android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/btnPhotoInfo"
-            android:background="@android:color/white"
             android:onClick="showCategorySelectActivity"
             android:text="분류미지정" />
 

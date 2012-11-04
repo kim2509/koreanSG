@@ -258,6 +258,7 @@ public class DYActivity extends Activity{
 		hash.put("nickName", getMetaInfoString("NICKNAME"));
 		hash.put("androidOSVersion", getOSVersion());
 		hash.put("ClientVersion", getPackageVersion());
+		hash.put("registration_id", getMetaInfoString("registration_id"));
 		
 		return hash;
 	}
@@ -273,6 +274,7 @@ public class DYActivity extends Activity{
 		jsonObj.put("nickName", getMetaInfoString("NICKNAME"));
 		jsonObj.put("androidOSVersion", getOSVersion());
 		jsonObj.put("ClientVersion", getPackageVersion());
+		jsonObj.put("registration_id", getMetaInfoString("registration_id"));
 		
 		writeLog( jsonObj.toString() );
 		
@@ -290,6 +292,7 @@ public class DYActivity extends Activity{
 		reqEntity.addPart("nickName", new StringBody( getMetaInfoString("NICKNAME") ) );
 		reqEntity.addPart("androidOSVersion", new StringBody( getOSVersion() ) );
 		reqEntity.addPart("ClientVersion", new StringBody( getPackageVersion() ) );
+		reqEntity.addPart("registration_id", new StringBody( getMetaInfoString("registration_id") ));
 		
 		return reqEntity;
 	}

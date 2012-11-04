@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.readystatesoftware.viewbadger.BadgeView;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -38,6 +40,8 @@ import android.widget.TextView;
 
 public class MainActivity extends DYActivity implements OnItemClickListener{
 
+	private JSONArray notificationList = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -48,13 +52,19 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 
 			GridView menuGrid = (GridView) findViewById(R.id.menuGrid);
 			menuGrid.setOnItemClickListener( this );
-
-			new GetMainInfoTask( this ).execute( serverURL + "iphone/getMainInfo.php");
 		}
 		catch( Exception ex )
 		{
 			writeLog( ex.getMessage() );
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		new GetMainInfoTask( this ).execute( serverURL + "android/getMainInfo.php");
 	}
 
 	public void updateMenu( JSONObject jsonObj )
@@ -96,6 +106,10 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 			
 			GridView g = (GridView) findViewById(R.id.menuGrid);
 			g.setAdapter(new ImageAdapter(this, ((JSONArray)serviceList.get(0))));
+			
+			notificationList = jsonObj.getJSONArray("notificationList");
+			
+			writeLog( notificationList.toString() );
 			
 			boardCategoryList = (JSONArray) ((JSONArray) jsonObj.get("boardCategoryList")).get(0);
 
@@ -196,7 +210,24 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 						else if ( "취업".equals( menuName ) )
 							imageView.setImageResource( R.drawable.job128 );
 						else if ( "알림센터".equals( menuName ) )
+						{
+							int count = 0;
+							for ( int j = 0; j < notificationList.length(); j++ )
+							{
+								JSONObject obj = notificationList.getJSONObject(j);
+								if ( "N".equals( obj.getString("IS_READ") ) )
+									count++;
+							}
+							
 							imageView.setImageResource( R.drawable.notification128 );
+							
+							if ( count > 0 )
+							{
+								BadgeView badge = new BadgeView( MainActivity.this, imageView);
+								badge.setText( count + "" );
+								badge.show();	
+							}
+						}
 						else if ( "설정".equals( menuName ) )
 							imageView.setImageResource( R.drawable.setting128 );
 						else
@@ -329,6 +360,7 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 				else if ( "알림센터".equals( selectedMenu ) )
 				{
 					Intent intent = new Intent( this, NotificationActivity.class);
+					intent.putExtra("param", notificationList.toString());
 					startActivity( intent );
 				}
 				else if ( "설정".equals( selectedMenu ) )

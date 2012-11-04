@@ -1,5 +1,7 @@
 package com.korea.hanintown;
 
+import com.korea.common.Constants;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -87,6 +89,8 @@ public class SettingsActivity extends DYActivity implements OnClickListener{
 			}
 			else if ( v.getId() == R.id.btnLogout )
 			{
+				execTransReturningString("iphone/logout.php", getJSONDataWithDefaultSetting(), 
+						Constants.REQUEST_CODE_COMMON, false);
 				clearUserInfo();
 				configureButtonsVisibility();
 			}
@@ -100,6 +104,19 @@ public class SettingsActivity extends DYActivity implements OnClickListener{
 			}
 			else if ( v.getId() == R.id.btnBack )
 				finish();
+		}
+		catch( Exception ex )
+		{
+			writeLog( ex.getMessage() );
+		}
+	}
+	
+	@Override
+	public void doPostTransaction(int requestCode, Object result) {
+		// TODO Auto-generated method stub
+		try
+		{
+			super.doPostTransaction(requestCode, result);
 		}
 		catch( Exception ex )
 		{

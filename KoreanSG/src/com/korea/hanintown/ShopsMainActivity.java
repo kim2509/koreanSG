@@ -34,9 +34,9 @@ public class ShopsMainActivity extends TabActivity {
             tabHost.addTab(categorySpec); 
             tabHost.addTab(menuSpec);
             
-            for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
-                tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 33;
-            }
+//            for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
+//                tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 33;
+//            }
     	}
     	catch( Exception ex )
     	{
