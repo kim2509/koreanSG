@@ -174,7 +174,7 @@ public class BoardItemContentActivity extends DYActivity implements OnClickListe
 	{
 		if ( isAlreadyLogin() == false )
 		{
-			showToastMessage("해당 기능을 이용하기 위해선\r\n로그인이 필요합니다.\r\n로그인 후 이용해 주시기 바랍니다.");
+			showToastMessage("오메!! 아직 로그인을 안햅써요?\r\n댓글 쓸라믄 로그인 해주야제~\r\n얼른 로그인 해주삼~~ ^^");
 			loadLoginActivity();
 			return false;
 		}
