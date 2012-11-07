@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,7 +28,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -36,7 +40,7 @@ public class ManageAttachmentActivity extends DYActivity
 	ArrayList<JSONObject> arAttachments = null;
 	ArrayList<Bitmap> arBitmaps = null;
 	ProgressDialog dialog = null;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
@@ -46,18 +50,18 @@ public class ManageAttachmentActivity extends DYActivity
 			setContentView(R.layout.activity_manage_attachment);
 
 			String jsonAttachments = getIntent().getExtras().getString("attachments");
-			
+
 			JSONArray jsonAr = new JSONArray( jsonAttachments );
-			
+
 			arAttachments = new ArrayList<JSONObject>();
-			
+
 			for ( int i = 0; i < jsonAr.length(); i++ )
 			{
 				arAttachments.add( jsonAr.getJSONObject(i) );
 			}
-			
+
 			arBitmaps = new ArrayList<Bitmap>();
-			
+
 			dialog = new ProgressDialog( this );
 			dialog.setMessage("로딩중...");
 			dialog.show();
@@ -74,7 +78,7 @@ public class ManageAttachmentActivity extends DYActivity
 		ListView lv = (ListView) findViewById(R.id.list);
 		lv.setAdapter( new AttachmentAdapter( this , arAttachments ));
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_manage_attachment, menu);
@@ -145,10 +149,10 @@ public class ManageAttachmentActivity extends DYActivity
 
 				ImageButton imgBtnMoveUp = (ImageButton) vi.findViewById(R.id.imgBtnMoveUp);
 				imgBtnMoveUp.setTag( String.valueOf( position ) );
-				
+
 				ImageButton imgBtnMoveDown = (ImageButton) vi.findViewById(R.id.imgBtnMoveDown);
 				imgBtnMoveDown.setTag( String.valueOf( position ) );
-				
+
 				return vi;
 			}
 			catch( Exception ex )
@@ -158,7 +162,7 @@ public class ManageAttachmentActivity extends DYActivity
 			}
 		}
 	}
-	
+
 	class FetchImageTask extends AsyncTask<Void, Void, Void> {
 
 		ImageView imgView = null;
@@ -166,7 +170,7 @@ public class ManageAttachmentActivity extends DYActivity
 		String protocol = "";
 		String server = "";
 		int port = 0;
-		
+
 		public FetchImageTask( String protocol, String server, int port )
 		{
 			try
@@ -180,57 +184,109 @@ public class ManageAttachmentActivity extends DYActivity
 				writeLog( ex.getMessage() );
 			}
 		}
-		
-	    protected Void doInBackground(Void...voids) {
-	        try {
-	            
-	        	for ( int i = 0; i < arAttachments.size(); i++ )
-	        	{
-	        		JSONObject jsonObj = arAttachments.get(i);
-	        	
-	        		if ( "TEXT".equals( jsonObj.get("TYPE"))) 
-	        		{
-	        			arBitmaps.add( null );
-	        			continue;
-	        		}
-	        		
-	        		Bitmap bm = null;
-	        		if ( jsonObj.get("ID") != null && !"".equals( jsonObj.get("ID")))
-	        		{
-	        			String urlString = jsonObj.getString("URL");
-						String param = "/" + urlString.replaceAll( serverURL, "" );
-						
-		        		url = new URL( protocol, server, port, param );
-		        		InputStream is = (InputStream) url.getContent();
-			        	bm = BitmapFactory.decodeStream( is );
-	        		}
-	        		else
-	        		{
-		        		bm = Util.getImageFromPath( jsonObj.getString("URL"));
-		        		bm = Util.getResizedBitmap(bm, 48, 48);
-	        		}
-	        		
-		        	arBitmaps.add( bm );
-	        	}
-	        	
-	        } catch (Exception e) {
-	            writeLog( e.getMessage() );
-	        }
-	        
-	        return null;
-	    }
 
-	    protected void onPostExecute( Void result ) {
-	        // TODO: check this.exception 
-	        // TODO: do something with the feed
-	    	if (dialog.isShowing())
+		private InputStream OpenHttpConnection(String urlString)
+				throws IOException
+				{
+			InputStream in = null;
+			int response = -1;
+
+			URL url = new URL(urlString);
+			URLConnection conn = url.openConnection();
+
+			if (!(conn instanceof HttpURLConnection))                    
+				throw new IOException("Not an HTTP connection");
+
+			try{
+				HttpURLConnection httpConn = (HttpURLConnection) conn;
+				httpConn.setAllowUserInteraction(false);
+				httpConn.setInstanceFollowRedirects(true);
+				httpConn.setRequestMethod("GET");
+				httpConn.connect();
+
+				response = httpConn.getResponseCode();                
+				if (response == HttpURLConnection.HTTP_OK) {
+					in = httpConn.getInputStream();                                
+				}                    
+			}
+			catch (Exception ex)
+			{
+				throw new IOException("Error connecting");           
+			}
+			return in;    
+				}
+		private Bitmap downloadImage(String URL)
+		{       
+			Bitmap bitmap = null;
+			InputStream in = null;       
+			try {
+				in = OpenHttpConnection(URL);
+				bitmap = BitmapFactory.decodeStream(in);
+				in.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return bitmap;               
+		}
+
+		protected Void doInBackground(Void...voids) {
+			try {
+
+				writeLog("doInBackground start!");
+
+				for ( int i = 0; i < arAttachments.size(); i++ )
+				{
+					JSONObject jsonObj = arAttachments.get(i);
+
+					writeLog( i + " 0");
+
+					writeLog( jsonObj.toString() );
+
+					writeLog( i + " 1");
+
+					if ( "TEXT".equals( jsonObj.get("TYPE"))) 
+					{
+						writeLog( i + " 2");
+						arBitmaps.add( null );
+						writeLog( i + " 3");
+						continue;
+					}
+
+					Bitmap bm = null;
+					if ( jsonObj.get("ID") != null && !"".equals( jsonObj.get("ID")))
+					{
+						String urlString = jsonObj.getString("URL");
+						bm = downloadImage( urlString );
+					}
+					else
+					{
+						bm = Util.getResizedBitmap(jsonObj.getString("URL"), 48, 48);
+					}
+
+					arBitmaps.add( bm );
+				}
+
+				writeLog("doInBackground ended!");
+
+			} catch (Exception e) {
+				writeLog( e.getMessage() );
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute( Void result ) {
+			// TODO: check this.exception 
+			// TODO: do something with the feed
+			if (dialog.isShowing())
 				dialog.dismiss();
-	    	
-	    	loadListView();
-	    }
-	 }
 
-	
+			loadListView();
+		}
+	}
+
+
 	public void deleteItem( View v )
 	{
 		try
@@ -242,37 +298,37 @@ public class ManageAttachmentActivity extends DYActivity
 			writeLog( ex.getMessage() );
 		}
 	}
-	
+
 	@Override
 	public void yesClicked(Object param) {
 		// TODO Auto-generated method stub
 		try
 		{
 			super.yesClicked(param);
-			
+
 			int position = Integer.parseInt( param.toString() );
-			
+
 			ListView lv = (ListView) findViewById(R.id.list);
 			AttachmentAdapter adapter = (AttachmentAdapter) lv.getAdapter();
-			
+
 			ArrayList<JSONObject> data = adapter.getData();
-			
+
 			JSONObject jsonObj = data.get(position);
-			
+
 			if ( "TEXT".equals( jsonObj.getString("TYPE") ) )
 			{
 				showOKDialog("본문은 삭제하실수 없습니다.", null );
 				return;
 			}
-			
+
 			if ( deletedArray == null )
 				deletedArray = new JSONArray();
-			
+
 			deletedArray.put( jsonObj.getString("ID") );
-			
+
 			data.remove( position );
 			arBitmaps.remove(position);
-			
+
 			adapter.notifyDataSetChanged();
 		}
 		catch( Exception ex )
@@ -287,17 +343,17 @@ public class ManageAttachmentActivity extends DYActivity
 		{
 			ListView lv = (ListView) findViewById(R.id.list);
 			AttachmentAdapter adapter = (AttachmentAdapter) lv.getAdapter();
-			
+
 			ArrayList<JSONObject> data = adapter.getData();
-			
+
 			int position = Integer.parseInt( v.getTag().toString() );
-			
+
 			if ( position == 0 )
 				return;
-			
+
 			Collections.swap( data, position, position - 1 );
 			Collections.swap( arBitmaps, position, position - 1 );
-			
+
 			adapter.notifyDataSetChanged();
 		}
 		catch( Exception ex )
@@ -312,17 +368,17 @@ public class ManageAttachmentActivity extends DYActivity
 		{
 			ListView lv = (ListView) findViewById(R.id.list);
 			AttachmentAdapter adapter = (AttachmentAdapter) lv.getAdapter();
-			
+
 			ArrayList<JSONObject> data = adapter.getData();
-			
+
 			int position = Integer.parseInt( v.getTag().toString() );
-			
+
 			if ( position >= data.size() - 1 )
 				return;
-			
+
 			Collections.swap( data, position, position + 1 );
 			Collections.swap( arBitmaps, position, position + 1 );
-			
+
 			adapter.notifyDataSetChanged();
 		}
 		catch( Exception ex )
@@ -330,7 +386,7 @@ public class ManageAttachmentActivity extends DYActivity
 			writeLog( ex.getMessage() );
 		}
 	}
-	
+
 	public void saveAttachments( View v )
 	{
 		ListView lv = (ListView) findViewById(R.id.list);
@@ -339,12 +395,12 @@ public class ManageAttachmentActivity extends DYActivity
 		JSONArray jsonAr = new JSONArray( data );
 		Intent intent = new Intent();
 		intent.putExtra("attachments", jsonAr.toString());
-		
+
 		if ( deletedArray != null )
 			intent.putExtra("delete", deletedArray.toString());
-		
+
 		setResult(RESULT_OK, intent);
-		
+
 		finish();
 	}
 }

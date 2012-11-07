@@ -5,70 +5,85 @@
     android:background="@android:color/white"
     android:orientation="vertical" >
 
-    <LinearLayout style="@style/TopBar">
+    <LinearLayout style="@style/TopBar" >
 
-        <Button android:id="@+id/btnBack" 
+        <Button
+            android:id="@+id/btnBack"
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/btn_bg01"
             android:layout_marginLeft="5dp"
-            android:text="뒤로"></Button>
-        
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg01"
+            android:text=" 뒤로"
+            android:textStyle="bold" >
+        </Button>
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="0.6"
             android:gravity="center_horizontal"
             android:text="설정"
             android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_weight="0.6"/>
-        
-        <Button android:id="@+id/btnEmpty" 
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnEmpty"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/btn_bg02"
             android:layout_marginRight="5dp"
-            android:visibility="invisible"
-            android:text="전송"></Button>
-        
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg02"
+            android:text="전송"
+            android:visibility="invisible" >
+        </Button>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical" >
 
         <Button
             android:id="@+id/btnLoginInfo"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:text="로그인 정보" />
-        
+            android:layout_height="wrap_content"
+            android:text="사용자 프로필"
+            android:textColor="#3b5999"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"/>
+
         <Button
             android:id="@+id/btnAppInfo"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:text="어플 정보" />
-        
+            android:layout_height="wrap_content"
+            android:text="어플 정보"
+            android:textColor="#3b5999"
+            android:textStyle="bold" 
+            android:layout_marginBottom="5dp"/>
+
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:text="로그인" />
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:textColor="#3b5999"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:text="로그아웃" />
-
+            android:layout_height="wrap_content"
+            android:text="로그아웃"
+            android:textColor="#3b5999"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

@@ -19,7 +19,9 @@ import com.korea.common.*;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -51,6 +53,8 @@ public class NewPostActivity extends DYActivity {
 			String jsonString = getIntent().getExtras().get("param").toString();
 			JSONObject jsonObject = new JSONObject( jsonString );
 			boardName = jsonObject.getString("BOARD_NAME");
+			
+			arAttachments = new ArrayList<JSONObject>();
 
 			if ( "edit".equals( getIntent().getExtras().get("mode")))
 			{
@@ -77,8 +81,6 @@ public class NewPostActivity extends DYActivity {
 					selectedCategoryName = getIntent().getExtras().getString("categoryName");
 
 					btnBoardCategory.setText( selectedCategoryName );
-					
-					arAttachments = new ArrayList<JSONObject>();
 
 					for ( int i = 0; i < jsonAr.length(); i++ )
 					{
@@ -106,6 +108,27 @@ public class NewPostActivity extends DYActivity {
 					Button btnPhotoInfo = (Button) findViewById(R.id.btnPhotoInfo );
 					btnPhotoInfo.setText( "그림 " + ( arAttachments.size() - 1 ));
 				}
+			}
+			else
+			{
+				Button btnBoardCategory = (Button) findViewById(R.id.btnBoardCategory);
+				
+				String categoryName = getMetaInfoString( boardName + "_CATEGORY_NAME");
+				
+				if ( !"".equals( categoryName ) && !"전체".equals( categoryName ) )
+				{
+					btnBoardCategory.setText( getMetaInfoString( boardName + "_CATEGORY_NAME") );
+					
+					selectedCategoryID = getMetaInfoString( boardName + "_CATEGORY_ID");
+					selectedCategoryName = getMetaInfoString( boardName + "_CATEGORY_NAME");
+				}
+				
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("content", "BODYTEXT");
+				jsonObj.put("TYPE", "TEXT");
+				jsonObj.put("ID", "" );
+				jsonObj.put("VERTICAL_ORDER", "0" );
+				arAttachments.add( jsonObj );
 			}
 		}
 		catch( Exception ex )
@@ -246,6 +269,12 @@ public class NewPostActivity extends DYActivity {
 			String title = edtTitle.getText().toString();
 			String content = edtContent.getText().toString();
 
+			if ( title == null || "".equals( title ) )
+			{
+				showOKDialog("제목을 입력해 주십시오.", null );
+				return;
+			}
+			
 			MultipartEntity reqEntity = getMultiFormRequestEntityWithDefaultSetting();
 			reqEntity.addPart("subject", new StringBody(title) );
 			reqEntity.addPart("content", new StringBody(content) );
@@ -253,64 +282,67 @@ public class NewPostActivity extends DYActivity {
 
 			if ( "new".equals( getIntent().getExtras().get("mode")))
 			{
-				String categoryID = getMetaInfoString( boardName + "_CATEGORY_ID");
+				Button btnBoardCategory = (Button) findViewById(R.id.btnBoardCategory);
+				if ("분류미지정".equals( btnBoardCategory.getText() ) || "".equals( btnBoardCategory.getText() ) )
+				{
+					showToastMessage("분류를 지정해 주십시오.");
+					showCategorySelectActivity(null);
+					return;
+				}
+				
+				String categoryID = selectedCategoryID;
 
-				reqEntity.addPart("bodyTextOrder", new StringBody("0") );
+				int order = 0;
+				for ( int i = 0; i < arAttachments.size(); i++ )
+				{
+					JSONObject obj = arAttachments.get(i);
+					if ( "TEXT".equals( obj.getString("TYPE")))
+					{
+						order = i;
+						break;
+					}
+				}
+				
+				reqEntity.addPart("bodyTextOrder", new StringBody( String.valueOf( order ) ) );
 				reqEntity.addPart("categoryID", new StringBody( categoryID ) );
 
-				for ( int i = 0; i < arImages.size(); i++ )
+				if ( arImages != null )
 				{
-					File f = arImages.get(i);
-					String extension = MimeTypeMap.getFileExtensionFromUrl( f.getAbsolutePath() );
-					String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+					for ( int i = 0; i < arImages.size(); i++ )
+					{
+						File f = arImages.get(i);
+						String extension = MimeTypeMap.getFileExtensionFromUrl( f.getAbsolutePath() );
+						String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
 
-					ByteArrayOutputStream bos = new ByteArrayOutputStream();
-					Bitmap bm = Util.getImageFromPath( f.getAbsolutePath() );
+						ByteArrayOutputStream bos = new ByteArrayOutputStream();
+						
+						Bitmap bm = BitmapFactory.decodeFile( f.getAbsolutePath() );
+						ExifInterface exif = new ExifInterface( f.getAbsolutePath() );
+						int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
 
-					int width = (bm.getWidth() >= bm.getHeight())? 1024:768;
-			        float ratio =  ((float) (bm.getHeight() * 1.0) / (float) (bm.getWidth() * 1.0));
-			        
-			        int height = (int) ( ratio * (width * 1.0));
-			        
-			        if ( width < bm.getWidth() )
-			        {
-			        	bm = Util.getResizedBitmap(bm, width, height);
-			        }
-					
-			        bm.compress(CompressFormat.JPEG, 100, bos);
-					
-					InputStream in = new ByteArrayInputStream(bos.toByteArray());
-					ContentBody mimePart = new InputStreamBody(in, mimeType, "image[]" );
+						int width = (bm.getWidth() >= bm.getHeight())? 1024:768;
+				        float ratio =  ((float) (bm.getHeight() * 1.0) / (float) (bm.getWidth() * 1.0));
+				        
+				        int height = (int) ( ratio * (width * 1.0));
+				        
+				        if ( width < bm.getWidth() )
+				        {
+				        	bm = Util.getResizedBitmap(bm, width, height, orientation);
+				        }
+						
+				        bm.compress(CompressFormat.JPEG, 100, bos);
+						
+						InputStream in = new ByteArrayInputStream(bos.toByteArray());
+						ContentBody mimePart = new InputStreamBody(in, mimeType, "image[]" );
 
-					ContentBody cbFile = new FileBody( f, mimeType );
-					
-					reqEntity.addPart("image[]", mimePart );
-//					reqEntity.addPart("image[]", cbFile );
+						ContentBody cbFile = new FileBody( f, mimeType );
+						
+						reqEntity.addPart("image[]", mimePart );
+					}	
 				}
 				
 				execFormRequest("web/mobile/board/addBoardPost.php", reqEntity);
 				
-				
-//				ArrayList<File> files = new ArrayList();
-//				
-//				for ( int i = 0; i < arImages.size(); i++ )
-//				{
-//					File f = arImages.get(i);
-//					String extension = MimeTypeMap.getFileExtensionFromUrl( f.getAbsolutePath() );
-//					String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-//					
-//					files.add( f );
-//				}
-//				
-//				Hashtable<String, String> ht = getHashtableWithDefaultSetting();
-//				ht.put("subject", title );
-//				ht.put("content", content );
-//				ht.put("boardName", boardName );
-//				ht.put("bodyTextOrder", "0");
-//				ht.put("categoryID", categoryID );
-//				ht.put("imageCount", String.valueOf( arImages.size() ));
-//				
-//				execFormRequest("web/mobile/board/addBoardPost.php", ht, files);
 			}
 			else
 			{
@@ -341,7 +373,11 @@ public class NewPostActivity extends DYActivity {
 								String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
 
 								ByteArrayOutputStream bos = new ByteArrayOutputStream();
-								Bitmap bm = Util.getImageFromPath( f.getAbsolutePath() );
+								
+								// read image orientation from file.
+								Bitmap bm = BitmapFactory.decodeFile( f.getAbsolutePath() );
+								ExifInterface exif = new ExifInterface( f.getAbsolutePath() );
+								int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
 
 								int width = (bm.getWidth() >= bm.getHeight())? 1024:768;
 						        float ratio =  ((float) (bm.getHeight() * 1.0) / (float) (bm.getWidth() * 1.0));
@@ -349,9 +385,7 @@ public class NewPostActivity extends DYActivity {
 						        int height = (int) ( ratio * (width * 1.0));
 						        
 						        if ( width < bm.getWidth() )
-						        {
-						        	bm = Util.getResizedBitmap(bm, width, height);
-						        }
+						        	bm = Util.getResizedBitmap(bm, width, height, orientation);
 								
 						        bm.compress(CompressFormat.JPEG, 100, bos);
 								
@@ -426,10 +460,13 @@ public class NewPostActivity extends DYActivity {
 	{
 		try
 		{
-			Intent intent = new Intent( this, ManageAttachmentActivity.class );
-			JSONArray jsonAr = new JSONArray( arAttachments );
-			intent.putExtra("attachments", jsonAr.toString());
-			startActivityForResult(intent, Constants.REQUEST_CODE_COMMON3 );	
+			if ( arAttachments != null && arAttachments.size() > 0 )
+			{
+				Intent intent = new Intent( this, ManageAttachmentActivity.class );
+				JSONArray jsonAr = new JSONArray( arAttachments );
+				intent.putExtra("attachments", jsonAr.toString());
+				startActivityForResult(intent, Constants.REQUEST_CODE_COMMON3 );	
+			}
 		}
 		catch( Exception ex )
 		{

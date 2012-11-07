@@ -72,12 +72,6 @@ public class SettingsActivity extends DYActivity implements OnClickListener{
 		}
 	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_settings, menu);
-        return true;
-    }
-
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub

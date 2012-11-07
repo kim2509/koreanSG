@@ -33,7 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class BoardHomeActivity extends DYActivity implements OnItemClickListener, OnClickListener{
+public class BoardHomeActivity extends DYActivity implements OnItemClickListener{
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -43,7 +43,7 @@ public class BoardHomeActivity extends DYActivity implements OnItemClickListener
     		super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_board_home);
             
-            execTransReturningString("iphone/getBoardMainInfo.php", new JSONObject(), true );
+            execTransReturningString("android/getBoardMainInfo.php", new JSONObject(), true );
     	}
     	catch( Exception ex )
     	{
@@ -84,44 +84,6 @@ public class BoardHomeActivity extends DYActivity implements OnItemClickListener
 			ListView lv = (ListView) findViewById(R.id.list);
 			lv.setOnItemClickListener( this );
 			lv.setAdapter( new BoardMenuAdapter( this , serviceList));
-			
-			LinearLayout layoutImageParent = (LinearLayout) findViewById(R.id.layoutImageParent);
-			JSONArray imageList = jsonObj.getJSONArray("imageList").getJSONArray(0);
-			for ( int i = 0; i < imageList.length(); i++ )
-			{
-				LinearLayout layoutImage = new LinearLayout( this );
-				layoutImage.setTag( imageList.getJSONObject( i ) );
-				layoutImageParent.addView( layoutImage );
-				ViewGroup.LayoutParams lParam = layoutImage.getLayoutParams();
-				lParam.width = getPixelFromDP( 120 );
-				lParam.height = getPixelFromDP( 120 );
-				layoutImage.setLayoutParams( lParam );
-				layoutImage.setOrientation(LinearLayout.VERTICAL);
-				
-				Button iv = new Button( this );
-				layoutImage.addView( iv );
-				iv.setTag("image");
-				
-				LinearLayout.LayoutParams ivParam = (LinearLayout.LayoutParams) iv.getLayoutParams();
-				ivParam.width = getPixelFromDP( 16 );
-				ivParam.height = getPixelFromDP( 16 );
-				ivParam.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-				ivParam.topMargin = getPixelFromDP(30);
-				ivParam.bottomMargin = getPixelFromDP(10);
-				iv.setBackgroundResource( R.drawable.loading16 );
-				
-				TextView tv = new TextView( this );
-				layoutImage.addView( tv );
-				tv.setTag("title");
-				LinearLayout.LayoutParams tvLParam = (LinearLayout.LayoutParams) tv.getLayoutParams();
-				tvLParam.width = getPixelFromDP( 120 );
-				tvLParam.height = getPixelFromDP( 20 );
-				tv.setGravity( Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL );
-				tv.setTextColor(Color.WHITE);
-				tv.setText("로딩중...");
-			}
-			
-			new ImageFetchTask().execute((Void)null);
     	}
     	catch( Exception ex )
     	{
@@ -214,116 +176,6 @@ public class BoardHomeActivity extends DYActivity implements OnItemClickListener
 			Intent intent = new Intent( this , BoardItemListActivity.class);
 			intent.putExtra("param", jsonObj.toString() );
 			startActivity(intent);
-		}
-		catch( Exception ex )
-		{
-			writeLog( ex.getMessage() );
-		}
-	}
-    
-    
-    private class ImageFetchTask extends AsyncTask<Void, Integer, ArrayList<Bitmap>> {
-
-		public ImageFetchTask()
-		{
-		}
-
-		protected void onPreExecute() {
-		}
-
-		protected ArrayList<Bitmap> doInBackground( Void... data ) {
-
-			try
-        	{
-        		LinearLayout layout = (LinearLayout) findViewById(R.id.layoutImageParent);
-        		ArrayList<Bitmap> ar = new ArrayList<Bitmap>();
-        		
-            	for ( int i = 0; i < layout.getChildCount(); i++ )
-            	{
-            		LinearLayout layoutChild = (LinearLayout) layout.getChildAt(i);
-            		JSONObject obj = (JSONObject) layoutChild.getTag();
-            		URL url = new URL( "http", serverHost, serverPort, 
-            				obj.getString("PATH") + "mobile/" + obj.getString("FILE_NAME") );
-            		InputStream is = (InputStream) url.getContent();
-		        	Bitmap bm = BitmapFactory.decodeStream( is );
-		        	ar.add( bm );
-            	}	
-            	
-            	return ar;
-        	}
-        	catch( Exception ex )
-        	{
-        		writeLog( ex.getMessage() );
-        	}
-
-			return null;
-		}
-
-		protected void onProgressUpdate(Integer... progress) {
-
-		}
-
-		protected void onPostExecute(ArrayList<Bitmap> result) {
-			updateImage( result );
-		}
-	}
-    
-    public void updateImage( ArrayList<Bitmap> result )
-    {
-    	try
-    	{
-    		LinearLayout layout = (LinearLayout) findViewById(R.id.layoutImageParent);
-    		
-        	for ( int i = 0; i < layout.getChildCount(); i++ )
-        	{
-        		LinearLayout layoutChild = (LinearLayout) layout.getChildAt(i);
-        		
-        		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layoutChild.getLayoutParams();
-        		lp.leftMargin = getPixelFromDP(5);
-        		lp.rightMargin = getPixelFromDP(5);
-        		
-        		JSONObject obj = (JSONObject) layoutChild.getTag();
-        		Bitmap bm = result.get(i);
-        		
-            	if ( bm != null )
-            	{
-            		Button imgBtn = (Button) layoutChild.findViewWithTag("image");
-            		imgBtn.setTag( obj );
-            		imgBtn.setOnClickListener( this );
-            		LinearLayout.LayoutParams ivParam = (LinearLayout.LayoutParams) imgBtn.getLayoutParams();
-            		ivParam.topMargin = getPixelFromDP(5);
-            		ivParam.bottomMargin = getPixelFromDP(5);
-    				ivParam.width = getPixelFromDP( 120 );
-    				ivParam.height = getPixelFromDP( 80 );
-            		imgBtn.setBackgroundDrawable( new BitmapDrawable( bm ) );
-            		
-            		TextView tv = (TextView) layoutChild.findViewWithTag("title");
-            		tv.setText( obj.getString("B_SUBJECT") );
-            	}
-        	}	
-    	}
-    	catch( Exception ex )
-    	{
-    		writeLog( ex.getMessage() );
-    	}
-    }
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		try
-		{
-			JSONObject obj = (JSONObject) v.getTag();
-			
-			JSONObject jsonObj = new JSONObject();
-        	jsonObj.put("BOARD_NAME", obj.getString("BOARD_NAME"));
-        	jsonObj.put("BID", obj.getString("B_ID"));
-        	jsonObj.put("SUBJECT", obj.getString("B_SUBJECT"));
-        	jsonObj.put("USER_ID", getMetaInfoString("USER_ID"));
-        	
-        	Intent intent = new Intent( this , BoardItemContentActivity.class);
-			intent.putExtra("param", jsonObj.toString() );
-		    startActivityForResult(intent, Constants.REQUEST_CODE_COMMON2 );
 		}
 		catch( Exception ex )
 		{

@@ -1,5 +1,9 @@
 package com.korea.hanintown;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -10,35 +14,36 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.korea.common.Constants;
+import com.korea.common.Util;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.GridLayout;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends DYActivity implements OnItemClickListener{
+public class MainActivity extends DYActivity implements OnItemClickListener, OnClickListener{
 
 	private JSONArray notificationList = null;
 	
@@ -63,6 +68,20 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		TextView txtName = (TextView) findViewById(R.id.txtName);
+		TextView txtLastLoginTime = (TextView) findViewById(R.id.txtLastLoginTime);
+		
+		if ( isAlreadyLogin() )
+		{
+			txtName.setText( getMetaInfoString("NICKNAME") + "(" + getMetaInfoString("USER_ID") + ")" );
+			txtLastLoginTime.setText( "Last Login: " + Util.substring( getMetaInfoString("LAST_LOGIN_TIME"), 0, 10 ) );
+		}
+		else
+		{
+			txtName.setText("로그인 정보가 없습니다.");
+			txtLastLoginTime.setText("");
+		}
 		
 		new GetMainInfoTask( this ).execute( serverURL + "android/getMainInfo.php");
 	}
@@ -112,6 +131,48 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 			writeLog( notificationList.toString() );
 			
 			boardCategoryList = (JSONArray) ((JSONArray) jsonObj.get("boardCategoryList")).get(0);
+			
+			if ( bLoadRecentPosts )
+			{
+				LinearLayout layoutImageParent = (LinearLayout) findViewById(R.id.layoutImageParent);
+				layoutImageParent.removeAllViews();
+				JSONArray imageList = jsonObj.getJSONArray("imageList").getJSONArray(0);
+				for ( int i = 0; i < imageList.length(); i++ )
+				{
+					LinearLayout layoutImage = new LinearLayout( this );
+					layoutImage.setTag( imageList.getJSONObject( i ) );
+					layoutImageParent.addView( layoutImage );
+					ViewGroup.LayoutParams lParam = layoutImage.getLayoutParams();
+					lParam.width = getPixelFromDP( 120 );
+					lParam.height = getPixelFromDP( 120 );
+					layoutImage.setLayoutParams( lParam );
+					layoutImage.setOrientation(LinearLayout.VERTICAL);
+					
+					Button iv = new Button( this );
+					layoutImage.addView( iv );
+					iv.setTag("image");
+					
+					LinearLayout.LayoutParams ivParam = (LinearLayout.LayoutParams) iv.getLayoutParams();
+					ivParam.width = getPixelFromDP( 16 );
+					ivParam.height = getPixelFromDP( 16 );
+					ivParam.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+					ivParam.topMargin = getPixelFromDP(30);
+					ivParam.bottomMargin = getPixelFromDP(10);
+					iv.setBackgroundResource( R.drawable.loading16 );
+					
+					TextView tv = new TextView( this );
+					layoutImage.addView( tv );
+					tv.setTag("title");
+					LinearLayout.LayoutParams tvLParam = (LinearLayout.LayoutParams) tv.getLayoutParams();
+					tvLParam.width = getPixelFromDP( 120 );
+					tvLParam.height = getPixelFromDP( 20 );
+					tv.setGravity( Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL );
+					tv.setTextColor(Color.WHITE);
+					tv.setText("로딩중...");
+				}
+				
+				new ImageFetchTask().execute((Void)null);
+			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -122,6 +183,95 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 			return;
 		}
 	}
+	
+	private boolean bLoadRecentPosts = true;
+	
+	private class ImageFetchTask extends AsyncTask<Void, Integer, ArrayList<Bitmap>> {
+
+		public ImageFetchTask()
+		{
+		}
+
+		protected void onPreExecute() {
+		}
+
+		protected ArrayList<Bitmap> doInBackground( Void... data ) {
+
+			try
+        	{
+        		LinearLayout layout = (LinearLayout) findViewById(R.id.layoutImageParent);
+        		ArrayList<Bitmap> ar = new ArrayList<Bitmap>();
+        		
+            	for ( int i = 0; i < layout.getChildCount(); i++ )
+            	{
+            		LinearLayout layoutChild = (LinearLayout) layout.getChildAt(i);
+            		JSONObject obj = (JSONObject) layoutChild.getTag();
+            		URL url = new URL( "http", serverHost, serverPort, 
+            				obj.getString("PATH") + "mobile/" + obj.getString("FILE_NAME") );
+            		InputStream is = (InputStream) url.getContent();
+		        	Bitmap bm = BitmapFactory.decodeStream( is );
+		        	ar.add( bm );
+            	}	
+            	
+            	return ar;
+        	}
+        	catch( Exception ex )
+        	{
+        		writeLog( ex.getMessage() );
+        	}
+
+			return null;
+		}
+
+		protected void onProgressUpdate(Integer... progress) {
+
+		}
+
+		protected void onPostExecute(ArrayList<Bitmap> result) {
+			updateImage( result );
+		}
+	}
+    
+    public void updateImage( ArrayList<Bitmap> result )
+    {
+    	try
+    	{
+    		LinearLayout layout = (LinearLayout) findViewById(R.id.layoutImageParent);
+    		
+        	for ( int i = 0; i < layout.getChildCount(); i++ )
+        	{
+        		LinearLayout layoutChild = (LinearLayout) layout.getChildAt(i);
+        		
+        		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layoutChild.getLayoutParams();
+        		lp.leftMargin = getPixelFromDP(5);
+        		lp.rightMargin = getPixelFromDP(5);
+        		
+        		JSONObject obj = (JSONObject) layoutChild.getTag();
+        		Bitmap bm = result.get(i);
+        		
+            	if ( bm != null )
+            	{
+            		Button imgBtn = (Button) layoutChild.findViewWithTag("image");
+            		imgBtn.setOnClickListener( this );
+            		
+            		LinearLayout.LayoutParams ivParam = (LinearLayout.LayoutParams) imgBtn.getLayoutParams();
+            		ivParam.topMargin = getPixelFromDP(5);
+            		ivParam.bottomMargin = getPixelFromDP(5);
+    				ivParam.width = getPixelFromDP( 120 );
+    				ivParam.height = getPixelFromDP( 80 );
+            		imgBtn.setBackgroundDrawable( new BitmapDrawable( bm ) );
+            		TextView tv = (TextView) layoutChild.findViewWithTag("title");
+            		tv.setText( obj.getString("B_SUBJECT") );
+            	}
+        	}
+        	
+        	bLoadRecentPosts = false;
+    	}
+    	catch( Exception ex )
+    	{
+    		writeLog( ex.getMessage() );
+    	}
+    }
 	
 	@Override
 	public void okClicked(Object param) {
@@ -162,23 +312,23 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 
 					linearLayout = new LinearLayout( mContext );
 
-					LinearLayout.LayoutParams lp = 
-							new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT );
-					//linearLayout.setLayoutParams( lp );
-
 					linearLayout.setOrientation(LinearLayout.VERTICAL);
 
 					imageView = new ImageView(mContext);
-					imageView.setLayoutParams(new GridView.LayoutParams( GridLayout.LayoutParams.FILL_PARENT, GridLayout.LayoutParams.WRAP_CONTENT));
+					linearLayout.addView( imageView );
+					
 					imageView.setAdjustViewBounds(false);
 					imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-					imageView.setPadding(8, 8, 8, 8);
+					imageView.setPadding(8, 8, 8, 4);
+					LinearLayout.LayoutParams ivp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+					ivp.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+					ivp.height = getPixelFromDP( 80 );
+					ivp.gravity = Gravity.CENTER_HORIZONTAL;
 
 					TextView tv = new TextView( mContext );
 					tv.setText("게시판");
 					tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-
-					linearLayout.addView( imageView );
+					
 					linearLayout.addView( tv );
 					
 					LinearLayout.LayoutParams tvp = (LinearLayout.LayoutParams) tv.getLayoutParams();
@@ -209,6 +359,8 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 							imageView.setImageResource( R.drawable.market128 );
 						else if ( "취업".equals( menuName ) )
 							imageView.setImageResource( R.drawable.job128 );
+						else if ( "쪽지함".equals( menuName ) )
+							imageView.setImageResource( R.drawable.message_128 );
 						else if ( "알림센터".equals( menuName ) )
 						{
 							int count = 0;
@@ -359,6 +511,13 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 				}
 				else if ( "알림센터".equals( selectedMenu ) )
 				{
+					if ( isAlreadyLogin() == false )
+					{
+						showToastMessage("해당 기능을 이용하기 위해선\r\n로그인이 필요합니다.\r\n로그인 후 이용해 주시기 바랍니다.");
+						loadLoginActivity();
+						return;
+					}
+					
 					Intent intent = new Intent( this, NotificationActivity.class);
 					intent.putExtra("param", notificationList.toString());
 					startActivity( intent );
@@ -369,6 +528,13 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 				}
 				else if ( "쪽지함".equals( selectedMenu ) )
 				{
+					if ( isAlreadyLogin() == false )
+					{
+						showToastMessage("해당 기능을 이용하기 위해선\r\n로그인이 필요합니다.\r\n로그인 후 이용해 주시기 바랍니다.");
+						loadLoginActivity();
+						return;
+					}
+					
 					Intent intent = new Intent( this , MessageListActivity.class);
 					startActivity(intent);
 				}
@@ -386,7 +552,31 @@ public class MainActivity extends DYActivity implements OnItemClickListener{
 		}
 		catch( Exception ex )
 		{
-
+			writeLog( ex.getMessage() );
+		}
+	}
+	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		try
+		{
+			LinearLayout layout = (LinearLayout) v.getParent();
+			JSONObject obj = (JSONObject) layout.getTag();
+			
+			JSONObject jsonObj = new JSONObject();
+        	jsonObj.put("BOARD_NAME", obj.getString("BOARD_NAME"));
+        	jsonObj.put("BID", obj.getString("B_ID"));
+        	jsonObj.put("SUBJECT", obj.getString("B_SUBJECT"));
+        	jsonObj.put("USER_ID", obj.getString("USER_ID"));
+        	
+        	Intent intent = new Intent( this , BoardItemContentActivity.class);
+			intent.putExtra("param", jsonObj.toString() );
+		    startActivityForResult(intent, Constants.REQUEST_CODE_COMMON2 );
+		}
+		catch( Exception ex )
+		{
+			writeLog( ex.getMessage() );
 		}
 	}
 }

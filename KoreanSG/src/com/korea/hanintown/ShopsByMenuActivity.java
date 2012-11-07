@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -96,6 +97,39 @@ public class ShopsByMenuActivity extends DYActivity implements OnItemClickListen
 
                 vi.setTag( jsonObj );
                 
+                ImageView iv = (ImageView) vi.findViewById(R.id.list_image);
+                iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                
+                String name = jsonObj.getString("NAME");
+                
+                if ( "¸Þ´º°Ë»ö".equals( name ) )
+                	iv.setImageResource(R.drawable.search_128);
+                else if ( "ÀÎ±â¸Þ´º TOP 20".equals( name ) )
+                	iv.setImageResource(R.drawable.delicious_128);
+                else if ( "ºñºö/ººÀ½/µ¤¹ä·ù".equals( name ) )
+                	iv.setImageResource(R.drawable.bibimbap_2xx);
+                else if ( "Á·¹ß/º¸½Ó".equals( name ) )
+                	iv.setImageResource(R.drawable.jokbal_2xx);
+                else if ( "À°·ù".equals( name ) )
+                	iv.setImageResource(R.drawable.pork_belly_1xx);
+                else if ( "Â¥Àå¸é/Â«»Í".equals( name ) )
+                	iv.setImageResource(R.drawable.jjajang);
+                else if ( "ÅÁÁ¾·ù(°¥ºñÅÁ/¼³··ÅÁ)".equals( name ) )
+                	iv.setImageResource(R.drawable.tang);
+                else if ( "Âî°³·ù".equals( name ) )
+                	iv.setImageResource(R.drawable.jjigae);
+                else if ( "ÂòÁ¾·ù".equals( name ) )
+                	iv.setImageResource(R.drawable.jjim);
+                else if ( "ÀüÁ¾·ù".equals( name ) )
+                	iv.setImageResource(R.drawable.jeon);
+                else if ( "ººÀ½·ù".equals( name ) )
+                	iv.setImageResource(R.drawable.bbokeum);
+                else if ( "È¸".equals( name ) )
+                	iv.setImageResource(R.drawable.hoi);
+                else if ( "ºÐ½Ä·ù".equals( name ) )
+                	iv.setImageResource(R.drawable.bunsik);
+                else
+                	iv.setImageBitmap(null);
                 
                 return vi;	
         	}

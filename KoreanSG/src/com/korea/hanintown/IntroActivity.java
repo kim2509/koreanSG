@@ -1,5 +1,7 @@
 package com.korea.hanintown;
 
+import com.google.android.gcm.GCMRegistrar;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.PendingIntent;
@@ -24,12 +26,12 @@ public class IntroActivity extends DYActivity {
 
 				}
 			}, 2000);
-
+			
 			Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
 			// sets the app name in the intent
 			registrationIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
 			registrationIntent.putExtra("sender", "761361569216");
-			startService(registrationIntent);
+			startService(registrationIntent);	
 		}
 		catch( Exception ex )
 		{

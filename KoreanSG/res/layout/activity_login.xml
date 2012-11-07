@@ -9,12 +9,13 @@
 
         <Button android:id="@+id/btnBack" 
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:background="@drawable/btn_bg01"
             android:layout_marginLeft="5dp"
-            android:text="뒤로"></Button>
+            android:textStyle="bold"
+            android:text=" 뒤로"></Button>
         
         <TextView
             android:layout_width="fill_parent"
@@ -29,7 +30,7 @@
         
         <Button android:id="@+id/btnEmpty" 
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:background="@drawable/btn_bg02"
@@ -42,25 +43,69 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical" >
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="로그인" />
+            android:layout_marginBottom="5dp"
+            android:text="로그인" 
+            android:textColor="#3b5999"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btnFacebookLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="페이스북 로그인" />
+            android:layout_marginBottom="5dp"
+            android:text="페이스북 로그인" 
+            android:textColor="#3b5999"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btnRegisterMember"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입" />
+            android:text="회원가입" 
+            android:textColor="#3b5999"
+            android:textStyle="bold"/>
     </LinearLayout>
 
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#EBEDF3"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+        
+        <TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="한인타운의 몇몇 기능들은 로그인이 필요합니다."
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"/>
+        
+        <TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:text="계정이 없는 고객님께서는 회원가입 또는 페이스북 로그인을 이용해 주시기 바랍니다."
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"/>
+    </LinearLayout>
+    
 </LinearLayout>

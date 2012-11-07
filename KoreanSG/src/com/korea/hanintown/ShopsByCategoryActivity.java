@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -161,6 +162,40 @@ public class ShopsByCategoryActivity extends DYActivity implements OnItemClickLi
                 TextView title = (TextView)vi.findViewById(R.id.title); // title
                 title.setText( jsonObj.getString("CATEGORY") + "(" + jsonObj.getString("CNT") + ")" );
                 vi.setTag( jsonObj );
+                
+                ImageView iv = (ImageView) vi.findViewById(R.id.list_image);
+                iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                
+                String category = jsonObj.getString("CATEGORY");
+                
+                if ( "전체".equals( category ) )
+                	iv.setImageResource(R.drawable.all_32);
+                else if ( "식당".equals( category ) )
+                	iv.setImageResource(R.drawable.food_128);
+                else if ( "학교/학원".equals( category ) )
+                	iv.setImageResource(R.drawable.school_128);
+                else if ( "수퍼마켓/떡집/보조식품".equals( category ) )
+                	iv.setImageResource(R.drawable.shop_48);
+                else if ( "미용".equals( category ) )
+                	iv.setImageResource(R.drawable.hair_128);
+                else if ( "여행사".equals( category ) )
+                	iv.setImageResource(R.drawable.travel_128);
+                else if ( "부동산".equals( category ) )
+                	iv.setImageResource(R.drawable.building_128);
+                else if ( "기타".equals( category ) )
+                	iv.setImageResource(R.drawable.other_48);
+                else if ( "병원/클리닉".equals( category ) )
+                	iv.setImageResource(R.drawable.hospital_64);
+                else if ( "컨설팅/법률상담/구인구직".equals( category ) )
+                	iv.setImageResource(R.drawable.job_128);
+                else if ( "해외이사".equals( category ) )
+                	iv.setImageResource(R.drawable.truck_128);
+                else if ( "렌트카".equals( category ) )
+                	iv.setImageResource(R.drawable.car_128);
+                else if ( "디자인/인테리어".equals( category ) )
+                	iv.setImageResource(R.drawable.design_128);
+                else
+                	iv.setImageBitmap(null);
                 
                 return vi;
         	}

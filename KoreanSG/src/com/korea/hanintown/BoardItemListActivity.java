@@ -126,6 +126,13 @@ public class BoardItemListActivity extends DYActivity implements OnClickListener
 			}
 			else if ( v.getId() == R.id.btnNewPost )
 			{
+				if ( isAlreadyLogin() == false )
+				{
+					showToastMessage("해당 기능을 이용하기 위해선\r\n로그인이 필요합니다.\r\n로그인 후 이용해 주시기 바랍니다.");
+					loadLoginActivity();
+					return;
+				}
+				
 				Intent intent = new Intent(this, NewPostActivity.class);
 				intent.putExtra("mode", "new");
 				intent.putExtra("param", getIntent().getExtras().getString("param"));

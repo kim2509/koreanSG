@@ -1,11 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:background="@android:color/white">
 
-    <LinearLayout style="@style/TopBar">
+    <LinearLayout android:id="@+id/lTop" 
+        style="@style/TopBar"
+        android:layout_alignParentTop="true">
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
             android:layout_gravity="center_vertical"
@@ -16,17 +17,75 @@
              android:textSize="20sp"/>
     </LinearLayout>
     
+    <LinearLayout
+        android:id="@+id/layerRecentPosts"
+        android:layout_width="fill_parent"
+        android:layout_height="140dp"
+        android:layout_below="@+id/lTop"
+        android:orientation="vertical"
+        android:background="@android:color/darker_gray">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="20sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="최신 글"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
+
+        <HorizontalScrollView
+            android:id="@+id/hsvRecentPosts"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            <LinearLayout 
+                android:id="@+id/layoutImageParent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+    
     <GridView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/menuGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="80dp"
+        android:layout_below="@+id/layerRecentPosts"
+        android:layout_above="@+id/lBottom"
+        android:columnWidth="70dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
+        android:verticalSpacing="5dp" />
+    
+    <RelativeLayout android:id="@+id/lBottom" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#EBEDF3"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <TextView android:id="@+id/txtName"  
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="대용(kim2509)"
+            android:layout_alignParentLeft="true"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+        <TextView android:id="@+id/txtLastLoginTime"  
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:textColor="#000000"
+            android:text="Last Login:12-11-08"/>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

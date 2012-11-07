@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -47,16 +48,32 @@ import android.widget.Toast;
 
 public class DYActivity extends Activity{
 
-	//protected String serverURL = "http://www.hanintownsg.com/";
-	protected String serverURL = "http://192.168.10.100:8888/";
-	protected String serverHost = "192.168.10.100";
-	protected int serverPort = 8888;
+//	protected String serverURL = "http://192.168.10.100:8888/";
+//	protected String serverHost = "192.168.10.100";
+//	protected int serverPort = 8888;
+
+	protected String serverURL = "http://www.hanintownsg.com/";
+	protected String serverHost = "www.hanintownsg.com";
+	protected int serverPort = 80;
+	
 	
 	protected static JSONArray boardCategoryList = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    
+		if ( item != null )
+		{
+			goSettingsActivity();
+		}
+		
+		return true;
 	}
 	
 	public void goBack( View v )
@@ -821,6 +838,12 @@ public class DYActivity extends Activity{
         {
         	try
         	{
+        		if ( userID != null && userID.equals( getMetaInfoString("USER_ID")))
+        		{
+        			showOKDialog("본인에게 메세지를 보낼 수 없습니다.", null );
+        			return;
+        		}
+        		
         		JSONObject jsonObj = new JSONObject();
         		jsonObj.put("USER_ID", userID);
         		jsonObj.put("NICKNAME", nickName );

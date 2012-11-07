@@ -9,19 +9,20 @@
 
         <Button android:id="@+id/btnBack" 
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:background="@drawable/btn_bg01"
             android:layout_marginLeft="5dp"
-            android:text="뒤로"></Button>
+            android:textStyle="bold"
+            android:text=" 뒤로"></Button>
         
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center_horizontal"
-            android:text="로그인 정보"
+            android:text="사용자 프로필"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -39,57 +40,64 @@
     
     <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:layout_margin="5dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/darker_gray">
 
         <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:layout_margin="5dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@android:color/white">
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:textColor="@android:color/black"
                 android:layout_weight="1"
-                android:text="사용자 아이디"/>
+                android:text="사용자 아이디"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/txtUserID"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:layout_weight="1"
-                android:textColor="@android:color/black"
-                android:gravity="right|center_vertical"/>
+                android:textColor="@android:color/darker_gray"
+                android:gravity="left|center_vertical"/>
         </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="2dp"
+            android:background="@android:color/white">
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:textColor="@android:color/black"
                 android:layout_weight="1"
-                android:text="닉네임"/>
+                android:text="닉네임"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/txtNickname"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/darker_gray"
                 android:layout_weight="1"
-                android:gravity="right|center_vertical"/>
+                android:gravity="left|center_vertical"/>
         </TableRow>
     </TableLayout>
 

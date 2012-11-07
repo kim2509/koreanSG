@@ -96,7 +96,7 @@ public class BoardItemContentActivity extends DYActivity implements OnClickListe
 		registerForContextMenu(btnModifyPost);
 		btnModifyPost.setLongClickable(false);
 		
-		if ( getMetaInfoString("USER_ID").equals( jsonObj.getString("USER_ID")))
+		if ( !"".equals( getMetaInfoString("USER_ID") ) && getMetaInfoString("USER_ID").equals( jsonObj.getString("USER_ID")))
 			btnModifyPost.setVisibility(View.VISIBLE);
 		else
 			btnModifyPost.setVisibility(View.INVISIBLE);
@@ -174,6 +174,7 @@ public class BoardItemContentActivity extends DYActivity implements OnClickListe
 	{
 		if ( isAlreadyLogin() == false )
 		{
+			showToastMessage("해당 기능을 이용하기 위해선\r\n로그인이 필요합니다.\r\n로그인 후 이용해 주시기 바랍니다.");
 			loadLoginActivity();
 			return false;
 		}
