@@ -1,13 +1,19 @@
 package com.krking;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
@@ -73,6 +79,9 @@ public class TransactionTaskReturningString extends AsyncTask<JSONObject, Intege
 		try
 		{
 			HttpClient client = new DefaultHttpClient();
+			HttpContext localContext = new BasicHttpContext();
+			CookieStore cookieStore = new BasicCookieStore();
+			localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
 			HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
 			HttpResponse response;
 			
@@ -88,8 +97,14 @@ public class TransactionTaskReturningString extends AsyncTask<JSONObject, Intege
 			
 			se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 			post.setEntity(se);
-			response = client.execute(post);
-
+			response = client.execute(post, localContext);
+			
+			for ( int i = 0; i < cookieStore.getCookies().size(); i++ )
+			{
+				Cookie cookie = cookieStore.getCookies().get(i);
+				System.out.println("cookie name:" + cookie.getName() + " value:" + cookie.getValue() );
+			}
+			
 			String responseString = EntityUtils.toString(response.getEntity()); 
 			
 			Log.d("RESPONSE", responseString );

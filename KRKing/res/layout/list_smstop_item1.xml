@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="30dp"
-    android:background="@android:color/white"
-    android:orientation="horizontal"
-    android:padding="5dip" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/title_bg"
+    android:orientation="horizontal" 
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
+    <!--  ListRow Left sied Thumbnail image -->
+	<LinearLayout android:id="@+id/thumbnail" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="3dip"		
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:visibility="gone">
+        
+		<ImageView     
+			android:id="@+id/list_image"   
+	        android:layout_width="25dp"
+	        android:layout_height="27dp"/>
+        
+	</LinearLayout>
+	
     <TextView
         android:id="@+id/txtHeaderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_marginLeft="20dp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"/>
+        android:textSize="20sp"
+        android:textColor="#353535"/>
     
     <TextView
         android:id="@+id/txtDate"
@@ -21,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:layout_marginRight="20dp"
+        android:textColor="#666666" />
 
 </RelativeLayout>

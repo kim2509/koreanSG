@@ -5,10 +5,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/rLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/main_top_bg" >
+        android:id="@+id/rLayout" style="@style/TopBar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,18 +14,19 @@
             android:layout_centerVertical="true"
             android:gravity="center_horizontal"
             android:text="출마 인기도"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="41dp"
+            android:layout_height="29dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:background="@drawable/btn_menu"
             android:onClick="showMainMenu"
-            android:text="메뉴" />
+            android:layout_marginLeft="10dp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -43,29 +41,61 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="금요" />
+           	android:background="@drawable/tab_menu01_fri_on"
+			/>
 
         <Button
             android:id="@+id/btnSat"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="토요" />
+            android:background="@drawable/tab_menu02_sat_off" />
 
         <Button
             android:id="@+id/btnSun"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="일요" />
+            android:background="@drawable/tab_menu03_sun_off" />
     </LinearLayout>
 
+    <LinearLayout 
+        android:id="@+id/lLayer2"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/lLayer"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/table_title_bg">
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/table01_line_"
+            android:orientation="horizontal">
+            
+            <TextView android:layout_width="23dp"
+                android:layout_height="35dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:singleLine="true"
+                android:text="1"/>
+            <TextView android:layout_width="57dp"
+                android:layout_height="35dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:singleLine="true"
+                android:text="지수사"/>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scroll1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lLayer" 
+        android:layout_below="@+id/lLayer2" 
         android:layout_above="@+id/hsv1">
 
         <HorizontalScrollView

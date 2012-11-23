@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -198,6 +199,24 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 	}
+	
+	public void setDayButton()
+	{
+		Button btnFri = (Button) getActivity().findViewById(R.id.btnFri);
+		Button btnSat = (Button) getActivity().findViewById(R.id.btnSat);
+		Button btnSun = (Button) getActivity().findViewById(R.id.btnSun);
+		
+		btnFri.setBackgroundResource( R.drawable.tab_menu01_fri_off);
+		btnSat.setBackgroundResource( R.drawable.tab_menu02_sat_off);
+		btnSun.setBackgroundResource( R.drawable.tab_menu03_sun_off);
+		
+		if ( requestCode == 1 )
+			btnFri.setBackgroundResource( R.drawable.tab_menu01_fri_on);
+		else if ( requestCode == 2 )
+			btnSat.setBackgroundResource( R.drawable.tab_menu02_sat_on);
+		else if ( requestCode == 3 )
+			btnSun.setBackgroundResource( R.drawable.tab_menu03_sun_on);
+	}
 
 	@Override
 	public void onClick(View arg0) {
@@ -208,16 +227,19 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 			if ( arg0.getId() == R.id.btnFri )
 			{
 				requestCode = 1;
+				setDayButton();
 				execTransReturningString("KrPopular/krPopular.aspx?dayGb=" + requestCode, requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnSat )
 			{
 				requestCode = 2;
+				setDayButton();
 				execTransReturningString("KrPopular/krPopular.aspx?dayGb=" + requestCode, requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnSun )
 			{
 				requestCode = 3;
+				setDayButton();
 				execTransReturningString("KrPopular/krPopular.aspx?dayGb=" + requestCode, requestCode, null);
 			}
 			else

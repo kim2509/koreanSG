@@ -4,12 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/BtnSlide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showMainMenu"
-        android:text="Slide" />
+    <RelativeLayout
+        android:id="@+id/rLayout" style="@style/TopBar">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="경마왕 예상"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/BtnSlide"
+            android:layout_width="41dp"
+            android:layout_height="29dp"
+            android:onClick="showMainMenu"
+            android:background="@drawable/btn_menu"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/list"

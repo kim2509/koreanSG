@@ -9,5 +9,6 @@
     <string name="title_activity_smstop_detail">SMSTopDetailActivity</string>
     <string name="title_activity_horse_race_result_detail">HorseRaceResultDetailActivity</string>
     <string name="title_activity_horse_race_expectation">HorseRaceExpectationActivity</string>
+    <string name="title_activity_terms_ncontract">TermsNContractActivity</string>
 
 </resources>

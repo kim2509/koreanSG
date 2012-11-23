@@ -5,10 +5,7 @@
     android:orientation="vertical" >
     
     <RelativeLayout
-        android:id="@+id/rLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/main_top_bg" >
+        android:id="@+id/rLayout" style="@style/TopBar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,46 +14,46 @@
             android:layout_centerVertical="true"
             android:gravity="center_horizontal"
             android:text="SMS 적중 TOP"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="41dp"
+            android:layout_height="29dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:onClick="showMainMenu"
-            android:text="메뉴" />
+            android:background="@drawable/btn_menu"
+            android:onClick="showMainMenu" 
+            android:layout_marginLeft="10dp"/>
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/lLayer"
         android:layout_width="fill_parent"
         android:layout_height="44dp"
-        android:layout_below="@+id/rLayout"
-        android:background="@drawable/main_top_bg" >
+        android:layout_below="@+id/rLayout">
 
         <Button
             android:id="@+id/btnDaysBest"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="일간 BEST" 
+            android:background="@drawable/tab_menu_bg_01_off"
             android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btnWeeksBest"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="주간 BEST" 
+            android:background="@drawable/tab_menu_bg_02_off"
             android:layout_weight="1"/>
         
         <Button
             android:id="@+id/btnMonthsBest"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="월간 BEST" 
+            android:background="@drawable/tab_menu_bg_03_off"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -76,29 +73,39 @@
         android:layout_width="fill_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/main_top_bg" >
+        android:background="@drawable/tab_bottom_bg" >
 
         <Button
             android:id="@+id/btnFri"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="금" />
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/btn_fri_on"/>
 
         <Button
             android:id="@+id/btnSat"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="토" />
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_sat_off"/>
         
         <Button
             android:id="@+id/btnSun"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="일" />
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/btn_sun_off" />
 
     </RelativeLayout>
     <LinearLayout
@@ -106,36 +113,49 @@
         android:layout_width="fill_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/main_top_bg"
+        android:background="@drawable/tab_bottom_bg"
         android:visibility="invisible">
 
         <Button
             android:id="@+id/btnRefund"
-            android:layout_width="fill_parent"
+            android:layout_width="73dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="환수" />
+            android:background="@drawable/btn_bottm_01_on"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical"  />
 
         <Button
             android:id="@+id/btnHit"
-            android:layout_width="fill_parent"
+            android:layout_width="73dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="적중" />
+            android:background="@drawable/btn_bottm_02_off"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical" />
         
         <Button
             android:id="@+id/btnDividends"
-            android:layout_width="fill_parent"
+            android:layout_width="73dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="배당" />
+            android:background="@drawable/btn_bottm_03_off"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical" />
         
         <Button
             android:id="@+id/btnCHorse"
-            android:layout_width="fill_parent"
+            android:layout_width="73dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="축마" />
+            android:background="@drawable/btn_bottm_04_off"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp" />
 
     </LinearLayout>
 </RelativeLayout>

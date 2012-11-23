@@ -2,6 +2,8 @@ package com.krking;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -41,6 +43,25 @@ public class BaseFragment extends Fragment
 	}
 	
 	public void doPostTransaction( int requestCode, String result )
+	{
+		
+	}
+	
+	public void showOKDialog( String message, final Object param )
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+		builder.setMessage( message )
+		       .setCancelable(false)
+		       .setPositiveButton("»Æ¿Œ", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                okClicked( param );
+		           }
+		       });
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	public void okClicked( Object param )
 	{
 		
 	}

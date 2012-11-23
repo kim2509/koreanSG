@@ -70,11 +70,8 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
     
     public void initializeControls()
     {
-    	TextView tv = (TextView) findViewById(R.id.menuTitle);
-    	ViewGroup.LayoutParams lp = tv.getLayoutParams();
-    	
     	Display display = getWindowManager().getDefaultDisplay();
-    	lp.width = (int) (display.getWidth() * 0.8);
+    	menu.getLayoutParams().width = (int) (display.getWidth() * 0.8);
     }
 
     @Override
@@ -88,6 +85,19 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
     	ArrayList<JSONObject> data = new ArrayList<JSONObject>();
     	
     	JSONObject item = new JSONObject();
+    	item.put("TYPE", "HEADER");
+    	item.put("NAME", "쇼킹TV(방송)");
+    	data.add( item );
+    	item = new JSONObject();
+    	item.put("TYPE", "ITEM");
+    	item.put("NAME", "금주 방송");
+    	data.add( item );
+    	item = new JSONObject();
+    	item.put("TYPE", "ITEM");
+    	item.put("NAME", "지난주 방송");
+    	data.add( item );
+    	
+    	item = new JSONObject();
     	item.put("TYPE", "HEADER");
     	item.put("NAME", "전문가 예상");
     	data.add( item );
@@ -182,6 +192,15 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
     	item.put("NAME", "로그인");
     	data.add( item );
     	
+    	item = new JSONObject();
+    	item.put("TYPE", "HEADER");
+    	item.put("NAME", "새벽조교");
+    	data.add( item );
+    	item = new JSONObject();
+    	item.put("TYPE", "ITEM");
+    	item.put("NAME", "새벽조");
+    	data.add( item );
+    	
     	ListView listView = (ListView) menu.findViewById(R.id.menuList);
     	listView.setAdapter( new MenuAdapter(this, data));
     	
@@ -222,7 +241,42 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
         		if ( "HEADER".equals( jsonObj.getString("TYPE") ))
         			vi = inflater.inflate(R.layout.list_menu_header, null);
         		else
+        		{
         			vi = inflater.inflate(R.layout.list_menu_item, null);
+        			
+        			ImageView iv = (ImageView) vi.findViewById(R.id.list_image);
+        			
+        			if ( "경마왕".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu01_1_prediction_pro);
+        			else if ( "프리".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu01_2_prediction_free);
+        			else if ( "일간 BEST".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu02_1_best_day);
+        			else if ( "주간 BEST".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu02_2_best_week);
+        			else if ( "월간 BEST".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu02_3_best_month);
+        			else if ( "예상지".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu03_paper);
+        			else if ( "금요".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu04_1_friday);
+        			else if ( "토요".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu04_2_saturday);
+        			else if ( "일요".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu04_3_sunday);
+        			else if ( "출마표".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu05_1_schedule);
+        			else if ( "경주결과".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu05_2_result);
+        			else if ( "자유게시판".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu06_1_bulletin);
+        			else if ( "예상/복기".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu06_2_remem);
+        			else if ( "회원가입".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu08_1_signin);
+        			else if ( "로그인".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu08_2_login);
+        		}
 
                 TextView title = (TextView)vi.findViewById(R.id.title); // title
                 

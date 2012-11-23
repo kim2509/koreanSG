@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="35dp"
-    android:background="#333A44"
+    android:background="@drawable/menu_section"
     android:orientation="horizontal"
     android:padding="5dip">
 

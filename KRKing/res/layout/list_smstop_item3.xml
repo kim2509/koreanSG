@@ -2,31 +2,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="35dp"
-    android:background="#A8BAB6"
+    android:background="@drawable/sms_other_tablecell"
     android:orientation="horizontal"
     android:padding="5dip">
     
     <!--  ListRow Left sied Thumbnail image -->
-	<LinearLayout android:id="@+id/thumbnail" 
+	<FrameLayout android:id="@+id/thumbnail" 
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
 	    android:layout_marginRight="5dip"
 	    android:layout_marginLeft="10dp"
-	    android:background="@android:color/white">"
+	    android:paddingTop="3dp">
         
 		<ImageView     
 			android:id="@+id/list_image"   
 	        android:layout_width="20dp"
-	        android:layout_height="30dp"/>
+	        android:layout_height="30dp"
+	        android:layout_gravity="center_vertical"/>
+		
+		<TextView android:id="@+id/txtRanking"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textColor="@android:color/white"
+		    android:textStyle="bold"
+		    android:paddingLeft="4dp"
+		    android:textSize="20sp"
+		    />
         
-	</LinearLayout>
+	</FrameLayout>
     
      <!-- Rightend Arrow -->    
      <ImageView android:id="@+id/imgArrow" 
-        android:layout_width="wrap_content"
-     	android:layout_height="wrap_content"
-     	android:src="@drawable/arrow"
+        android:layout_width="25dp"
+     	android:layout_height="25dp"
+     	android:src="@drawable/btn_next_icon"
+     	android:layout_marginRight="10dp"
      	android:layout_alignParentRight="true"
      	android:layout_centerVertical="true"/>
 
@@ -46,7 +57,7 @@
          android:layout_height="wrap_content"
          android:layout_toLeftOf="@+id/imgArrow"
          android:layout_centerVertical="true"
-         android:layout_marginRight="5dp"
+         android:layout_marginRight="10dp"
          android:textColor="@android:color/black"/>
      
 </RelativeLayout>

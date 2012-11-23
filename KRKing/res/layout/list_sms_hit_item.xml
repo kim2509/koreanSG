@@ -2,26 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/black"
+    android:background="#D2D2D2"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:paddingBottom="2dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="2dp"
-        android:tag="date"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/sms_date_bg">
+
+        <ImageView     
+			android:id="@+id/list_image"   
+	        android:layout_width="20dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_gravity="center_vertical"
+	        android:layout_height="23dp"/>
+        
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="2dp"
+            android:tag="date"
+            android:textColor="#353535"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
+        android:background="#D2D2D2"
         android:tag="table" >
     </TableLayout>
 

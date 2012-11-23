@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.common.Util;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -90,6 +93,8 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			Button btnMonthsBest = (Button) getView().findViewById(R.id.btnMonthsBest);
 			btnMonthsBest.setOnClickListener( this );
 			
+			setHeaderButton();
+			
 			Button btnFri = (Button) getView().findViewById(R.id.btnFri);
 			btnFri.setOnClickListener( this );
 			Button btnSat = (Button) getView().findViewById(R.id.btnSat);
@@ -109,6 +114,8 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			ArrayList<JSONObject> data = new ArrayList<JSONObject>();
 			
 			ListView listView = (ListView) getView().findViewById(R.id.list);
+			listView.setDivider( null ); 
+			listView.setDividerHeight(0);
 			listView.setAdapter( new SMSItemAdapter( getActivity(), data ) );
 			listView.setOnItemClickListener( this );
 		}
@@ -120,6 +127,32 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 	
 	String strDate = "";
 	String strDay = "금";
+	
+	public void setHeaderButton()
+	{
+		Button btnDaysBest = (Button) getView().findViewById(R.id.btnDaysBest);
+		Button btnWeeksBest = (Button) getView().findViewById(R.id.btnWeeksBest);
+		Button btnMonthsBest = (Button) getView().findViewById(R.id.btnMonthsBest);
+		
+		if ( requestCode == 1 )
+		{
+			btnDaysBest.setBackgroundResource(R.drawable.tab_menu_bg_01_on);
+			btnWeeksBest.setBackgroundResource(R.drawable.tab_menu_bg_02_off);
+			btnMonthsBest.setBackgroundResource(R.drawable.tab_menu_bg_03_off);
+		}
+		else if ( requestCode == 2 )
+		{
+			btnDaysBest.setBackgroundResource(R.drawable.tab_menu_bg_01_off);
+			btnWeeksBest.setBackgroundResource(R.drawable.tab_menu_bg_02_on);
+			btnMonthsBest.setBackgroundResource(R.drawable.tab_menu_bg_03_off);
+		}
+		else if ( requestCode == 3 )
+		{
+			btnDaysBest.setBackgroundResource(R.drawable.tab_menu_bg_01_off);
+			btnWeeksBest.setBackgroundResource(R.drawable.tab_menu_bg_02_off);
+			btnMonthsBest.setBackgroundResource(R.drawable.tab_menu_bg_03_on);
+		}
+	}
 	
 	@Override
 	public void doPostTransaction( int requestCode, String result) {
@@ -184,6 +217,7 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 		{
 			
 			ArrayList<JSONObject> tempAr = Util.getArrayList( jsonAr.getJSONArray(i) );
+			
 			JSONObject titleObject = new JSONObject();
 			titleObject.put("TYPE", "ITEM1");
 			
@@ -198,13 +232,24 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			
 			tempAr.add(0, titleObject);
 			
-			for ( int j = 1; j < tempAr.size(); j++ )
+			if ( i > 0 )
+			{
+				JSONObject seperatorObject = new JSONObject();
+				seperatorObject.put("TYPE", "ITEM4");
+				tempAr.add(0, seperatorObject);
+			}
+			
+			for ( int j = 0; j < tempAr.size(); j++ )
 			{
 				JSONObject firstObj = tempAr.get(j);
 				
+				if ( firstObj.has("TYPE") && 
+						("ITEM1".equals( firstObj.get("TYPE")) || "ITEM4".equals( firstObj.get("TYPE"))) )
+					continue;
+				
 				strDate = firstObj.getString("d");
 				
-				if ( j == 1 )
+				if ( firstObj.getInt("o") == 1 )
 					firstObj.put("TYPE", "ITEM2");
 				else
 					firstObj.put("TYPE", "ITEM3");
@@ -265,13 +310,39 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
         			TextView txtDate = (TextView) vi.findViewById(R.id.txtDate);
         			
         			if ( requestCode == 1 )
+        			{
+        				LinearLayout thumbnail = (LinearLayout) vi.findViewById(R.id.thumbnail);
+        				thumbnail.setVisibility(ViewGroup.VISIBLE);
+        				ImageView list_image = ( ImageView ) vi.findViewById(R.id.list_image);
+        				
+        				((RelativeLayout.LayoutParams)txtHeaderName.getLayoutParams() ).leftMargin = 0;
+        				
+        				if ( "금".equals( strDay ) )
+        					list_image.setImageResource(R.drawable.prediction_fridaybox);
+        				else if ( "토".equals( strDay ) )
+        					list_image.setImageResource(R.drawable.prediction_saturdaybox);
+        				else if ( "일".equals( strDay ) )
+        					list_image.setImageResource(R.drawable.prediction_sundaybox);
+        				
         				txtDate.setText( strDate + " (" + strDay + ")" );
+        			}
         			else
         				txtDate.setText( strDate );
         		}
         		else if ( "ITEM2".equals( jsonObj.getString("TYPE") ))
         		{
         			vi = inflater.inflate(R.layout.list_smstop_item2, null);
+        			
+        			// Get singletone instance of ImageLoader
+    				ImageLoader imageLoader = ImageLoader.getInstance();
+    				// Initialize ImageLoader with configuration. Do it once.
+    				imageLoader.init(ImageLoaderConfiguration.createDefault( activity ));
+    				// Load and display image asynchronously
+
+    				ImageView list_image = (ImageView) vi.findViewById(R.id.list_image);
+    				
+    				String imageURL = jsonObj.getString("i");
+    				imageLoader.displayImage( imageURL, list_image);
         			
         			TextView txtName = (TextView) vi.findViewById(R.id.txtName);
         			txtName.setText( jsonObj.getString("n") );
@@ -294,10 +365,24 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
         		{
         			vi = inflater.inflate(R.layout.list_smstop_item3, null);
         			
+        			ImageView list_image = (ImageView) vi.findViewById(R.id.list_image);
+        			
+        			if ( jsonObj.getInt("o") < 4 )
+        				list_image.setImageResource(R.drawable.sms_othercell_numberbox);
+        			else
+        				list_image.setImageResource(R.drawable.sms_othercell_numberbox2);
+        			
+        			TextView txtRanking = (TextView) vi.findViewById(R.id.txtRanking);
+        			txtRanking.setText( jsonObj.getString("o") );
+        			
         			TextView txtName = (TextView) vi.findViewById(R.id.txtName);
         			txtName.setText( jsonObj.getString("n") );
         			TextView txtHitRate = (TextView) vi.findViewById(R.id.txtHitRate );
         			txtHitRate.setText( jsonObj.getString("p") );
+        		}
+        		else if ( "ITEM4".equals( jsonObj.getString("TYPE") ))
+        		{
+        			vi = inflater.inflate(R.layout.list_smstop_item4, null);
         		}
 
 				vi.setTag( jsonObj );
@@ -348,6 +433,10 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				requestCode = 1;
 				strDay = "금";
 				strPeriod = "D";
+				
+				setHeaderButton();
+				setWeekDay();
+				
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbDAY=1", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnWeeksBest )
@@ -357,6 +446,9 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				
 				requestCode = 2;
 				strPeriod = "W";
+				
+				setHeaderButton();
+				
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbCNT=1", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnMonthsBest )
@@ -366,6 +458,9 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				
 				requestCode = 3;
 				strPeriod = "M";
+				
+				setHeaderButton();
+				
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbCNT=1", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnFri )
@@ -373,6 +468,9 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				requestCode = 1;
 				strDay = "금";
 				strPeriod = "D";
+				
+				setWeekDay();
+				
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbDAY=1", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnSat )
@@ -380,6 +478,9 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				requestCode = 1;
 				strDay = "토";
 				strPeriod = "D";
+				
+				setWeekDay();
+				
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbDAY=2", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnSun )
@@ -387,6 +488,9 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				requestCode = 1;
 				strDay = "일";
 				strPeriod = "D";
+				
+				setWeekDay();
+				
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbDAY=3", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnRefund )
@@ -408,10 +512,39 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				requestCode = 6;
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbCNT=4", requestCode, null);
 			}
+			
 		}
 		catch( Exception ex )
 		{
 			writeLog( ex.getMessage() );
 		}
+	}
+	
+	public void setWeekDay()
+	{
+		Button btnFriday = (Button) getView().findViewById(R.id.btnFri);
+		Button btnSat = (Button) getView().findViewById(R.id.btnSat);
+		Button btnSun = (Button) getView().findViewById(R.id.btnSun);
+		
+		if ( "금".equals( strDay ) )
+		{
+			btnFriday.setBackgroundResource(R.drawable.btn_fri_on);
+			btnSat.setBackgroundResource(R.drawable.btn_sat_off);
+			btnSun.setBackgroundResource(R.drawable.btn_sun_off);
+		}
+		else if ( "토".equals( strDay ) )
+		{
+			btnFriday.setBackgroundResource(R.drawable.btn_fri_off);
+			btnSat.setBackgroundResource(R.drawable.btn_sat_on);
+			btnSun.setBackgroundResource(R.drawable.btn_sun_off);
+		}
+		else if ( "일".equals( strDay ) )
+		{
+			btnFriday.setBackgroundResource(R.drawable.btn_fri_off);
+			btnSat.setBackgroundResource(R.drawable.btn_sat_off);
+			btnSun.setBackgroundResource(R.drawable.btn_sun_on);
+		}
+		
+		
 	}
 }
