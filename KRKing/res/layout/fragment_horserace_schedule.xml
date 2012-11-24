@@ -41,21 +41,22 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="금요" />
+            android:background="@drawable/tab_menu01_fri_on" />
 
         <Button
             android:id="@+id/btnSat"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="토요" />
+            android:background="@drawable/tab_menu02_sat_off" />
 
         <Button
             android:id="@+id/btnSun"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="일요" />
+            android:background="@drawable/tab_menu03_sun_off" />
+        
     </LinearLayout>
 
     <ScrollView
