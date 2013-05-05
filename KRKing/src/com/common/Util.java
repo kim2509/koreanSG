@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.os.Build;
 import android.util.TypedValue;
 
 public class Util {
@@ -48,6 +49,14 @@ public class Util {
 	{
 		Pattern pattern = Pattern.compile(emailPattern);
 		return pattern.matcher( email ).matches();
+	}
+	
+	private static String idPattern = "[A-Z0-9a-z]+";
+	
+	public static boolean validateID( String id )
+	{
+		Pattern pattern = Pattern.compile(idPattern);
+		return pattern.matcher( id ).matches();
 	}
 	
 	public static Bitmap getImageFromPath( String imagePath ) throws Exception
@@ -116,5 +125,12 @@ public class Util {
 		Date date = df.parse( d );
 		SimpleDateFormat myFormat = new SimpleDateFormat( toFormat );
 		return myFormat.format( date );	
+	}
+	
+	public static boolean isSimulator()
+	{
+		if ( "google_sdk".equals( Build.PRODUCT ) )
+			return true;
+		else return false;
 	}
 }
