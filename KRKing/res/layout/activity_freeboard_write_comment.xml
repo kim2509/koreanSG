@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        style="@style/TopBar" >
+
+        <TextView
+            android:id="@+id/txtTopTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="덧글작성"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/btn_back"
+            android:onClick="goBack" />
+        
+        <Button
+            android:id="@+id/btnWrite"
+            android:layout_width="41dp"
+            android:layout_height="29dp"
+            android:background="@drawable/btn_write"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+        
+    </RelativeLayout>
+    
+    <EditText 
+        android:id="@+id/edtComment"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/rLayout"
+        android:gravity="top|left"/>
+
+</RelativeLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/prediction_tablecell"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/imgReply"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/icon_comment" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@+id/imgReply"
+        android:singleLine="true"
+        android:text="title"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/fComments"
+        android:layout_width="25dp"
+        android:layout_height="23dp"
+        android:layout_alignTop="@+id/title"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/title" >
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="23dp"
+            android:src="@drawable/icon_comment_speech_bubble" />
+
+        <TextView
+            android:id="@+id/txtComments"
+            android:layout_width="25dp"
+            android:layout_height="23dp"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="1dp"
+            android:text="3"
+            android:textColor="#1E5BC0"
+            android:textSize="13sp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:text="2012-12-12"
+        android:textColor="#878787"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/txtRefCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/txtDate"
+        android:text="조회"
+        android:textColor="#878787"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/imgFinger"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/txtRefCount"
+        android:src="@drawable/icon_finger" />
+
+    <TextView
+        android:id="@+id/txtLikesCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/imgFinger"
+        android:text="323"
+        android:textColor="#878787"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/imgAuthor"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/txtLikesCount"
+        android:src="@drawable/icon_people_2" />
+
+    <TextView
+        android:id="@+id/txtAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/imgAuthor"
+        android:singleLine="true"
+        android:text="기억하라"
+        android:textColor="#878787"
+        android:textSize="13sp" />
+
+</RelativeLayout>

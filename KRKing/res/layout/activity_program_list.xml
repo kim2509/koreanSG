@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rProgramList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/white"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/rHeader1"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/popup_header_bg" >
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="방송 편성표"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
+            
+            <Button
+                android:id="@+id/btnClose"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/popup_btn_close"
+                android:onClick="goBack" />
+            
+        </RelativeLayout>
+        
+        <LinearLayout
+            android:id="@+id/rHeader2" 
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/rHeader1"
+            android:background="@drawable/popup_header2_bg">
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/rHeader2"
+            android:background="@android:color/white"
+            android:cacheColorHint="#00000000">
+        </ListView>
+    </RelativeLayout>
+
+</RelativeLayout>

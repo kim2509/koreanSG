@@ -33,21 +33,20 @@
         android:id="@+id/lLayer"
         android:layout_width="fill_parent"
         android:layout_height="44dp"
-        android:layout_below="@+id/rLayout"
-        android:background="@drawable/main_top_bg" >
+        android:layout_below="@+id/rLayout">
 
         <Button
-            android:id="@+id/btnDaysBest"
+            android:id="@+id/btnSeoul"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="일간 BEST" 
+            android:layout_height="fill_parent"
+            android:background="@drawable/tab_menu_01_seoul_on"
             android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/btnWeeksBest"
+            android:id="@+id/btnBusan"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="주간 BEST" 
+            android:layout_height="fill_parent"
+            android:background="@drawable/tab_menu_02_busan_off" 
             android:layout_weight="1"/>        
 
     </LinearLayout>

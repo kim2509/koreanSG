@@ -59,20 +59,12 @@
             android:background="@drawable/tab_menu03_sun_off" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lLayer2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lLayer"
-        android:orientation="vertical" >
-    </LinearLayout>
-
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rRounds"
-        android:layout_below="@+id/lLayer2"
+        android:layout_below="@+id/lLayer"
         android:cacheColorHint="#00000000"
         android:fadingEdge="none"
         android:listSelector="@android:color/transparent" >

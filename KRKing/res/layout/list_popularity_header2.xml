@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/table01_line_"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="7"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="o"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="18"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="n"
+            android:text="지수사"
+            android:textColor="#0083D1"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="14"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="k"
+            android:text="지수사"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="5"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="p1"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="5"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="p2"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="5"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="p3"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="5"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="p4"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="5"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="p5"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_weight="17"
+            android:layout_height="fill_parent" >
+            
+            <ImageView android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/graph_bar_bg"
+                android:layout_gravity="center_vertical"/>
+            
+            <ImageView android:layout_width="55dp"
+                android:layout_height="20dp"
+                android:tag="percent"
+                android:background="@drawable/graph_bar"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="55dp"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:singleLine="true"
+                android:text="70%"
+                android:tag="percentText"
+                android:textColor="#424242"
+                android:textSize="10sp" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="11"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="t"
+            android:text="지수사"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="8"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="w"
+            android:text="지수사"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+</LinearLayout>

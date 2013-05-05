@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/result_table_line"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="90"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="i0"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="93"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="i1"
+            android:text="4"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="167"
+            android:layout_height="29dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:tag="i2"
+            android:text="지수사"
+            android:paddingLeft="5dp"
+            android:textColor="#424242"
+            android:background="#E1E7F0"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="95"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="i3"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="125"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="i4"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+        
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="90"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="i6"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+        
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="212"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:singleLine="true"
+            android:tag="i7"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+        
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="128"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|right"
+            android:paddingRight="3dp"
+            android:singleLine="true"
+            android:tag="i8"
+            android:text="1"
+            android:textColor="#424242"
+            android:textSize="11sp" />
+        
+    </LinearLayout>
+
+</LinearLayout>

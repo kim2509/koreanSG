@@ -14,7 +14,8 @@
             android:textColor="@android:color/white"
             android:background="@drawable/header_bg"
             android:gravity="center_vertical|center_horizontal"/>
-        <ImageView android:layout_width="fill_parent"
+        <ImageView android:id="@+id/imgBanner"
+            android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:src="@drawable/menu_banner"
             android:scaleType="fitXY"/>

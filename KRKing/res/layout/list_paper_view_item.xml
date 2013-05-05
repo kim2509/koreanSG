@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sub_cell"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp" >
+
+    <!-- Rightend Arrow -->
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/btn_next_icon" />
+
+    <ImageView
+        android:id="@+id/imgDay"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/btn_fri" />
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgDay"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_centerVertical="true"
+        android:singleLine="true"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#333333"
+        android:textSize="17sp" />
+
+</RelativeLayout>

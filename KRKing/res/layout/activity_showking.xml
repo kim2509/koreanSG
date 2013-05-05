@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shocking_title_bar" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:layout_toLeftOf="@+id/button1"
+            android:layout_marginRight="50dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/txtSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="20sp"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/btn_close"
+            android:onClick="goBack" />
+    </RelativeLayout>
+
+    <com.common.VideoViewCustom
+        android:id="@+id/video"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/rLayout" />
+
+    <LinearLayout
+        android:id="@+id/lPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lToolbar"
+        android:layout_below="@+id/video"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnWeeklyMonthly"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/menubtn_01_off"
+                android:onClick="loadList"
+                android:tag="5" />
+
+            <Button
+                android:id="@+id/btnFriday"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/menubtn_02_off"
+                android:onClick="loadList"
+                android:tag="6" />
+
+            <Button
+                android:id="@+id/btnSaturday"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/menubtn_03_off"
+                android:onClick="loadList"
+                android:tag="7" />
+
+            <Button
+                android:id="@+id/btnSunday"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/menubtn_04_off"
+                android:onClick="loadList"
+                android:tag="8" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:cacheColorHint="#00000000" >
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lToolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnThisWeek"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_this_week_off"
+            android:onClick="loadList"
+            android:tag="1" />
+
+        <Button
+            android:id="@+id/btnLastWeek"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_last_week_off"
+            android:onClick="loadList"
+            android:tag="2" />
+
+        <Button
+            android:id="@+id/btnPlan"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_plan_off"
+            android:onClick="loadList"
+            android:tag="3" />
+
+        <Button
+            android:id="@+id/btnETC"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_etc_off"
+            android:onClick="loadList"
+            android:tag="4" />
+
+        <Button
+            android:id="@+id/btnProgramList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_program_list_off"
+            android:onClick="loadList" />
+    </LinearLayout>
+
+</RelativeLayout>

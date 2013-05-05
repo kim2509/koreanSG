@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/schedule_title_bg">
+
+        <ImageView android:id="@+id/img_city" 
+            android:layout_width="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:tag="city"/>
+        
+        <TextView android:id="@+id/txtDate" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_city"
+            android:layout_marginTop="10dp"
+            android:padding="2dp"
+            android:layout_marginLeft="10dp"
+            android:tag="date"
+            android:textColor="#232323"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"/>
+        
+        <ImageView android:id="@+id/img_day" 
+            android:layout_width="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtDate"
+            android:tag="day"/>
+        
+        <TextView android:id="@+id/txtTime" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_day"
+            android:layout_marginTop="10dp"
+            android:padding="2dp"
+            android:layout_marginLeft="5dp"
+            android:tag="time"
+            android:textColor="#232323"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+        
+        <TextView android:id="@+id/txtRound" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_city"
+            android:layout_marginLeft="10dp"
+            android:tag="round"
+            android:textColor="#1E5BC0"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"/>
+        
+        <TextView android:id="@+id/txtEtc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtRound"
+            android:layout_below="@+id/txtDate"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:tag="etc"
+            android:textColor="#232323"
+            android:textSize="13sp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"/>
+        
+        <Button
+            android:id="@+id/btnGo"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/btn_nextmenu" />
+    </RelativeLayout>
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/table_title_bg">
+        
+    </LinearLayout>
+
+</LinearLayout>

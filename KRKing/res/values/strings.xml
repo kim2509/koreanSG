@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">KRKing</string>
+    <string name="app_name">경마왕</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_intro">IntroActivity</string>
@@ -10,5 +10,14 @@
     <string name="title_activity_horse_race_result_detail">HorseRaceResultDetailActivity</string>
     <string name="title_activity_horse_race_expectation">HorseRaceExpectationActivity</string>
     <string name="title_activity_terms_ncontract">TermsNContractActivity</string>
+    <string name="title_activity_program_list">ProgramListActivity</string>
+    <string name="title_activity_dawn">DawnActivity</string>
+    <string name="title_activity_show_king_home">ShowKingHomeActivity</string>
+    <string name="title_activity_paper_detail">PaperDetailActivity</string>
+    <string name="title_activity_paper_view_detail_activity2">PaperViewDetailActivity2</string>
+    <string name="title_activity_freeboard_content">FreeboardContentActivity</string>
+    <string name="title_activity_freeboard_comments">FreeboardCommentsActivity</string>
+    <string name="title_activity_freeboard_write_comment">FreeboardWriteCommentActivity</string>
+    <string name="title_activity_freeboard_write_post">FreeboardWritePostActivity</string>
 
 </resources>
