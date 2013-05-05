@@ -1,5 +1,7 @@
 package com.krking;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,14 +14,25 @@ import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class HorseRaceResultDetailActivity extends BaseActivity {
+public class HorseRaceResultDetailActivity extends BaseActivity implements OnClickListener{
 
+	String round = "";
+	String totalRound = "";
+	String city = "";
+	String date = "";
+	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -30,30 +43,41 @@ public class HorseRaceResultDetailActivity extends BaseActivity {
             
             String param = getIntent().getExtras().getString("param");
             
-            String city = param.split("\\|")[0];
+            city = param.split("\\|")[0];
             
-            if ( "º≠øÔ".equals( city ) )
+            if ( "ÏÑúÏö∏".equals( city ) )
             	city = "KC";
-            else if ( "∫ŒªÍ".equals( city ) )
+            else if ( "Î∂ÄÏÇ∞".equals( city ) )
             	city = "BU";
             
-            String date = param.split("\\|")[1];
+            date = param.split("\\|")[1];
             
             date = date.replaceAll(" ", "");
-            date = date.replaceAll("≥‚", "");
-            date = date.replaceAll("ø˘", "");
-            date = date.replaceAll("¿œ", "");
+            date = date.replaceAll("ÎÖÑ", "");
+            date = date.replaceAll("Ïõî", "");
+            date = date.replaceAll("Ïùº", "");
             
-            String round = param.split("\\|")[2];
+            round = param.split("\\|")[2];
+            
+            totalRound = param.split("\\|")[3];
+            
+            ArrayList<JSONObject> data = new ArrayList<JSONObject>();
+
+			ListView listView = (ListView) findViewById(R.id.list);
+			listView.setDivider( null ); 
+			listView.setDividerHeight(0);
+			listView.setAdapter( new ResultItemAdapter( this, data ) );
             
             execTransReturningString( "krRaceInfo/krRaceResultDetail.aspx?pgb=" + city + "&pDate=" + date + "&pRound=" + 
-            		round + "&totRound=10", null );
+            		round + "&totRound=" + totalRound , null );
     	}
     	catch( Exception ex )
     	{
     		writeLog( ex.getMessage() );
     	}
     }
+    
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,63 +98,90 @@ public class HorseRaceResultDetailActivity extends BaseActivity {
         	JSONObject headerInfo1 = jsonObj.getJSONObject("RaceINF1");
         	JSONObject headerInfo2 = jsonObj.getJSONObject("RaceINF2");
         	
-        	TextView tv = (TextView) findViewById(R.id.txtHeaderInfo);
+        	ArrayList<JSONObject> data = new ArrayList<JSONObject>();
         	
-        	tv.setText( Util.getDateString( headerInfo1.getString("c"), "yyyyMMdd", "yyyy≥‚ MMø˘ dd¿œ") + 
-        			" (" + headerInfo1.getString("w") + ") " + headerInfo1.getString("g") + "  " + 
-        			headerInfo1.getString("r") + "  " + headerInfo1.getString("t") + "  " + headerInfo1.getString("u") +
-        			"  " + headerInfo1.getString("s") );
+        	JSONObject jsonItem = new JSONObject();
+        	jsonItem.put("TYPE", "ITEM1");
+        	jsonItem.put("RaceINF1", headerInfo1);
+        	jsonItem.put("RaceINF2", headerInfo2);
         	
-        	TextView tv2 = (TextView) findViewById(R.id.txtHeaderInfo2);
+        	data.add( jsonItem );
         	
-        	tv2.setText( headerInfo1.getString("k") + "  " + headerInfo2.getString("li") + " " + headerInfo2.getString("ki") +
-        			headerInfo2.getString("ji") + " " + headerInfo2.getString("ai") );
+        	ArrayList<JSONObject> tempAr = Util.getArrayList( jsonObj.getJSONArray("HorseINF") );
+        	for ( int j = 0; j < tempAr.size(); j++ )
+			{
+				JSONObject firstObj = tempAr.get(j);
+				firstObj.put("TYPE", "ITEM2");
+			}
         	
-        	LinearLayout l = (LinearLayout) findViewById(R.id.lLayout );
+        	data.addAll( tempAr );
         	
-        	JSONArray jsonAr = jsonObj.getJSONArray("HorseINF");
+        	jsonItem = new JSONObject();
+        	jsonItem.put("TYPE", "ITEM3");
+        	data.add( jsonItem );
         	
-        	String[] dataHeaders = new String[]{"i0", "i1", "i2", "i3", "i4", "i5", "i6", "i7", "i8", "i9"};
-        	int[] width = new int[]{20, 20, 80, 30, 50, 70, 40, 60, 40, 40};
+        	tempAr = Util.getArrayList( jsonObj.getJSONArray("CORNERTIME") );
+        	for ( int j = 0; j < tempAr.size(); j++ )
+			{
+				JSONObject firstObj = tempAr.get(j);
+				firstObj.put("TYPE", "ITEM4");
+			}
         	
-        	for ( int i = 0; i < jsonAr.length(); i++ )
-        	{
-        		JSONObject jsonItem = jsonAr.getJSONObject(i);
-            	TableLayout tl = (TableLayout) l.findViewWithTag("table1");
-            	TableRow tr = getTableRow(tl, 0, 1, 0, 0);
-            	String[] d = getDataFromJSONObject( dataHeaders, jsonItem );
-            	getTableCells(tr, d, 0, 0, 0, 0, width, "#ffffff");	
-        	}
+        	data.addAll( tempAr );
         	
-        	jsonAr = jsonObj.getJSONArray("CORNERTIME");
+        	jsonItem = new JSONObject();
+        	jsonItem.put("TYPE", "ITEM5");
+        	data.add( jsonItem );
         	
-        	dataHeaders = new String[]{"o", "n", "S1F", "C1", "C2", "C3", "C4", "G3F", "G1F", "G"};
-        	width = new int[]{20, 20, 60, 60, 60, 60, 60, 50, 50, 50};
+        	jsonItem = new JSONObject();
+        	jsonItem.put("TYPE", "ITEM6");
+        	jsonItem.put("BAEDANG", jsonObj.getJSONObject("BAEDANG"));
+        	data.add( jsonItem );
         	
-        	for ( int i = 0; i < jsonAr.length(); i++ )
-        	{
-        		JSONObject jsonItem = jsonAr.getJSONObject(i);
-            	TableLayout tl = (TableLayout) l.findViewWithTag("table2");
-            	TableRow tr = getTableRow(tl, 0, 1, 0, 0);
-            	String[] d = getDataFromJSONObject( dataHeaders, jsonItem );
-            	getTableCells(tr, d, 0, 0, 0, 0, width, "#ffffff");
-        	}
+        	jsonItem = new JSONObject();
+        	jsonItem.put("TYPE", "ITEM7");
+        	data.add( jsonItem );
         	
-        	JSONObject baedang = jsonObj.getJSONObject("BAEDANG");
+        	jsonItem = new JSONObject();
+        	jsonItem.put("TYPE", "ITEM8");
+        	jsonItem.put("JUDGMENT", jsonObj.getJSONObject("JUDGMENT"));
+        	data.add( jsonItem );
         	
-        	TextView txt1 = (TextView) findViewById(R.id.txt1 );
-        	txt1.setText( baedang.getString("DS") + "  " + baedang.getString("YS") );
-        	TextView txt2 = (TextView) findViewById(R.id.txt2 );
-        	txt2.setText( baedang.getString("BS") + "  " + baedang.getString("BY") );
-        	TextView txt3 = (TextView) findViewById(R.id.txt3 );
-        	txt3.setText( baedang.getString("SS") );
-        	TextView txt4 = (TextView) findViewById(R.id.txt4 );
-        	txt4.setText( baedang.getString("SB") );
-        	
-        	JSONObject judgement = jsonObj.getJSONObject("JUDGMENT");
-        	
-        	TextView txt5 = (TextView) findViewById(R.id.txt5 );
-        	txt5.setText( judgement.getString("i") );
+        	ListView listView = (ListView) findViewById(R.id.list);
+        	ResultItemAdapter adapter = (ResultItemAdapter) listView.getAdapter();
+			adapter.setData(data);
+			adapter.notifyDataSetChanged();
+        
+			LinearLayout lLayout2 = (LinearLayout) findViewById(R.id.lLayout2 );
+			lLayout2.removeAllViews();
+			
+			JSONArray jsonAr = jsonObj.getJSONArray( "Round" );
+			
+			for ( int i = 0; i < jsonAr.length(); i++ )
+			{
+				jsonItem = jsonAr.getJSONObject( i );
+				
+				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				View vi = inflater.inflate(R.layout.template, null);
+				LinearLayout lPLayout = (LinearLayout) vi.findViewById(R.id.lParent);
+
+				Button btn = (Button) vi.findViewById(R.id.btn_template);
+				lPLayout.removeView( btn );
+				
+				lLayout2.addView( btn );
+				
+				btn.setText( jsonItem.getString("r") + "R" );
+				btn.setTextColor(Color.GRAY);
+				
+				btn.setOnClickListener( this );
+				btn.setTag( jsonItem.getString("r") );
+				
+				if ( (i+1) == Integer.parseInt(round) )
+				{
+					btn.setBackgroundResource(R.drawable.btn_r_bg_on);
+					btn.setTextColor(Color.WHITE);
+				}
+			}
     	}
     	catch( Exception ex )
     	{
@@ -138,45 +189,181 @@ public class HorseRaceResultDetailActivity extends BaseActivity {
     	}
     }
     
-    private TableRow getTableRow(TableLayout tl, int topMargin, int bottomMargin, int rightMargin, int leftMargin ) {
-		TableRow tr = new TableRow( this );
-		tl.addView( tr );
-		TableLayout.LayoutParams trp = (TableLayout.LayoutParams) tr.getLayoutParams();
-		trp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-		trp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-		trp.setMargins( topMargin, bottomMargin, rightMargin, leftMargin );
-		tr.setBackgroundColor(Color.BLACK);
-		return tr;
-	}
-    
-    public String[] getDataFromJSONObject( String[] dataHeaders,JSONObject data ) throws Exception
-	{
-		String[] d = new String[dataHeaders.length];
-		for ( int i = 0; i < dataHeaders.length; i++ )
-		{
-			d[i] = data.getString( dataHeaders[i] );
+    public class ResultItemAdapter extends BaseAdapter {
+
+		private Activity activity;
+		private ArrayList<JSONObject> data;
+		private LayoutInflater inflater=null;
+
+		public ResultItemAdapter(Activity a, ArrayList<JSONObject> d) {
+			activity = a;
+			data=d;
+			inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 
-		return d;
-	}
-    
-    public void getTableCells(TableRow tr, String[] columnData, int topMargin, int bottomMargin, int rightMargin, int leftMargin,
-			int[] width, String backgroundColor ) {
-
-		for ( int i = 0; i < columnData.length; i++ )
+		public void setData( ArrayList<JSONObject> data )
 		{
-			TextView tv = new TextView( this );
-			tr.addView( tv );
-			LinearLayout.LayoutParams tvp = (LinearLayout.LayoutParams) tv.getLayoutParams();
-			tvp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-			tvp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-			tvp.setMargins( topMargin, bottomMargin, rightMargin, leftMargin );
-			tv.setPadding(3, 2, 3, 2);
-			tv.setWidth( width[i] );
-			tv.setText( columnData[i] );
-			tv.setBackgroundColor( Color.parseColor( backgroundColor ));
-			tv.setTextColor(Color.BLACK);
-			tv.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL );
+			this.data = data;
+		}
+
+		public int getCount() {
+			return data.size();
+		}
+
+		public JSONObject getItem(int position) {
+			return data.get(position);
+		}
+
+		public long getItemId(int position) {
+			return position;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			try
+			{
+				View vi=convertView;
+
+				JSONObject jsonObj = data.get(position);
+
+				String tag = "";
+				
+				if ( "ITEM1".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header1, null);
+					
+					ImageView iv = (ImageView) vi.findViewWithTag("city");
+					
+					JSONObject header1 = jsonObj.getJSONObject("RaceINF1");
+					JSONObject header2 = jsonObj.getJSONObject("RaceINF2");
+
+					if ( "ÏÑúÏö∏".equals( header1.getString("g") ) )
+						iv.setImageResource(R.drawable.btn_seoul);
+					else if ( "Î∂ÄÏÇ∞".equals( header1.getString("g") ) )
+						iv.setImageResource(R.drawable.btn_busan);
+					else if ( "Ï†úÏ£º".equals( header1.getString("g") ) )
+						iv.setImageResource(R.drawable.btn_jeju);
+
+					TextView tv = (TextView) vi.findViewById(R.id.txtDate);
+					tv.setText( header1.getString("d") );
+
+					ImageView ivDay = (ImageView) vi.findViewWithTag("day");
+
+					if ( "Í∏à".equals( header1.getString("w") ) )
+						ivDay.setImageResource(R.drawable.btn_fri);
+					else if ( "ÌÜ†".equals( header1.getString("w") ) )
+						ivDay.setImageResource(R.drawable.btn_sat);
+					else if ( "Ïùº".equals( header1.getString("w") ) )
+						ivDay.setImageResource(R.drawable.btn_sun);
+
+					TextView txtWeather = (TextView) vi.findViewById(R.id.txtWeather);
+					txtWeather.setText( header1.getString("t") + " " + header1.getString("u") + " " + header1.getString("s") );
+
+					TextView txtRound = (TextView) vi.findViewById(R.id.txtRound);
+					txtRound.setText( round + "R");
+
+					TextView txtEtc = (TextView) vi.findViewById(R.id.txtEtc);
+					txtEtc.setText( header1.getString("k") + " " + header2.getString("li") + " " +
+							header2.getString("ki") + " " + header2.getString("ji") + " " + header2.getString("ai") );
+				}
+				else if ( "ITEM2".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header2, null);
+
+					String[] dataHeaders = new String[]{"i0", "i1", "i2", "i3", "i4", "i6", "i7", "i8"};
+					for ( int i = 0; i < dataHeaders.length; i++ )
+					{
+						TextView tv = (TextView) vi.findViewWithTag( dataHeaders[i] );
+						tv.setText( jsonObj.getString( dataHeaders[i] ).trim());
+					}
+				}
+				else if ( "ITEM3".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header3, null);
+				}
+				else if ( "ITEM4".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header4, null);
+
+					String[] dataHeaders = new String[]{"o", "n", "S1F", "C1", "C2", "C3", "C4", "G3F", "G1F", "G"};
+					for ( int i = 0; i < dataHeaders.length; i++ )
+					{
+						TextView tv = (TextView) vi.findViewWithTag( dataHeaders[i] );
+						tv.setText( jsonObj.getString( dataHeaders[i] ).trim());
+					}
+				}
+				else if ( "ITEM5".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header5, null);
+				}
+				else if ( "ITEM6".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header6, null);
+					
+					JSONObject baedangInfo = jsonObj.getJSONObject("BAEDANG");
+					
+					TextView tv = (TextView) vi.findViewWithTag("1");
+					tv.setText( baedangInfo.getString("DS") + " " + baedangInfo.getString("YS") );
+					tv = (TextView) vi.findViewWithTag("2");
+					tv.setText( baedangInfo.getString("BS"));
+					tv = (TextView) vi.findViewWithTag("3");
+					tv.setText( baedangInfo.getString("BY"));
+					tv = (TextView) vi.findViewWithTag("4");
+					tv.setText( baedangInfo.getString("SS"));
+					tv = (TextView) vi.findViewWithTag("5");
+					tv.setText( baedangInfo.getString("SB"));
+				}
+				else if ( "ITEM7".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header7, null);
+				}
+				else if ( "ITEM8".equals( jsonObj.getString("TYPE") ))
+				{
+					vi = inflater.inflate(R.layout.list_result_header8, null);
+					
+					JSONObject judgementInfo = jsonObj.getJSONObject("JUDGMENT");
+					
+					TextView tv = (TextView) vi.findViewWithTag("1");
+					tv.setText( judgementInfo.getString("i") );
+				}
+
+				vi.setTag( tag );
+
+				return vi;	
+			}
+			catch( Exception ex )
+			{
+				writeLog( ex.getMessage() );
+			}
+
+			return null;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		try
+		{
+			Button btn = (Button) v;
+			
+			LinearLayout lLayout2 = (LinearLayout) findViewById(R.id.lLayout2 );
+			for ( int i = 0; i < lLayout2.getChildCount(); i++ )
+			{
+				Button btnTemp = (Button) lLayout2.getChildAt(i);
+				btnTemp.setTextColor(Color.GRAY);
+				btnTemp.setBackgroundResource(R.drawable.btn_r_bg_off);
+			}
+			
+			btn.setBackgroundResource(R.drawable.btn_r_bg_on);
+			btn.setTextColor(Color.WHITE);
+			
+			round = btn.getTag().toString();
+			execTransReturningString( "krRaceInfo/krRaceResultDetail.aspx?pgb=" + city + "&pDate=" + date + "&pRound=" + 
+            		round + "&totRound=" + totalRound , null );
+		}
+		catch( Exception ex )
+		{
+			writeLog( ex.getMessage() );
 		}
 	}
 }

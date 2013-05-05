@@ -126,7 +126,7 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 	}
 	
 	String strDate = "";
-	String strDay = "±İ";
+	String strDay = "ê¸ˆ";
 	
 	public void setHeaderButton()
 	{
@@ -175,13 +175,13 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				titleObject.put("TYPE", "ITEM1");
 				
 				if ( requestCode == 2 || requestCode == 3 )
-					titleObject.put("TITLE", "È¯¼ö Top");
+					titleObject.put("TITLE", "í™˜ìˆ˜ Top");
 				else if ( requestCode == 4 )
-					titleObject.put("TITLE", "ÀûÁß Top");
+					titleObject.put("TITLE", "ì ì¤‘ Top");
 				else if ( requestCode == 5 )
-					titleObject.put("TITLE", "¹è´ç Top");
+					titleObject.put("TITLE", "ë°°ë‹¹ Top");
 				else if (requestCode == 6 )
-					titleObject.put("TITLE", "Ãà¸¶ Top");
+					titleObject.put("TITLE", "ì¶•ë§ˆ Top");
 				
 				tempAr.add(0, titleObject);
 				
@@ -222,13 +222,13 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			titleObject.put("TYPE", "ITEM1");
 			
 			if ( i == 0 )
-				titleObject.put("TITLE", "È¯¼ö Top");
+				titleObject.put("TITLE", "í™˜ìˆ˜ Top");
 			else if ( i == 1 )
-				titleObject.put("TITLE", "ÀûÁß Top");
+				titleObject.put("TITLE", "ì ì¤‘ Top");
 			else if ( i == 2 )
-				titleObject.put("TITLE", "¹è´ç Top");
+				titleObject.put("TITLE", "ë°°ë‹¹ Top");
 			else if ( i == 3 )
-				titleObject.put("TITLE", "Ãà¸¶ Top");
+				titleObject.put("TITLE", "ì¶•ë§ˆ Top");
 			
 			tempAr.add(0, titleObject);
 			
@@ -238,6 +238,9 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				seperatorObject.put("TYPE", "ITEM4");
 				tempAr.add(0, seperatorObject);
 			}
+			
+			//ì²«ì§¸ cell ë§Œ ì‚¬ì§„ ë‚˜ì˜¤ëŠ” íƒ€ì´í‹€ë¡œ.
+			boolean bBig = true;
 			
 			for ( int j = 0; j < tempAr.size(); j++ )
 			{
@@ -249,8 +252,11 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				
 				strDate = firstObj.getString("d");
 				
-				if ( firstObj.getInt("o") == 1 )
+				if ( firstObj.getInt("o") == 1 && bBig )
+				{
 					firstObj.put("TYPE", "ITEM2");
+					bBig = false;
+				}
 				else
 					firstObj.put("TYPE", "ITEM3");
 			}
@@ -317,11 +323,11 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
         				
         				((RelativeLayout.LayoutParams)txtHeaderName.getLayoutParams() ).leftMargin = 0;
         				
-        				if ( "±İ".equals( strDay ) )
+        				if ( "ê¸ˆ".equals( strDay ) )
         					list_image.setImageResource(R.drawable.prediction_fridaybox);
-        				else if ( "Åä".equals( strDay ) )
+        				else if ( "í† ".equals( strDay ) )
         					list_image.setImageResource(R.drawable.prediction_saturdaybox);
-        				else if ( "ÀÏ".equals( strDay ) )
+        				else if ( "ì¼".equals( strDay ) )
         					list_image.setImageResource(R.drawable.prediction_sundaybox);
         				
         				txtDate.setText( strDate + " (" + strDay + ")" );
@@ -431,7 +437,7 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 				rLayout2.setVisibility(View.VISIBLE);
 				
 				requestCode = 1;
-				strDay = "±İ";
+				strDay = "ê¸ˆ";
 				strPeriod = "D";
 				
 				setHeaderButton();
@@ -466,7 +472,7 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			else if ( arg0.getId() == R.id.btnFri )
 			{
 				requestCode = 1;
-				strDay = "±İ";
+				strDay = "ê¸ˆ";
 				strPeriod = "D";
 				
 				setWeekDay();
@@ -476,7 +482,7 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			else if ( arg0.getId() == R.id.btnSat )
 			{
 				requestCode = 1;
-				strDay = "Åä";
+				strDay = "í† ";
 				strPeriod = "D";
 				
 				setWeekDay();
@@ -486,7 +492,7 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			else if ( arg0.getId() == R.id.btnSun )
 			{
 				requestCode = 1;
-				strDay = "ÀÏ";
+				strDay = "ì¼";
 				strPeriod = "D";
 				
 				setWeekDay();
@@ -495,20 +501,56 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 			}
 			else if ( arg0.getId() == R.id.btnRefund )
 			{
+				Button btnRefund = (Button) getView().findViewById(R.id.btnRefund);
+				btnRefund.setBackgroundResource(R.drawable.btn_bottm_01_on);
+				Button btnHit = (Button) getView().findViewById(R.id.btnHit);
+				btnHit.setBackgroundResource(R.drawable.btn_bottm_02_off);
+				Button btnDividends = (Button) getView().findViewById(R.id.btnDividends);
+				btnDividends.setBackgroundResource(R.drawable.btn_bottm_03_off);
+				Button btnCHorse = (Button) getView().findViewById(R.id.btnCHorse);
+				btnCHorse.setBackgroundResource(R.drawable.btn_bottm_04_off);
+				
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbCNT=1", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnHit )
 			{
+				Button btnRefund = (Button) getView().findViewById(R.id.btnRefund);
+				btnRefund.setBackgroundResource(R.drawable.btn_bottm_01_off);
+				Button btnHit = (Button) getView().findViewById(R.id.btnHit);
+				btnHit.setBackgroundResource(R.drawable.btn_bottm_02_on);
+				Button btnDividends = (Button) getView().findViewById(R.id.btnDividends);
+				btnDividends.setBackgroundResource(R.drawable.btn_bottm_03_off);
+				Button btnCHorse = (Button) getView().findViewById(R.id.btnCHorse);
+				btnCHorse.setBackgroundResource(R.drawable.btn_bottm_04_off);
+				
 				requestCode = 4;
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbCNT=2", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnDividends )
 			{
+				Button btnRefund = (Button) getView().findViewById(R.id.btnRefund);
+				btnRefund.setBackgroundResource(R.drawable.btn_bottm_01_off);
+				Button btnHit = (Button) getView().findViewById(R.id.btnHit);
+				btnHit.setBackgroundResource(R.drawable.btn_bottm_02_off);
+				Button btnDividends = (Button) getView().findViewById(R.id.btnDividends);
+				btnDividends.setBackgroundResource(R.drawable.btn_bottm_03_on);
+				Button btnCHorse = (Button) getView().findViewById(R.id.btnCHorse);
+				btnCHorse.setBackgroundResource(R.drawable.btn_bottm_04_off);
+				
 				requestCode = 5;
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbCNT=3", requestCode, null);
 			}
 			else if ( arg0.getId() == R.id.btnCHorse )
 			{
+				Button btnRefund = (Button) getView().findViewById(R.id.btnRefund);
+				btnRefund.setBackgroundResource(R.drawable.btn_bottm_01_off);
+				Button btnHit = (Button) getView().findViewById(R.id.btnHit);
+				btnHit.setBackgroundResource(R.drawable.btn_bottm_02_off);
+				Button btnDividends = (Button) getView().findViewById(R.id.btnDividends);
+				btnDividends.setBackgroundResource(R.drawable.btn_bottm_03_off);
+				Button btnCHorse = (Button) getView().findViewById(R.id.btnCHorse);
+				btnCHorse.setBackgroundResource(R.drawable.btn_bottm_04_on);
+				
 				requestCode = 6;
 				execTransReturningString("KrSMS/krSMSBest.aspx?gbWK=" + strPeriod + "&gbCNT=4", requestCode, null);
 			}
@@ -526,19 +568,19 @@ public class SMSTopFragment extends BaseFragment implements OnClickListener,OnIt
 		Button btnSat = (Button) getView().findViewById(R.id.btnSat);
 		Button btnSun = (Button) getView().findViewById(R.id.btnSun);
 		
-		if ( "±İ".equals( strDay ) )
+		if ( "ê¸ˆ".equals( strDay ) )
 		{
 			btnFriday.setBackgroundResource(R.drawable.btn_fri_on);
 			btnSat.setBackgroundResource(R.drawable.btn_sat_off);
 			btnSun.setBackgroundResource(R.drawable.btn_sun_off);
 		}
-		else if ( "Åä".equals( strDay ) )
+		else if ( "í† ".equals( strDay ) )
 		{
 			btnFriday.setBackgroundResource(R.drawable.btn_fri_off);
 			btnSat.setBackgroundResource(R.drawable.btn_sat_on);
 			btnSun.setBackgroundResource(R.drawable.btn_sun_off);
 		}
-		else if ( "ÀÏ".equals( strDay ) )
+		else if ( "ì¼".equals( strDay ) )
 		{
 			btnFriday.setBackgroundResource(R.drawable.btn_fri_off);
 			btnSat.setBackgroundResource(R.drawable.btn_sat_off);

@@ -6,8 +6,12 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +19,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -28,7 +33,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends BaseActivity implements AnimationListener, OnItemClickListener{
+public class MainActivity extends BaseActivity implements AnimationListener, OnItemClickListener, OnClickListener{
 
 	View menu;
 	View app;
@@ -45,8 +50,6 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
     		menu = findViewById(R.id.menu);
             app = findViewById(R.id.app);
             
-            initMenuList();
-            
             FragmentManager fragmentManager = getSupportFragmentManager();
             
         	if ( fragmentManager != null )
@@ -56,15 +59,18 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
         		
         		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         		PredictionFragment fragment = new PredictionFragment( this, "K" );
+        		activeFragment = fragment;
         		fragmentTransaction.add(R.id.app, fragment);
         		fragmentTransaction.commit();
         	}
         	
         	initializeControls();
+        	
+        	execTransReturningString("krSetting/setMenu.aspx", 1, null );
     	}
     	catch( Exception ex )
     	{
-    		
+    		writeLog( ex.getMessage() );
     	}
     }
     
@@ -72,8 +78,43 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
     {
     	Display display = getWindowManager().getDefaultDisplay();
     	menu.getLayoutParams().width = (int) (display.getWidth() * 0.8);
+    	
+    	ImageView imgBanner = (ImageView) findViewById(R.id.imgBanner);
+    	imgBanner.setOnClickListener( this );
+    	
+    	ArrayList<JSONObject> data = new ArrayList<JSONObject>();
+    	ListView listView = (ListView) menu.findViewById(R.id.menuList);
+    	listView.setAdapter( new MenuAdapter(this, data));
+    	listView.setOnItemClickListener( this );
     }
 
+    @Override
+    public void doPostTransaction(int requestCode, String result) {
+    	// TODO Auto-generated method stub
+    	try
+    	{
+    		super.doPostTransaction(requestCode, result);
+    	
+    		JSONObject jsonObj = new JSONObject( result );
+    		jsonObj = jsonObj.getJSONObject("TopBanner");
+        	
+        	ImageView imgBanner = (ImageView) findViewById(R.id.imgBanner);
+        	
+        	// Get singletone instance of ImageLoader
+    		ImageLoader imageLoader = ImageLoader.getInstance();
+    		// Initialize ImageLoader with configuration. Do it once.
+    		imageLoader.init(ImageLoaderConfiguration.createDefault( this ));
+    		// Load and display image asynchronously
+    		imageLoader.displayImage( jsonObj.getString("i"), imgBanner);
+    		
+    	}
+    	catch( Exception ex )
+    	{
+    		writeLog( ex.getMessage() );
+    	}
+    }
+    
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -86,125 +127,136 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
     	
     	JSONObject item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "ºÓ≈∑TV(πÊº€)");
+    	item.put("NAME", "ÏáºÌÇπTV(Î∞©ÏÜ°)");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "±›¡÷ πÊº€");
+    	item.put("NAME", "Í∏àÏ£º Î∞©ÏÜ°");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "¡ˆ≥≠¡÷ πÊº€");
+    	item.put("NAME", "ÏßÄÎÇúÏ£º Î∞©ÏÜ°");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "¿¸πÆ∞° øπªÛ");
+    	item.put("NAME", "ÏÉàÎ≤ΩÏ°∞Íµê");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "∞Ê∏∂ø’");
-    	data.add( item );
-    	item = new JSONObject();
-    	item.put("TYPE", "ITEM");
-    	item.put("NAME", "«¡∏Æ");
+    	item.put("NAME", "ÏÉàÎ≤ΩÏ°∞");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "SMS ¿˚¡ﬂ TOP");
+    	item.put("NAME", "Ï†ÑÎ¨∏Í∞Ä ÏòàÏÉÅ");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "¿œ∞£ BEST");
+    	item.put("NAME", "Í≤ΩÎßàÏôï");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "¡÷∞£ BEST");
-    	data.add( item );
-    	item = new JSONObject();
-    	item.put("TYPE", "ITEM");
-    	item.put("NAME", "ø˘∞£ BEST");
+    	item.put("NAME", "ÌîÑÎ¶¨");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "øπªÛ¡ˆ");
+    	item.put("NAME", "SMS Ï†ÅÏ§ë TOP");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "øπªÛ¡ˆ");
+    	item.put("NAME", "ÏùºÍ∞Ñ BEST");
+    	data.add( item );
+    	item = new JSONObject();
+    	item.put("TYPE", "ITEM");
+    	item.put("NAME", "Ï£ºÍ∞Ñ BEST");
+    	data.add( item );
+    	item = new JSONObject();
+    	item.put("TYPE", "ITEM");
+    	item.put("NAME", "ÏõîÍ∞Ñ BEST");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "√‚∏∂ ¿Œ±‚µµ");
+    	item.put("NAME", "ÏòàÏÉÅÏßÄ");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "±›ø‰");
-    	data.add( item );
-    	item = new JSONObject();
-    	item.put("TYPE", "ITEM");
-    	item.put("NAME", "≈‰ø‰");
-    	data.add( item );
-    	item = new JSONObject();
-    	item.put("TYPE", "ITEM");
-    	item.put("NAME", "¿œø‰");
+    	item.put("NAME", "ÏòàÏÉÅÏßÄ");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "∞Ê∏∂¿⁄∑·");
+    	item.put("NAME", "Ï∂úÎßà Ïù∏Í∏∞ÎèÑ");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "√‚∏∂«•");
+    	item.put("NAME", "Í∏àÏöî");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "∞Ê¡÷∞·∞˙");
+    	item.put("NAME", "ÌÜ†Ïöî");
+    	data.add( item );
+    	item = new JSONObject();
+    	item.put("TYPE", "ITEM");
+    	item.put("NAME", "ÏùºÏöî");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "ƒøπ¬¥œ∆º");
+    	item.put("NAME", "Í≤ΩÎßàÏûêÎ£å");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "¿⁄¿Ø∞‘Ω√∆«");
+    	item.put("NAME", "Ï∂úÎßàÌëú");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "øπªÛ/∫π±‚");
+    	item.put("NAME", "Í≤ΩÏ£ºÍ≤∞Í≥º");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "±‚≈∏");
+    	item.put("NAME", "Ïª§ÎÆ§ÎãàÌã∞");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "»∏ø¯∞°¿‘");
+    	item.put("NAME", "ÏûêÏú†Í≤åÏãúÌåê");
     	data.add( item );
     	item = new JSONObject();
     	item.put("TYPE", "ITEM");
-    	item.put("NAME", "∑Œ±◊¿Œ");
+    	item.put("NAME", "ÏòàÏÉÅ/Î≥µÍ∏∞");
     	data.add( item );
     	
     	item = new JSONObject();
     	item.put("TYPE", "HEADER");
-    	item.put("NAME", "ªı∫Æ¡∂±≥");
+    	item.put("NAME", "Í∏∞ÌÉÄ");
     	data.add( item );
-    	item = new JSONObject();
-    	item.put("TYPE", "ITEM");
-    	item.put("NAME", "ªı∫Æ¡∂");
-    	data.add( item );
+    	
+    	if ( "".equals( getMetaInfoString("uid") ) )
+    	{
+    		item = new JSONObject();
+        	item.put("TYPE", "ITEM");
+        	item.put("NAME", "ÌöåÏõêÍ∞ÄÏûÖ");
+        	data.add( item );
+        	item = new JSONObject();
+        	item.put("TYPE", "ITEM");
+        	item.put("NAME", "Î°úÍ∑∏Ïù∏");
+        	data.add( item );
+    	}
+    	else
+    	{
+    		item = new JSONObject();
+        	item.put("TYPE", "ITEM");
+        	item.put("NAME", "Î°úÍ∑∏ÏïÑÏõÉ");
+        	data.add( item );
+    	}
     	
     	ListView listView = (ListView) menu.findViewById(R.id.menuList);
-    	listView.setAdapter( new MenuAdapter(this, data));
-    	
-    	listView.setOnItemClickListener( this );
+    	MenuAdapter adapter = (MenuAdapter) listView.getAdapter();
+    	adapter.setData( data );
+    	adapter.notifyDataSetChanged();
     }
     
     public class MenuAdapter extends BaseAdapter {
@@ -223,6 +275,16 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
             return data.size();
         }
 
+        public ArrayList<JSONObject> getData()
+        {
+        	return data;
+        }
+        
+        public void setData( ArrayList<JSONObject> d )
+        {
+        	this.data = d;
+        }
+        
         public Object getItem(int position) {
             return data.get(position);
         }
@@ -246,36 +308,42 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
         			
         			ImageView iv = (ImageView) vi.findViewById(R.id.list_image);
         			
-        			if ( "∞Ê∏∂ø’".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu01_1_prediction_pro);
-        			else if ( "«¡∏Æ".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu01_2_prediction_free);
-        			else if ( "¿œ∞£ BEST".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu02_1_best_day);
-        			else if ( "¡÷∞£ BEST".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu02_2_best_week);
-        			else if ( "ø˘∞£ BEST".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu02_3_best_month);
-        			else if ( "øπªÛ¡ˆ".equals( jsonObj.getString("NAME") ) )
+        			if ( "Í∏àÏ£º Î∞©ÏÜ°".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.broadcasting_this_week);
+        			else if ( "ÏßÄÎÇúÏ£º Î∞©ÏÜ°".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.broadcasting_last_week);
+        			else if ( "Í≤ΩÎßàÏôï".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu01_1_prediction_pro2);
+        			else if ( "ÌîÑÎ¶¨".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu01_2_prediction_free2);
+        			else if ( "ÏùºÍ∞Ñ BEST".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu02_1_best_day2);
+        			else if ( "Ï£ºÍ∞Ñ BEST".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu02_2_best_week2);
+        			else if ( "ÏõîÍ∞Ñ BEST".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu02_3_best_month2);
+        			else if ( "ÏòàÏÉÅÏßÄ".equals( jsonObj.getString("NAME") ) )
         				iv.setImageResource(R.drawable.menu03_paper);
-        			else if ( "±›ø‰".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu04_1_friday);
-        			else if ( "≈‰ø‰".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu04_2_saturday);
-        			else if ( "¿œø‰".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu04_3_sunday);
-        			else if ( "√‚∏∂«•".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu05_1_schedule);
-        			else if ( "∞Ê¡÷∞·∞˙".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu05_2_result);
-        			else if ( "¿⁄¿Ø∞‘Ω√∆«".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu06_1_bulletin);
-        			else if ( "øπªÛ/∫π±‚".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu06_2_remem);
-        			else if ( "»∏ø¯∞°¿‘".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu08_1_signin);
-        			else if ( "∑Œ±◊¿Œ".equals( jsonObj.getString("NAME") ) )
-        				iv.setImageResource(R.drawable.menu08_2_login);
+        			else if ( "Í∏àÏöî".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu04_1_friday2);
+        			else if ( "ÌÜ†Ïöî".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu04_2_saturday2);
+        			else if ( "ÏùºÏöî".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu04_3_sunday2);
+        			else if ( "Ï∂úÎßàÌëú".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu05_1_schedule2);
+        			else if ( "Í≤ΩÏ£ºÍ≤∞Í≥º".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu05_2_result2);
+        			else if ( "ÏûêÏú†Í≤åÏãúÌåê".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu06_1_bulletin2);
+        			else if ( "ÏòàÏÉÅ/Î≥µÍ∏∞".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu06_2_remem2);
+        			else if ( "ÌöåÏõêÍ∞ÄÏûÖ".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu08_1_signin2);
+        			else if ( "Î°úÍ∑∏Ïù∏".equals( jsonObj.getString("NAME") ) || "Î°úÍ∑∏ÏïÑÏõÉ".equals( jsonObj.getString("NAME") ))
+        				iv.setImageResource(R.drawable.menu08_2_login2);
+        			else if ( "ÏÉàÎ≤ΩÏ°∞".equals( jsonObj.getString("NAME") ) )
+        				iv.setImageResource(R.drawable.menu_dawn);
         		}
 
                 TextView title = (TextView)vi.findViewById(R.id.title); // title
@@ -304,34 +372,67 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
         	MenuAdapter adapter = (MenuAdapter) lv.getAdapter();
         	JSONObject obj = (JSONObject) adapter.getItem(position);
         	
-        	if ( "∞Ê∏∂ø’".equals( obj.getString("NAME") ) )
+        	if ( "Í∏àÏ£º Î∞©ÏÜ°".equals( obj.getString("NAME") ) )
+        	{
+        		Intent intent = new Intent( this , ShowkingActivity.class );
+        		intent.putExtra("requestCode", "1");
+        		startActivity(intent);
+        		return;
+        	}
+    		else if ( "ÏßÄÎÇúÏ£º Î∞©ÏÜ°".equals( obj.getString("NAME") ) )
+        	{
+    			Intent intent = new Intent( this , ShowkingActivity.class );
+        		intent.putExtra("requestCode", "2");
+        		startActivity(intent);
+        		return;
+        	}
+    		else if ( "Í≤ΩÎßàÏôï".equals( obj.getString("NAME") ) )
         	{
         		activeFragment = new PredictionFragment( this, "K" );
         	}
-        	else if ( "«¡∏Æ".equals( obj.getString("NAME") ))
+        	else if ( "ÌîÑÎ¶¨".equals( obj.getString("NAME") ))
         		activeFragment = new PredictionFragment( this, "F" );
-        	else if ( "¿œ∞£ BEST".equals( obj.getString("NAME")) )
+        	else if ( "ÏùºÍ∞Ñ BEST".equals( obj.getString("NAME")) )
         		activeFragment = new SMSTopFragment( this, 1 );
-        	else if ("¡÷∞£ BEST".equals( obj.getString("NAME")) )
+        	else if ("Ï£ºÍ∞Ñ BEST".equals( obj.getString("NAME")) )
         		activeFragment = new SMSTopFragment( this, 2 );
-        	else if ("ø˘∞£ BEST".equals( obj.getString("NAME")) )
+        	else if ("ÏõîÍ∞Ñ BEST".equals( obj.getString("NAME")) )
         		activeFragment = new SMSTopFragment( this, 3 );
-        	else if ("±›ø‰".equals( obj.getString("NAME")) )
+        	else if ("ÏòàÏÉÅÏßÄ".equals( obj.getString("NAME")) )
+        		activeFragment = new PaperViewFragment( this );
+        	else if ("Í∏àÏöî".equals( obj.getString("NAME")) )
         		activeFragment = new HorseRacePopularityFragment( this , 1 );
-        	else if ("≈‰ø‰".equals( obj.getString("NAME")) )
+        	else if ("ÌÜ†Ïöî".equals( obj.getString("NAME")) )
         		activeFragment = new HorseRacePopularityFragment( this , 2 );
-        	else if ("¿œø‰".equals( obj.getString("NAME")) )
+        	else if ("ÏùºÏöî".equals( obj.getString("NAME")) )
         		activeFragment = new HorseRacePopularityFragment( this , 3 );
-        	else if ("√‚∏∂«•".equals( obj.getString("NAME")) )
+        	else if ("Ï∂úÎßàÌëú".equals( obj.getString("NAME")) )
         		activeFragment = new HorseRaceScheduleFragment( this, 1 );
-        	else if ("∞Ê¡÷∞·∞˙".equals( obj.getString("NAME")) )
+        	else if ("Í≤ΩÏ£ºÍ≤∞Í≥º".equals( obj.getString("NAME")) )
         		activeFragment = new HorseRaceResultFragment( this, 1 );
-        	else if ("øπªÛ/∫π±‚".equals( obj.getString("NAME")) )
-        		activeFragment = new HorseRaceExpectationFragment( this );
-        	else if ("∑Œ±◊¿Œ".equals( obj.getString("NAME")) )
+        	else if ("ÏûêÏú†Í≤åÏãúÌåê".equals( obj.getString("NAME")) )
+        		activeFragment = new FreeBoardFragment( this , 1 ); 
+        	else if ("ÏòàÏÉÅ/Î≥µÍ∏∞".equals( obj.getString("NAME")) )
+        		activeFragment = new FreeBoardFragment( this , 2 ); 
+        	else if ("Î°úÍ∑∏Ïù∏".equals( obj.getString("NAME")) )
         		activeFragment = new LoginFragment( this );
-        	else if ("»∏ø¯∞°¿‘".equals( obj.getString("NAME")) )
+        	else if ("Î°úÍ∑∏ÏïÑÏõÉ".equals( obj.getString("NAME")) )
+        	{
+        		setMetaInfo("uid", "");
+        		setMetaInfo("upwd", "");
+        		showToastMessage("Î°úÍ∑∏ÏïÑÏõÉÎêòÏóàÏäµÎãàÎã§.");
+        		showMainMenu( null );
+        		return;
+        	}
+        	else if ("ÌöåÏõêÍ∞ÄÏûÖ".equals( obj.getString("NAME")) )
         		activeFragment = new RegisterMemberFragment( this );
+        	else if ("ÏÉàÎ≤ΩÏ°∞".equals( obj.getString("NAME")) )
+        	{
+        		Intent intent = new Intent( this , DawnActivity.class );
+        		intent.putExtra("requestCode", "2");
+        		startActivity(intent);
+        		return;
+        	}
         	
         	showMainMenu( null );
     	}
@@ -339,6 +440,57 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
     	{
     		writeLog( ex.getMessage() );
     	}
+    }
+    
+    public void goToFreeBoard()
+    {
+    	activeFragment = new FreeBoardFragment( this, 1 );
+    	
+    	FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if ( activeFragment != null)
+        {
+        	LinearLayout l = (LinearLayout) app;
+        	l.removeAllViews();
+        	
+        	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        	fragmentTransaction.replace(R.id.app, activeFragment);
+        	fragmentTransaction.commit();	
+        }
+    }
+    
+    public void goToHorseRaceSchedule( int param )
+    {
+    	activeFragment = new HorseRaceScheduleFragment( this, param );
+    	
+    	FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if ( activeFragment != null)
+        {
+        	LinearLayout l = (LinearLayout) app;
+        	l.removeAllViews();
+        	
+        	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        	fragmentTransaction.replace(R.id.app, activeFragment);
+        	fragmentTransaction.commit();	
+        }
+    }
+    
+    public void goToHorseRacePopularity( int param )
+    {
+    	activeFragment = new HorseRacePopularityFragment( this, param );
+    	
+    	FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if ( activeFragment != null)
+        {
+        	LinearLayout l = (LinearLayout) app;
+        	l.removeAllViews();
+        	
+        	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        	fragmentTransaction.replace(R.id.app, activeFragment);
+        	fragmentTransaction.commit();	
+        }
     }
     
     boolean menuOut = false;
@@ -370,6 +522,9 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
             int left = (int) (app.getMeasuredWidth() * 0.8);
 
             if (!menuOut) {
+            	
+            	initMenuList();
+            	
                 // anim = AnimationUtils.loadAnimation(context, R.anim.push_right_out_80);
                 anim = new TranslateAnimation(0, left, 0, 0);
                 menu.setVisibility(View.VISIBLE);
@@ -404,8 +559,9 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
         {
         	LinearLayout l = (LinearLayout) app;
         	l.removeAllViews();
+        	
         	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        	fragmentTransaction.add(R.id.app, activeFragment);
+        	fragmentTransaction.replace(R.id.app, activeFragment);
         	fragmentTransaction.commit();	
         }
     }
@@ -426,4 +582,14 @@ public class MainActivity extends BaseActivity implements AnimationListener, OnI
                 + animParams.bottom + "]");
         app.layout(animParams.left, animParams.top, animParams.right, animParams.bottom);
     }
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+//		activeFragment = new ShockingFragment( this );
+//		showMainMenu( null );
+		
+		activeFragment = new ShowKingHomeFragment( this );
+		showMainMenu( null );
+	}
 }

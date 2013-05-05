@@ -6,8 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.common.Util;
+import com.krking.PredictionFragment.PredictItemAdapter;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,27 +15,29 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-@SuppressLint("ValidFragment")
-public class PredictionFragment extends BaseFragment implements OnItemClickListener
+public class FreeBoardFragment extends BaseFragment implements OnItemClickListener, OnClickListener
 {
 	MainActivity mainActivity;
-	String mode = "";
+	int gBn = 1;
 	int pageNo = 1;
 	
-	public PredictionFragment( MainActivity main, String m )
+	public FreeBoardFragment( MainActivity main, int gubun )
 	{
+		this.gBn = gubun;
 		this.mainActivity = main;
-		this.mode = m;
 	}
 	
 	@Override
@@ -48,14 +50,11 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View v = inflater.inflate(R.layout.fragment_prediction, container, false);
+		View v = inflater.inflate(R.layout.fragment_freeboard, container, false);
 		
-		TextView tv = (TextView) v.findViewById(R.id.txtTitle);
+		Button btnWrite = (Button) v.findViewById(R.id.btnWrite);
+		btnWrite.setOnClickListener( this );
 		
-		if ( "K".equals( mode ) )
-			tv.setText("경마왕 예상");
-		else if ( "F".equals( mode ) )
-			tv.setText("프리 예상");
 		return v;
 	}
 	
@@ -64,11 +63,25 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 		// TODO Auto-generated method stub
 		super.onStart();
 		
+		TextView txtTitle = (TextView) getView().findViewById(R.id.txtTitle);
+		if ( gBn == 1 )
+			txtTitle.setText("자유게시판");
+		else
+			txtTitle.setText("예상/복기");
+		
 		ListView listView = (ListView) getView().findViewById(R.id.list);
 		listView.setDivider( null ); 
 		listView.setDividerHeight(0);
 		
-		execTransReturningString("KrPro/krProList.aspx?proGb=" + mode + "&Page=" + pageNo + "&refIdx=0", 1, null);
+		Button btnWrite = (Button) getActivity().findViewById(R.id.btnWrite);
+		
+		if ( mainActivity.getMetaInfoString("uid") != null &&
+				!"".equals( mainActivity.getMetaInfoString("uid")))
+			btnWrite.setVisibility( ViewGroup.VISIBLE );
+		else
+			btnWrite.setVisibility( ViewGroup.GONE );
+		
+		execTransReturningString("KrBoard/krBoardList.aspx?bGb=" + gBn + "&page=" + pageNo + "&refIdx=0", 1, null );
 	}
 	
 	@Override
@@ -77,7 +90,7 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 		try
 		{
 			// TODO Auto-generated method stub
-			super.doPostTransaction(requestCode, result);
+			super.doPostTransaction(result);
 			
 			ListView listView = (ListView) getView().findViewById(R.id.list);
 			
@@ -99,12 +112,12 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 				tempObj.put("TYPE", "ITEM2");
 				tempData.add( tempObj );
 				
-				listView.setAdapter( new PredictItemAdapter( getActivity(), tempData ) );
+				listView.setAdapter( new FreeboardItemAdapter( getActivity(), tempData ) );
 				listView.setOnItemClickListener( this );
 			}
 			else if ( requestCode == 2 )
 			{
-				PredictItemAdapter adapter = (PredictItemAdapter) listView.getAdapter();
+				FreeboardItemAdapter adapter = (FreeboardItemAdapter) listView.getAdapter();
 				ArrayList<JSONObject> data = adapter.getData();
 				JSONObject tempObj = data.get( data.size() - 1 );
 				data.remove( data.size() - 1 );
@@ -112,6 +125,7 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 				data.add( tempObj );
 				adapter.notifyDataSetChanged();
 			}
+			
 		}
 		catch( Exception ex )
 		{
@@ -119,13 +133,13 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 		}
 	}
 	
-	public class PredictItemAdapter extends BaseAdapter {
+	public class FreeboardItemAdapter extends BaseAdapter {
         
         private Activity activity;
         private ArrayList<JSONObject> data;
         private LayoutInflater inflater=null;
         
-        public PredictItemAdapter(Activity a, ArrayList<JSONObject> d) {
+        public FreeboardItemAdapter(Activity a, ArrayList<JSONObject> d) {
             activity = a;
             data=d;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -138,14 +152,19 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
         public Object getItem(int position) {
             return data.get(position);
         }
+
+        public long getItemId(int position) {
+            return position;
+        }
         
         public ArrayList<JSONObject> getData()
         {
         	return data;
         }
-
-        public long getItemId(int position) {
-            return position;
+        
+        public void setData( ArrayList<JSONObject> d )
+        {
+        	this.data = d;
         }
         
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -157,43 +176,49 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 
         		if ( "ITEM1".equals( jsonObj.getString("TYPE") ) )
         		{
-            		vi = inflater.inflate(R.layout.list_predict_item, null);
-            		
-            		ImageView list_image = (ImageView)vi.findViewById(R.id.list_image);
-            		
-            		if ( "JOK".equals( jsonObj.getString("g") ) )
-            			list_image.setImageResource(R.drawable.prediction_trainingbox);
-            		else if ( "BOK".equals( jsonObj.getString("g") ) )
-            			list_image.setImageResource(R.drawable.prediction_reviewbox);
-            		else if ( "ANA".equals( jsonObj.getString("g") ) )
-            			list_image.setImageResource(R.drawable.prediction_analysisbox);
-            		else if ( "SUN".equals( jsonObj.getString("g") ) )
-            			list_image.setImageResource(R.drawable.prediction_sundaybox);
-            		else if ( "SAT".equals( jsonObj.getString("g") ) )
-            			list_image.setImageResource(R.drawable.prediction_saturdaybox);
-            		else if ( "FRI".equals( jsonObj.getString("g") ) )
-            			list_image.setImageResource(R.drawable.prediction_fridaybox);
-            		
-                    TextView title = (TextView)vi.findViewById(R.id.title); // title
+        			vi = inflater.inflate(R.layout.list_freeboard_item, null);
+        			
+        			TextView title = (TextView)vi.findViewById(R.id.title); // title
                     TextView txtDate = (TextView) vi.findViewById(R.id.txtDate);
                     TextView txtRefCount = (TextView) vi.findViewById(R.id.txtRefCount);
                     TextView txtAuthor = (TextView) vi.findViewById(R.id.txtAuthor);
+                    TextView txtLikesCount = (TextView) vi.findViewById(R.id.txtLikesCount);
+                    TextView txtComments = (TextView) vi.findViewById(R.id.txtComments);
                     
                     vi.setTag( jsonObj );
                     
                     title.setText( jsonObj.getString("t") );
-                    txtDate.setText( "작성 " + jsonObj.getString("d").substring(0, 10 ) );
-                    txtRefCount.setText( "조회 " + jsonObj.getString("r") );
-                    txtAuthor.setText( jsonObj.getString("n") );	
+                    txtDate.setText( jsonObj.getString("d").substring(0, 10) );
+                    txtRefCount.setText( "조회: " + jsonObj.getString("r") );
+                    txtAuthor.setText( jsonObj.getString("n") );
+                    txtLikesCount.setText( jsonObj.getString("j") );
+                    
+                    ImageView imgReply = (ImageView) vi.findViewById(R.id.imgReply);
+                    if ( jsonObj.getInt("re") < 1 )
+                    	imgReply.setVisibility(ViewGroup.GONE);
+                    else
+                    	imgReply.setVisibility(ViewGroup.VISIBLE);
+                    
+                    FrameLayout f = (FrameLayout) vi.findViewById(R.id.fComments);
+                    if ( jsonObj.getInt("c") < 1 )
+                    {
+                    	f.setVisibility(ViewGroup.GONE);
+                    }
+                    else
+                    {
+                    	f.setVisibility(ViewGroup.VISIBLE);
+                    	txtComments.setText( jsonObj.getString("c") );
+                    }
+                    
         		}
         		else
         		{
         			vi = inflater.inflate(R.layout.list_item_more, null);
         			pageNo++;
-        			execTransReturningString("KrPro/krProList.aspx?proGb=" + mode + "&Page=" + pageNo + "&refIdx=0", 2, null);
+        			execTransReturningString("KrBoard/krBoardList.aspx?bGb=" + gBn + "&page=" + pageNo + "&refIdx=0", 2, null );
         		}
-                
-                return vi;	
+        		
+                return vi;
         	}
         	catch( Exception ex )
         	{
@@ -210,7 +235,8 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 		{
 			JSONObject jsonObj = (JSONObject) arg1.getTag();
 			
-			Intent intent = new Intent( getActivity(), PredictionContentActivity.class );
+			Intent intent = new Intent( getActivity(), FreeboardContentActivity.class );
+			intent.putExtra("bGb", gBn );
 			intent.putExtra("param", jsonObj.toString());
 			startActivity( intent );
 		}
@@ -219,5 +245,28 @@ public class PredictionFragment extends BaseFragment implements OnItemClickListe
 			writeLog( ex.getMessage() );
 		}
 		
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		try
+		{
+			if ( mainActivity.getMetaInfoString("uid") == null ||
+					"".equals( mainActivity.getMetaInfoString("uid") ) )
+			{
+				showOKDialog("로그인 후 작성이 가능합니다.", null );
+				return;
+			}
+					
+			Intent intent = new Intent( getActivity(), FreeboardWritePostActivity.class );
+			intent.putExtra("bGb", gBn );
+			intent.putExtra("mode", "NEW");
+			startActivity( intent );
+		}
+		catch( Exception ex )
+		{
+			writeLog( ex.getMessage() );
+		}
 	}
 }

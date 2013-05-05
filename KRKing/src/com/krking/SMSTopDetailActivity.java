@@ -118,7 +118,7 @@ public class SMSTopDetailActivity extends BaseActivity {
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			LinearLayout lLayout = (LinearLayout) findViewById(R.id.lLayout );
 
-			String[] headers = new String[]{"R", "±¸ºĞ", "º¹¼ş", "½Ö¼ş", "»ïº¹", "Ãà", "ÀûÁß%", "È¯¼ö%", "SMS¹ß¼Û³»¿ª", "Âø¼ø"};
+			String[] headers = new String[]{"R", "êµ¬ë¶„", "ë³µìˆ­", "ìŒìˆ­", "ì‚¼ë³µ", "ì¶•", "ì ì¤‘%", "í™˜ìˆ˜%", "SMSë°œì†¡ë‚´ì—­", "ì°©ìˆœ"};
 			String[] dataHeaders = new String[]{"r", "a", "bs", "ss", "sb", "f", "h", "p", "c", "t"};
 			int[] width = new int[]{100, 90, 60, 60, 60, 40, 80, 80, 350, 70 };
 			int[] alignments = new int[]{ Gravity.CENTER_HORIZONTAL , Gravity.CENTER_HORIZONTAL, Gravity.CENTER_HORIZONTAL, 
@@ -133,13 +133,13 @@ public class SMSTopDetailActivity extends BaseActivity {
 				tlp.setMargins(0, 0, 0, 1);
 				TableRow tr = getTableRow(tl, 0, 1, 0, 0 );
 				
-				// SMS ¹ß¼Û³»¿ª Çì´õ Áß¾ÓÁ¤·Ä
+				// SMS ë°œì†¡ë‚´ì—­ í—¤ë” ì¤‘ì•™ì •ë ¬
 				alignments[8] = Gravity.CENTER_HORIZONTAL;
 
 				getTableCells(tr, headers, 0, 1, 1, 0, width, alignments, 14, null , R.drawable.sms_title_bg, 40, null  );
 				lLayout.addView( vi );
 
-				// SMS ¹ß¼Û³»¿ª ÁÂÃøÁ¤·Ä
+				// SMS ë°œì†¡ë‚´ì—­ ì¢Œì¸¡ì •ë ¬
 				alignments[8] = Gravity.LEFT;
 
 				ArrayList<JSONObject> arItems = map.get( keys[j]);
@@ -153,11 +153,11 @@ public class SMSTopDetailActivity extends BaseActivity {
 						tvDate.setText( Util.getDateString( jsonItem.getString("d"), "yyyyMMdd", "yyyy-MM-dd" )  + 
 								" (" + jsonItem.getString("w") + ")" );
 						list_image = (ImageView) vi.findViewById(R.id.list_image);
-						if ("±İ".equals( jsonItem.getString("w") ) )
+						if ("ê¸ˆ".equals( jsonItem.getString("w") ) )
 							list_image.setBackgroundResource(R.drawable.prediction_fridaybox);
-						else if ("Åä".equals( jsonItem.getString("w") ) )
+						else if ("í† ".equals( jsonItem.getString("w") ) )
 							list_image.setBackgroundResource(R.drawable.prediction_saturdaybox);
-						else if ("ÀÏ".equals( jsonItem.getString("w") ) )
+						else if ("ì¼".equals( jsonItem.getString("w") ) )
 							list_image.setBackgroundResource(R.drawable.prediction_sundaybox);
 					}
 
@@ -231,11 +231,11 @@ public class SMSTopDetailActivity extends BaseActivity {
 				
 				ivp.leftMargin = 20;
 				
-				if ( "¼­¿ï".equals( jsonItem.getString("g") ) )
+				if ( "ì„œìš¸".equals( jsonItem.getString("g") ) )
 					iv.setImageResource(R.drawable.table_icon_seoul);
-				else if ( "ºÎ»ê".equals( jsonItem.getString("g") ) )
+				else if ( "ë¶€ì‚°".equals( jsonItem.getString("g") ) )
 					iv.setImageResource(R.drawable.table_icon_busan);
-				else if ( "Á¦ÁÖ".equals( jsonItem.getString("g") ) )
+				else if ( "ì œì£¼".equals( jsonItem.getString("g") ) )
 					iv.setImageResource(R.drawable.table_icon_jeju);
 				
 				if ( backgroundColor != null && !"".equals( backgroundColor ))

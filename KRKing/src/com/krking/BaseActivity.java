@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -48,6 +49,11 @@ public class BaseActivity extends FragmentActivity{
 	{
 		new TransactionTaskReturningString( this, url.trim() ).execute( request );
 	}
+    
+    public void execTransReturningString( String url, int requestCode, JSONObject request )
+	{
+		new TransactionTaskReturningString( this, url, requestCode ).execute( request );
+	}
 	
 	public void doPostTransaction( String result )
 	{
@@ -64,7 +70,7 @@ public class BaseActivity extends FragmentActivity{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage( message )
 		       .setCancelable(false)
-		       .setPositiveButton("È®ÀÎ", new DialogInterface.OnClickListener() {
+		       .setPositiveButton("í™•ì¸", new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		                okClicked( param );
 		           }
@@ -78,6 +84,35 @@ public class BaseActivity extends FragmentActivity{
 		
 	}
 	
+	public void showYesNoDialog( String message, final Object param )
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage( message )
+		       .setCancelable(false)
+		       .setPositiveButton("ì˜ˆ", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   yesClicked( param );
+		           }
+		       })
+		       .setNegativeButton("ì•„ë‹ˆìš”", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   noClicked( param );
+		           }
+		       });
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	public void yesClicked( Object param )
+	{
+		
+	}
+	
+	public void noClicked( Object param )
+	{
+		
+	}
+	
 	public void makeACall( String phoneNumber )
 	{
 		try {
@@ -85,7 +120,26 @@ public class BaseActivity extends FragmentActivity{
 			callIntent.setData(Uri.parse("tel:" + phoneNumber ));
 			startActivity(callIntent);
 		} catch (ActivityNotFoundException e) {
-			showOKDialog("ÀüÈ­°É±â¿¡ ½ÇÆĞÇß½À´Ï´Ù.\r\n°ü¸®ÀÚ¿¡°Ô ¹®ÀÇ¹Ù¶ø´Ï´Ù.", null );
+			showOKDialog("ì „í™”ê±¸ê¸°ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.\r\nê´€ë¦¬ìì—ê²Œ ë¬¸ì˜ë°”ëë‹ˆë‹¤.", null );
 		}
+	}
+	
+	public void setMetaInfo( String key, String value )
+	{
+		SharedPreferences settings = getSharedPreferences("USER_INFO", 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString( key, value );
+		editor.commit();
+	}
+	
+	public String getMetaInfoString( String key )
+	{
+		SharedPreferences settings = getSharedPreferences("USER_INFO",0);
+		
+		String value = settings.getString(key, "");
+		if ("".equals( value ))
+			return "";
+		
+	    return value;
 	}
 }

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -57,17 +58,22 @@ public class HorseRaceResultFragment extends BaseFragment implements OnClickList
 		{
 			// TODO Auto-generated method stub
 			super.onStart();
+			
+			Button btnSeoul = (Button) getView().findViewById(R.id.btnSeoul);
+			btnSeoul.setBackgroundResource(R.drawable.tab_menu_01_seoul_on);
+			Button btnBusan = (Button) getView().findViewById(R.id.btnBusan);
+			btnBusan.setBackgroundResource(R.drawable.tab_menu_02_busan_off);
 
 			execTransReturningString("krRaceInfo/krRaceResultList.aspx?pGb=KC", requestCode, null);
 
-			Button btnDaysBest = (Button) getView().findViewById(R.id.btnDaysBest);
-			btnDaysBest.setOnClickListener( this );
-			Button btnWeeksBest = (Button) getView().findViewById(R.id.btnWeeksBest);
-			btnWeeksBest.setOnClickListener( this );
+			btnSeoul.setOnClickListener( this );
+			btnBusan.setOnClickListener( this );
 
 			ArrayList<JSONObject> data = new ArrayList<JSONObject>();
 
 			ListView listView = (ListView) getView().findViewById(R.id.list);
+			listView.setDivider( null ); 
+			listView.setDividerHeight(0);
 			listView.setAdapter( new HorseRaceResultItemAdapter( getActivity(), data ) );
 		}
 		catch( Exception ex )
@@ -77,7 +83,7 @@ public class HorseRaceResultFragment extends BaseFragment implements OnClickList
 	}
 
 	String strDate = "";
-	String strDay = "��";
+	String strDay = "금";
 
 	@Override
 	public void doPostTransaction( int requestCode, String result) {
@@ -147,24 +153,44 @@ public class HorseRaceResultFragment extends BaseFragment implements OnClickList
 
 				vi = inflater.inflate(R.layout.list_horserace_result, null);
 				LinearLayout lLayout = (LinearLayout) vi.findViewById(R.id.lLayout);
+				
+				ImageView imgCity = (ImageView) vi.findViewById(R.id.imgCity);
+				if ( "서울".equals( jsonObj.getString("r") ) )
+					imgCity.setImageResource(R.drawable.btn_seoul);
+				else if ( "부산".equals( jsonObj.getString("r") ) )
+					imgCity.setImageResource(R.drawable.btn_busan);
+				else if ( "제주".equals( jsonObj.getString("r") ) )
+					imgCity.setImageResource(R.drawable.btn_jeju);
 
 				TextView tvHeader = (TextView) vi.findViewWithTag("header");
 				
-				tvHeader.setText( jsonObj.getString("d") + " (" + jsonObj.getString("w") + ")" );
+				tvHeader.setText( jsonObj.getString("d") );
 				
 				int roundCount = Integer.parseInt( jsonObj.getString("t") );
-						
+				
+				ImageView imgDay = (ImageView) vi.findViewById(R.id.imgDay);
+				
+				if ( "금".equals( jsonObj.getString("w") ) )
+					imgDay.setImageResource(R.drawable.icon_fri_s);
+				else if ( "토".equals( jsonObj.getString("w") ) )
+					imgDay.setImageResource(R.drawable.icon_sat_s);
+				else if ( "일".equals( jsonObj.getString("w") ) )
+					imgDay.setImageResource(R.drawable.icon_sun_s);
+				
 				for ( int i = 0; i < roundCount; i++ )
 				{
-					Button btn = new Button( getActivity() );
+					LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					View v = inflater.inflate(R.layout.template, null);
+					LinearLayout lPLayout = (LinearLayout) v.findViewById(R.id.lParent);
+
+					Button btn = (Button) v.findViewById(R.id.btn_template);
+					lPLayout.removeView( btn );
 					lLayout.addView( btn );
-					LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) btn.getLayoutParams();
-					lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-					lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+					
 					btn.setText( jsonObj.getString( "r" + (i+1) ) + "R");
 					btn.setOnClickListener( HorseRaceResultFragment.this );
 					btn.setTag( jsonObj.getString("r") + "|" + jsonObj.getString("d") + "|" + 
-							jsonObj.getString("r" + (i+1) ) );
+							jsonObj.getString("r" + (i+1) ) + "|" + jsonObj.getString("t") );
 				}
 				
 				vi.setTag( jsonObj );
@@ -185,20 +211,31 @@ public class HorseRaceResultFragment extends BaseFragment implements OnClickList
 
 		try
 		{
+			Button btn = (Button) arg0;
+			
 			// TODO Auto-generated method stub
-			if ( arg0.getId() == R.id.btnDaysBest )
+			if ( arg0.getId() == R.id.btnSeoul )
 			{
+				btn.setBackgroundResource(R.drawable.tab_menu_01_seoul_on);
+
+				Button btnBusan = (Button) getView().findViewById(R.id.btnBusan);
+				btnBusan.setBackgroundResource(R.drawable.tab_menu_02_busan_off);
+				
 				execTransReturningString("krRaceInfo/krRaceResultList.aspx?pGb=KC", requestCode, null);
 			}
-			else if ( arg0.getId() == R.id.btnWeeksBest )
+			else if ( arg0.getId() == R.id.btnBusan )
 			{
+				Button btnSeoul = (Button) getView().findViewById(R.id.btnSeoul);
+				btnSeoul.setBackgroundResource(R.drawable.tab_menu_01_seoul_off);
+
+				btn.setBackgroundResource(R.drawable.tab_menu_02_busan_on);
+				
 				execTransReturningString("krRaceInfo/krRaceResultList.aspx?pGb=BU", requestCode, null);
 			}
 			else
 			{
 				if ( arg0.getTag() != null )
 				{
-					Button btn = (Button) arg0;
 					Intent intent = new Intent( getActivity(), HorseRaceResultDetailActivity.class );
 					intent.putExtra("param", btn.getTag().toString());
 					startActivity( intent );

@@ -166,7 +166,6 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 				btn.setTextColor(Color.GRAY);
 				btn.setOnClickListener( this );
 				btn.setTag( jsonItem );
-				btn.setSelected(true);
 
 				if ( headerInfo.getString("g").equals( jsonItem.getString("p")) &&
 						headerInfo.getString("r").equals( jsonItem.getString("r")))
@@ -241,12 +240,17 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 				setDayButton();
 				execTransReturningString("KrPopular/krPopular.aspx?dayGb=" + requestCode, requestCode, null);
 			}
+			else if ( arg0.getId() == R.id.btnGo )
+			{
+				mainActivity.goToHorseRaceSchedule( requestCode );
+			}
 			else
 			{
 				LinearLayout lLayout2 = (LinearLayout) getView().findViewById(R.id.lLayout2 );
 				for ( int i = 0; i < lLayout2.getChildCount(); i++ )
 				{
 					Button btn = (Button) lLayout2.getChildAt(i);
+					btn.setTextColor(Color.GRAY);
 					btn.setBackgroundResource(R.drawable.btn_r_bg_off);
 				}
 				
@@ -311,11 +315,11 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 					ImageView iv = (ImageView) vi.findViewWithTag("city");
 					JSONObject jsonInfo = jsonObj.getJSONObject("INFO");
 
-					if ( "¼­¿ï".equals( jsonInfo.getString("g") ) )
+					if ( "ì„œìš¸".equals( jsonInfo.getString("g") ) )
 						iv.setImageResource(R.drawable.btn_seoul);
-					else if ( "ºÎ»ê".equals( jsonInfo.getString("g") ) )
+					else if ( "ë¶€ì‚°".equals( jsonInfo.getString("g") ) )
 						iv.setImageResource(R.drawable.btn_busan);
-					else if ( "Á¦ÁÖ".equals( jsonInfo.getString("g") ) )
+					else if ( "ì œì£¼".equals( jsonInfo.getString("g") ) )
 						iv.setImageResource(R.drawable.btn_jeju);
 
 					TextView tv = (TextView) vi.findViewById(R.id.txtDate);
@@ -323,15 +327,15 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 
 					ImageView ivDay = (ImageView) vi.findViewWithTag("day");
 
-					if ( "±Ý".equals( jsonInfo.getString("w") ) )
+					if ( "ê¸ˆ".equals( jsonInfo.getString("w") ) )
 						ivDay.setImageResource(R.drawable.btn_fri);
-					else if ( "Åä".equals( jsonInfo.getString("w") ) )
+					else if ( "í† ".equals( jsonInfo.getString("w") ) )
 						ivDay.setImageResource(R.drawable.btn_sat);
-					else if ( "ÀÏ".equals( jsonInfo.getString("w") ) )
+					else if ( "ì¼".equals( jsonInfo.getString("w") ) )
 						ivDay.setImageResource(R.drawable.btn_sun);
 
 					TextView txtTime = (TextView) vi.findViewById(R.id.txtTime);
-					txtTime.setText( "(¹ßÁÖ:" + jsonInfo.getString("t") + ")");
+					txtTime.setText( "(ë°œì£¼:" + jsonInfo.getString("t") + ")");
 
 					TextView txtRound = (TextView) vi.findViewById(R.id.txtRound);
 					txtRound.setText( jsonInfo.getString("r") + "R");
@@ -339,6 +343,9 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 					TextView txtEtc = (TextView) vi.findViewById(R.id.txtEtc);
 					txtEtc.setText( jsonInfo.getString("l") + " " + jsonInfo.getString("u") +
 							jsonInfo.getString("i") + " " + jsonInfo.getString("k") + " " + jsonInfo.getString("j"));
+					
+					Button btnGo = (Button) vi.findViewById(R.id.btnGo);
+					btnGo.setOnClickListener( HorseRacePopularityFragment.this );
 				}
 				else if ( "ITEM2".equals( jsonObj.getString("TYPE") ))
 				{
@@ -389,12 +396,4 @@ public class HorseRacePopularityFragment extends BaseFragment implements OnClick
 			return null;
 		}
 	}
-
-	/*
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-
-	}
-	 */
 }

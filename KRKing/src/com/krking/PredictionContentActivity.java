@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,6 +74,8 @@ public class PredictionContentActivity extends BaseActivity {
         	if ( !"".equals( jsonObj.getString("a") ) )
         	{
         		btnPhone.setText( "     " + jsonObj.getString("a") );
+       
+        		
         		btnPhone.setTag( jsonObj.getString("a") );
         	}
         	
@@ -89,10 +92,12 @@ public class PredictionContentActivity extends BaseActivity {
         	btnSMS.setText( sms );
         	
         	TextView txtDate = (TextView) findViewById(R.id.txtDate);
-        	txtDate.setText( "ÀÛ¼ºÀÏ: " + Util.getDateString(jsonObj.getString("d"), "yyyy-MM-dd a HH:mm:ss", "yy.MM.dd") +
-        			" / Á¶È¸:" + jsonObj.getString("r") );
+        	txtDate.setText( "ìž‘ì„±ì¼: " + Util.getDateString(jsonObj.getString("d"), "yyyy-MM-dd a HH:mm:ss", "yy.MM.dd") +
+        			" / ì¡°íšŒ:" + jsonObj.getString("r") );
         	
         	WebView webView1 = (WebView) findViewById(R.id.webView1);
+        	WebSettings settings = webView1.getSettings();
+			settings.setBuiltInZoomControls(true);
         	webView1.loadDataWithBaseURL(null, jsonObj.getString("c") , "text/html", "utf-8", null);
     	}
     	catch( Exception ex )
@@ -108,7 +113,7 @@ public class PredictionContentActivity extends BaseActivity {
     		Button btn = (Button) v;
     		
     		String phoneNumber = btn.getTag().toString().trim();
-    		if ( phoneNumber == null || "".equals( phoneNumber ) || phoneNumber.indexOf("¹«ÅëÀå") >= 0 )
+    		if ( phoneNumber == null || "".equals( phoneNumber ) || phoneNumber.indexOf("ë¬´í†µìž¥") >= 0 )
     			return ;
     		
     		makeACall( phoneNumber );
