@@ -90,7 +90,8 @@ public class LoginActivity extends DYActivity implements OnClickListener, Reques
 
 	            @Override
 	            public void onFacebookError(FacebookError error) {
-	            	showToastMessage("로그인도중 오류가 발생했습니다.\r\n다시 시도해 주십시오.");
+	            	showToastMessage("로그인도중 오류가 발생했습니다.\r\n" + error );
+	            	writeLog( error.toString() );
 	            }
 
 	            @Override

@@ -31,7 +31,7 @@ public class IntroActivity extends DYActivity {
 			// sets the app name in the intent
 			registrationIntent.putExtra("app", PendingIntent.getBroadcast(this, 0, new Intent(), 0));
 			registrationIntent.putExtra("sender", "761361569216");
-			startService(registrationIntent);	
+			startService(registrationIntent);
 		}
 		catch( Exception ex )
 		{

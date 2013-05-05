@@ -48,8 +48,8 @@ import android.widget.Toast;
 
 public class DYActivity extends Activity{
 
-//	protected String serverURL = "http://192.168.10.100:8888/";
-//	protected String serverHost = "192.168.10.100";
+//	protected String serverURL = "http://192.168.10.105:8888/";
+//	protected String serverHost = "192.168.10.105";
 //	protected int serverPort = 8888;
 
 	protected String serverURL = "http://www.hanintownsg.com/";
@@ -232,9 +232,12 @@ public class DYActivity extends Activity{
 		InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE); 
 
-		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                   InputMethodManager.HIDE_NOT_ALWAYS);
-		inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+		if ( getCurrentFocus() != null )
+		{
+			inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+	                   InputMethodManager.HIDE_NOT_ALWAYS);
+			inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);	
+		}
 	}
 	
 	public void showSoftKeyboard()

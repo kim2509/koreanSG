@@ -168,31 +168,31 @@ public class ShopsByCategoryActivity extends DYActivity implements OnItemClickLi
                 
                 String category = jsonObj.getString("CATEGORY");
                 
-                if ( "ÀüÃ¼".equals( category ) )
+                if ( "ì „ì²´".equals( category ) )
                 	iv.setImageResource(R.drawable.all_32);
-                else if ( "½Ä´ç".equals( category ) )
+                else if ( "ì‹ë‹¹".equals( category ) )
                 	iv.setImageResource(R.drawable.food_128);
-                else if ( "ÇĞ±³/ÇĞ¿ø".equals( category ) )
+                else if ( "í•™êµ/í•™ì›".equals( category ) )
                 	iv.setImageResource(R.drawable.school_128);
-                else if ( "¼öÆÛ¸¶ÄÏ/¶±Áı/º¸Á¶½ÄÇ°".equals( category ) )
+                else if ( "ìˆ˜í¼ë§ˆì¼“/ë–¡ì§‘/ë³´ì¡°ì‹í’ˆ".equals( category ) )
                 	iv.setImageResource(R.drawable.shop_48);
-                else if ( "¹Ì¿ë".equals( category ) )
+                else if ( "ë¯¸ìš©".equals( category ) )
                 	iv.setImageResource(R.drawable.hair_128);
-                else if ( "¿©Çà»ç".equals( category ) )
+                else if ( "ì—¬í–‰ì‚¬".equals( category ) )
                 	iv.setImageResource(R.drawable.travel_128);
-                else if ( "ºÎµ¿»ê".equals( category ) )
+                else if ( "ë¶€ë™ì‚°".equals( category ) )
                 	iv.setImageResource(R.drawable.building_128);
-                else if ( "±âÅ¸".equals( category ) )
+                else if ( "ê¸°íƒ€".equals( category ) )
                 	iv.setImageResource(R.drawable.other_48);
-                else if ( "º´¿ø/Å¬¸®´Ğ".equals( category ) )
+                else if ( "ë³‘ì›/í´ë¦¬ë‹‰".equals( category ) )
                 	iv.setImageResource(R.drawable.hospital_64);
-                else if ( "ÄÁ¼³ÆÃ/¹ı·ü»ó´ã/±¸ÀÎ±¸Á÷".equals( category ) )
+                else if ( "ì»¨ì„¤íŒ…/ë²•ë¥ ìƒë‹´/êµ¬ì¸êµ¬ì§".equals( category ) )
                 	iv.setImageResource(R.drawable.job_128);
-                else if ( "ÇØ¿ÜÀÌ»ç".equals( category ) )
+                else if ( "í•´ì™¸ì´ì‚¬".equals( category ) )
                 	iv.setImageResource(R.drawable.truck_128);
-                else if ( "·»Æ®Ä«".equals( category ) )
+                else if ( "ë ŒíŠ¸ì¹´".equals( category ) )
                 	iv.setImageResource(R.drawable.car_128);
-                else if ( "µğÀÚÀÎ/ÀÎÅ×¸®¾î".equals( category ) )
+                else if ( "ë””ìì¸/ì¸í…Œë¦¬ì–´".equals( category ) )
                 	iv.setImageResource(R.drawable.design_128);
                 else
                 	iv.setImageBitmap(null);
@@ -256,7 +256,7 @@ public class ShopsByCategoryActivity extends DYActivity implements OnItemClickLi
 		}
 
 		protected void onPreExecute() {
-			this.dialog.setMessage("¾÷µ¥ÀÌÆ® ÁßÀÔ´Ï´Ù.\r\nÀá½Ã¸¸ ±â´Ù·Á ÁÖ½Ê½Ã¿À.");
+			this.dialog.setMessage("ì—…ë°ì´íŠ¸ ì¤‘ì…ë‹ˆë‹¤.\r\nì ì‹œë§Œ ê¸°ë‹¤ë ¤ ì£¼ì‹­ì‹œì˜¤.");
 			this.dialog.show();
 		}
 

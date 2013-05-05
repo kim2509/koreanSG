@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+    
+    <TextView android:id="@+id/txtLike"  
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이 업체를 좋아합니까?"
+        android:textColor="@android:color/black"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+    
+    <Button android:id="@+id/btnLike" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Like"
+        android:textStyle="bold"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="#3b5999"
+        android:layout_marginRight="10dp"/>
+    
+</RelativeLayout>

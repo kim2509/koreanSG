@@ -33,5 +33,6 @@
     <string name="title_activity_shop_menu_search">ShopMenuSearchActivity</string>
     <string name="title_activity_shops_by_category_main">ShopsByCategoryMainActivity</string>
     <string name="title_activity_shop_list_main">ShopListMainActivity</string>
+    <string name="title_activity_program_list">ProgramListActivity</string>
 
 </resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:layout_marginLeft="10dp">
+    
+    <ImageView android:id="@+id/ivComment" 
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:src="@drawable/comment_add16"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+
+	<TextView android:id="@+id/txtComment" 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="10dp"
+	    android:gravity="center_vertical"
+	    android:layout_toRightOf="@+id/ivComment"
+	    android:layout_centerVertical="true"
+	    android:textColor="@android:color/black"
+	    android:layout_marginRight="10dp"></TextView>
+	
+	<Button android:id="@+id/btnDeleteComment" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="삭제"
+        android:textStyle="bold"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="#3b5999"
+        android:layout_marginRight="10dp"/>
+
+</RelativeLayout>

@@ -21,13 +21,13 @@ public class ShopsMainActivity extends TabActivity {
             
             TabHost tabHost = getTabHost();
             
-            TabSpec categorySpec = tabHost.newTabSpec("ºÐ·ùº°");
-            categorySpec.setIndicator("ºÐ·ùº°");
+            TabSpec categorySpec = tabHost.newTabSpec("ë¶„ë¥˜ë³„");
+            categorySpec.setIndicator("ë¶„ë¥˜ë³„");
             Intent categoryIntent = new Intent(this, ShopsByCategoryActivity.class);
             categorySpec.setContent(categoryIntent);
             
-            TabSpec menuSpec = tabHost.newTabSpec("¸Þ´ºº°");
-            menuSpec.setIndicator("¸Þ´ºº°");
+            TabSpec menuSpec = tabHost.newTabSpec("ë©”ë‰´ë³„");
+            menuSpec.setIndicator("ë©”ë‰´ë³„");
             Intent menuIntent = new Intent(this, ShopsByMenuActivity.class);
             menuSpec.setContent(menuIntent);
             

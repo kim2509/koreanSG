@@ -1,4 +1,4 @@
-#Thu Nov 01 19:57:49 KST 2012
+#Mon Dec 24 10:36:09 KST 2012
 eclipse.preferences.version=1
 encoding//src/com/korea/common/Util.java=UTF-8
 encoding//src/com/korea/hanintown/BoardHomeActivity.java=UTF-8
@@ -16,4 +16,6 @@ encoding//src/com/korea/hanintown/NotificationActivity.java=UTF-8
 encoding//src/com/korea/hanintown/RegisterMemeberActivity.java=UTF-8
 encoding//src/com/korea/hanintown/SearchBoardActivity.java=UTF-8
 encoding//src/com/korea/hanintown/SendMessageActivity.java=UTF-8
+encoding//src/com/korea/hanintown/ShopsByCategoryActivity.java=UTF-8
+encoding//src/com/korea/hanintown/ShopsMainActivity.java=UTF-8
 encoding//src/com/korea/hanintown/UserListActivity.java=UTF-8
